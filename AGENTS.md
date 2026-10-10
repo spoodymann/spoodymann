@@ -105,6 +105,19 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
    Otomatik push DÜŞERSE kullanıcıya kısa commit mesajı ver
    (GitHub Desktop: Commit to main → Push origin).
 
+11. **KAYNAK KLASÖR TEMİZLİĞİ (10.10.2026'dan itibaren, HER ZAMAN UYGULA):**
+    Yeni günün raporları siteye yüklendikten sonra masaüstündeki kaynak
+    klasörlerdeki eski tarihli dosyalar KALICI OLARAK SİLİNİR (yalnızca
+    klasörden değil, Geri Dönüşüm Kutusu'ndan da silinir — Shift+Delete /
+    kalıcı silme), yalnızca en güncel gün kalır:
+    - `frontrunner\` → yalnızca `YYYY-MM-DD_*` en yeni tarih kalır
+      (örn. `2026-10-10_*` varken `2026-10-0*` eskiler silinir).
+    - `beyer raporu\`, `kilit yarış arşivi\`, `sınıf düşme analizi\` →
+      yalnızca yeni günün tarihi kalır (örn. `*20261010*`).
+    - `istatistik ve galop\` → üzerine yazıldığı için işlem gerekmez.
+    - `günlük sonuç değerlendirme raporu\` → yalnızca en güncel
+      değerlendirme tarihi kalır.
+
 ## Diğer kurallar
 - Commit+push otomatiktir (asistan/script yapar). SADECE otomatik push düşerse
   kullanıcıya raporları commit/push için adım adım talimat ver

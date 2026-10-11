@@ -18,6 +18,8 @@
 # - rapor/ klasorune kopyalar (gtag + Beyer temizligi uygular)
 # - raporlar.html ve index.html kartlarini + sitemap.xml'i gunceller
 # - Onceki gunun rapor dosya/kart/URL'lerini siler
+# - Kaynak klasorlerdeki eski tarihli dosyalari siler (AGENTS.md madde 11:
+#   yalnizca en guncel gun kalir; istatistikte yeni gunde olmayan sehirler silinir)
 # Kullanim: powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\site-yukle-22-30.ps1 [-Tarih 10/09/2026] [-WhatIf] [-SkipTur istatistik]
 #   -SkipTur: bu seferlik atlanacak tur(ler). Or: -SkipTur istatistik / -SkipTur @('istatistik','tempo')
 #   Gecerli degerler: beyer, kilit, tempo, istatistik (istat), sinif (sinif-dusme). Varsayilan: bos (5 tur zorunlu).
@@ -363,6 +365,71 @@ foreach ($f in Get-ChildItem $RaporDir -Filter '*.html') {
     $silinenTarihler.Add("$($m.Groups[2].Value).$($AyTers[$m.Groups[3].Value]).$($Hedef.Year)") | Out-Null
     Write-Output "SIL: rapor/$($f.Name)"
     if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+}
+
+# ---------- 5b. Kaynak klasor temizligi (AGENTS.md madde 11: yalnizca en guncel gun kalir) ----------
+if (Test-Path $SrcBeyer) {
+    foreach ($f in Get-ChildItem $SrcBeyer -Filter '*.html' -ErrorAction SilentlyContinue) {
+        $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal)?\.html$')
+        if ($m.Success -and $m.Groups[2].Value -ne $basic) {
+            Write-Output "SIL (kaynak beyer): $($f.Name)"
+            if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+        }
+    }
+}
+if (Test-Path $SrcKilit) {
+    foreach ($f in Get-ChildItem $SrcKilit -Filter '*.html' -ErrorAction SilentlyContinue) {
+        $m = [regex]::Match($f.Name, '^kilit_yaris_(.+)_tum_kosular_(\d{8})\.html$')
+        if ($m.Success -and $m.Groups[2].Value -ne $basic) {
+            Write-Output "SIL (kaynak kilit): $($f.Name)"
+            if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+        }
+    }
+}
+foreach ($sk in @($SrcSinif, $SrcSinifEski)) {
+    if (-not $sk -or -not (Test-Path $sk)) { continue }
+    foreach ($f in Get-ChildItem $sk -Filter '*_sinif_dusme_analizi.html' -ErrorAction SilentlyContinue) {
+        $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_(.+)_sinif_dusme_analizi\.html$')
+        if ($m.Success -and $m.Groups[1].Value -ne $HedefIso) {
+            Write-Output "SIL (kaynak sinif): $($f.Name)"
+            if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+        }
+    }
+}
+if (Test-Path $SrcTempo) {
+    foreach ($f in Get-ChildItem $SrcTempo -Filter '*.html' -ErrorAction SilentlyContinue) {
+        $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_.+\.html$')
+        if ($m.Success -and $m.Groups[1].Value -ne $HedefIso) {
+            Write-Output "SIL (kaynak tempo): $($f.Name)"
+            if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+        }
+    }
+}
+if (Test-Path $SrcDeger) {
+    $degerTarihler = New-Object System.Collections.Generic.HashSet[string]
+    foreach ($f in Get-ChildItem $SrcDeger -Filter '*.html' -ErrorAction SilentlyContinue) {
+        $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_.+\.html$')
+        if ($m.Success) { $degerTarihler.Add($m.Groups[1].Value) | Out-Null }
+    }
+    if ($degerTarihler.Count -gt 0) {
+        $enYeniDeger = ($degerTarihler | Sort-Object -Descending | Select-Object -First 1)
+        foreach ($f in Get-ChildItem $SrcDeger -Filter '*.html' -ErrorAction SilentlyContinue) {
+            $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_.+\.html$')
+            if ($m.Success -and $m.Groups[1].Value -ne $enYeniDeger) {
+                Write-Output "SIL (kaynak degerlendirme): $($f.Name)"
+                if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+            }
+        }
+    }
+}
+if ((Test-Path $SrcIstat) -and $sehirler.Count -gt 0) {
+    foreach ($f in Get-ChildItem $SrcIstat -Filter '*.html' -ErrorAction SilentlyContinue) {
+        $k = ToAsciiLower ([System.IO.Path]::GetFileNameWithoutExtension($f.Name))
+        if (-not $sehirler.Contains($k)) {
+            Write-Output "SIL (kaynak istatistik): $($f.Name)"
+            if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+        }
+    }
 }
 
 # ---------- 6. Kartlar ----------

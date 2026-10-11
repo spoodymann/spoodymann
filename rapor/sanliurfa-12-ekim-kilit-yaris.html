@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.3, maximum-scale=5, user-scalable=yes">
+<title>Kilit Yaris 20261012 - Tum Kosular</title>
+<style>
+body { font-family: Arial, Helvetica, sans-serif; color: #050505; margin: 20px; }
+.page { transform-origin: top left; max-width: 1024px; margin: 0 auto; }
+.zoom-bar {
+  position: fixed;
+  top: 10px;
+  right: 12px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  background: #fff;
+  border: 1px solid #cfcfcf;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+.zoom-bar button {
+  min-width: 34px;
+  height: 30px;
+  border: 1px solid #b8b8b8;
+  background: #f7f7f7;
+  color: #000;
+  font-weight: 700;
+  cursor: pointer;
+}
+.zoom-bar button:hover { background: #ededed; }
+.zoom-value {
+  min-width: 48px;
+  text-align: center;
+  font-size: 12px;
+  color: #000;
+  font-weight: 700;
+}
+h1 { color: #000; font-size: 30px; line-height: 1.1; margin: 0 0 10px; font-weight: 800; letter-spacing: 0; }
+h2 { font-size: 16px; margin: 14px 0 8px; font-weight: 700; }
+p { font-size: 14px; line-height: 1.4; margin: 2px 0; }
+.no-key { font-weight: 400; font-size: 14px; color: #050505; margin: 14px 0 20px; }
+.hot-form { color: #d00000; font-weight: 900; margin: -4px 0 8px; }
+.race-line { font-weight: 700; font-size: 15px; color: #000; margin: 18px 0 4px; }
+table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 12px; }
+th { text-align: left; font-weight: 700; border-bottom: 1px solid #d8d8d8; padding: 6px 4px; }
+td { vertical-align: top; border-bottom: 1px solid #eeeeee; padding: 7px 4px; line-height: 1.45; }
+td:nth-child(1), th:nth-child(1) { padding-right: 2px; }
+td:nth-child(2), th:nth-child(2) { text-align: left; white-space: nowrap; padding-left: 2px; padding-right: 4px; }
+td:nth-child(3) { width: 50%; }
+td:nth-child(3) strong {
+  display: inline-block;
+  min-width: 46px;
+  margin-right: 6px;
+  color: #000;
+  font-weight: 900;
+}
+td:nth-child(4), th:nth-child(4) { text-align: right; white-space: nowrap; width: 52px; }
+td.fig-cell { text-align: right; vertical-align: top; }
+.fig {
+  display: inline-block;
+  min-width: 44px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+  color: #000;
+}
+
+.gap { height: 6px; }
+strong { font-weight: 700; }
+.black-hit { color: #000; font-weight: 900; }
+.top12-table { width: auto; margin: 0 0 14px; }
+.top12-table td { border-bottom: 0; padding: 2px 18px 2px 0; line-height: 1.4; text-align: left; vertical-align: top; white-space: nowrap; }
+.top12-head-row td { font-size: 12px; font-weight: 700; color: #000; padding-bottom: 4px; }
+.top12-mini { width: auto; margin: 0; font-size: 12px; }
+.top12-mini td, .top12-mini th { border-bottom: 0; padding: 1px 4px; line-height: 1.4; text-align: left; vertical-align: top; white-space: nowrap; }
+.top12-mini th.hp, .top12-mini td.hp, .top12-mini th.sp, .top12-mini td.sp { width: 36px; min-width: 36px; max-width: 36px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; color: #000; }
+.top12-mini td.pos { width: 22px; min-width: 22px; text-align: right; color: #333; }
+.top12-mini td.nm { max-width: 190px; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 700px) {
+  body { margin: 12px; padding-top: 46px; }
+  .zoom-bar { top: 6px; right: 6px; }
+  .zoom-bar button { min-width: 44px; height: 40px; font-size: 20px; }
+  .zoom-value { min-width: 54px; font-size: 14px; }
+}
+
+.race-block { margin-bottom: 28px; }
+.race-head { font-size: 20px; font-weight: 800; color: #fff; background: #274060; padding: 8px 12px; border-radius: 4px; margin-bottom: 8px; }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0CWBQ8K4X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N0CWBQ8K4X');
+</script></head>
+<body>
+<div class="zoom-bar" aria-label="Yakınlaştırma">
+  <button type="button" id="zoom-out" title="Uzaklaştır">-</button>
+  <span class="zoom-value" id="zoom-value">100%</span>
+  <button type="button" id="zoom-in" title="Yakınlaştır">+</button>
+</div>
+<div class="page" id="page">
+<div class="race-block"><div class="race-head">SANLIURFA - KOSU 1</div>
+<h1>SANLIURFA KOŞU 1</h1>
+<p>Secilen kosu: 1</p>
+<div class="gap"></div>
+<p class="no-key">Kilit yaris yok: 1-BABA AKİF, 2-AMİRSOYLU, 3-BİLKAY, 4-ÇEÇAN BEY, 6-KIRKDOKUZOĞLU, 7-SOSAN AĞA, 8-SUN OF FIRAT, 10-CANOĞLU YILDIZI, 11-ÇİLEK SULTAN, 13-KETRİN</p>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 1</h1>
+<h2>5-DÜZGÖRÜN OĞLU — Maiden/DHÖW / KUM / 1300m</h2>
+<p>Jokey: <strong class="black-hit">Y.ÇELİKBAŞ</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 7 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">7/2</strong></p>
+<p>Referans tarih: 19.09.2026 <strong class="black-hit">(23 gün ara)</strong> — ŞARTLI 19/DHÖW / KUM / 1200m</p>
+<p>Hipodrom: DIYARBAKIR</p>
+<p>Referans koşu no: 4</p>
+<p>DÜZGÖRÜN OĞLU <strong class="black-hit">10 oldu</strong> (kazananla +37.95 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 395.000 TL / Bugünkü birincilik 395.000 TL</p>
+<p>Sınıf durumu: sınıf aynı</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>URFA KAPLANI</td><td>1 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 2,9</strong> 03.10.2026 Diyarbakir 1. Koşu — ŞARTLI 3/DHÖ / KUM / 1200m / Birincilik ikramiyesi: 280.000 TL</td><td class="fig-cell"><span class="fig">34</span></td></tr>
+<tr><td>TİGRİS HANIM</td><td>3 oldu</td><td><strong class="black-hit">6 oldu</strong> <strong class="black-hit">Sabit Ganyan: 18</strong> 26.09.2026 Diyarbakir 3. Koşu — ŞARTLI 4/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 350.000 TL</td><td class="fig-cell"><span class="fig">26</span></td></tr>
+<tr><td>ÖZGÜRAK</td><td>4 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 8,5</strong> 30.09.2026 Elazig 5. Koşu — ŞARTLI 19/DHÖW / KUM / 1600m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">30</span></td></tr>
+<tr><td>FIRATHAN AĞASI</td><td>5 oldu</td><td><strong class="black-hit">8 oldu</strong> <strong class="black-hit">Sabit Ganyan: 25</strong> 06.10.2026 Adana 1. Koşu — ŞARTLI 19/DHÖW / KUM / 1300m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">22</span></td></tr>
+<tr><td>SEYYARETAY</td><td>6 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 5</strong> 30.09.2026 Elazig 8. Koşu — ŞARTLI 19/DHÖW/Dişi / KUM / 1600m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">48</span></td></tr>
+<tr><td>ZOR AĞA</td><td>8 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 30</strong> 30.09.2026 Elazig 5. Koşu — ŞARTLI 19/DHÖW / KUM / 1600m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">20</span></td></tr>
+<tr><td>EFSANE YILMAZ</td><td>9 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 10</strong> 30.09.2026 Elazig 5. Koşu — ŞARTLI 19/DHÖW / KUM / 1600m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>30.09.2026 Elazig 8. Koşu</td><td>30.09.2026 Elazig 5. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">SEYYARETAY</strong></td><td class="hp">26</td><td class="sp">48</td></tr><tr><td class="pos">2.</td><td class="nm">RHEA</td><td class="hp">—</td><td class="sp">40</td></tr><tr><td class="pos">3.</td><td class="nm">PRENSES FADİLE</td><td class="hp">26</td><td class="sp">28</td></tr><tr><td class="pos">4.</td><td class="nm">SUZANAY</td><td class="hp">14</td><td class="sp">18</td></tr><tr><td class="pos">5.</td><td class="nm">ALGHABRA</td><td class="hp">14</td><td class="sp">15</td></tr><tr><td class="pos">6.</td><td class="nm">EZGİL FIRTINASI</td><td class="hp">27</td><td class="sp">14</td></tr><tr><td class="pos">7.</td><td class="nm">ALİYE ANA</td><td class="hp">24</td><td class="sp">11</td></tr><tr><td class="pos">8.</td><td class="nm">YAĞMUR ECE</td><td class="hp">19</td><td class="sp">9</td></tr><tr><td class="pos">9.</td><td class="nm">EMOŞUN KIZI</td><td class="hp">19</td><td class="sp">6</td></tr><tr><td class="pos">10.</td><td class="nm">AFRİKA SULTANI</td><td class="hp">20</td><td class="sp">4</td></tr><tr><td class="pos">11.</td><td class="nm">BAŞKUT ANA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">KOĞUN SESİ</td><td class="hp">10</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">NERGİS SULTAN</td><td class="hp">24</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">ÜÇKONAKLI</td><td class="hp">23</td><td class="sp">1</td></tr><tr><td class="pos">15.</td><td class="nm">YAZ MELTEMİ</td><td class="hp">26</td><td class="sp">1</td></tr><tr><td class="pos">16.</td><td class="nm">FATMA ŞAH</td><td class="hp">8</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ÖZGÜRAK</strong></td><td class="hp">26</td><td class="sp">30</td></tr><tr><td class="pos">2.</td><td class="nm">GÜLPAŞA</td><td class="hp">18</td><td class="sp">29</td></tr><tr><td class="pos">3.</td><td class="nm">ÇEÇAN BEY</td><td class="hp">12</td><td class="sp">21</td></tr><tr><td class="pos">4.</td><td class="nm">ZOR AĞA</td><td class="hp">13</td><td class="sp">20</td></tr><tr><td class="pos">5.</td><td class="nm">MİRZACAN</td><td class="hp">24</td><td class="sp">17</td></tr><tr><td class="pos">6.</td><td class="nm">RECEPPAŞA</td><td class="hp">26</td><td class="sp">17</td></tr><tr><td class="pos">7.</td><td class="nm">PİRİM ÖZER</td><td class="hp">25</td><td class="sp">5</td></tr><tr><td class="pos">8.</td><td class="nm">BY ORMANCI</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">EFSANE YILMAZ</td><td class="hp">21</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">HIZLI MARTI</td><td class="hp">20</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">ZÜMRA SULTAN</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">KARLIOVA BEYİ</td><td class="hp">25</td><td class="sp">1</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 1</h1>
+<h2>9-BABİTTA — Maiden/DHÖW / KUM / 1300m</h2>
+<p>Jokey: <strong class="black-hit">M.ŞAKİR AP</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 10 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">10/2</strong></p>
+<p>Referans tarih: 02.09.2026 <strong class="black-hit">(40 gün ara)</strong> — Maiden/DHÖW/Dişi / KUM / 1200m</p>
+<p>Hipodrom: ELAZIG</p>
+<p>Referans koşu no: 3</p>
+<p>BABİTTA <strong class="black-hit">9 oldu</strong> (kazananla +12.67 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 395.000 TL / Bugünkü birincilik 395.000 TL</p>
+<p>Sınıf durumu: sınıf aynı</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>BALTIMORE</td><td>1 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 12</strong> 26.09.2026 Diyarbakir 3. Koşu — ŞARTLI 4/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 350.000 TL</td><td class="fig-cell"><span class="fig">2</span></td></tr>
+<tr><td>ÖZTÜRK PINARI</td><td>2 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 2,6</strong> 09.09.2026 Elazig 7. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">44</span></td></tr>
+<tr><td>PRENSES FADİLE</td><td>3 oldu</td><td><strong class="black-hit">derecesiz</strong> <strong class="black-hit">Sabit Ganyan: 6</strong> 09.09.2026 Elazig 1. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">veri yok</span></td></tr>
+<tr><td>SEYYARETAY</td><td>4 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,6</strong> 09.09.2026 Elazig 1. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">31</span></td></tr>
+<tr><td>EMOŞUN KIZI</td><td>5 oldu</td><td><strong class="black-hit">8 oldu</strong> <strong class="black-hit">Sabit Ganyan: 20</strong> 09.09.2026 Elazig 7. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">16</span></td></tr>
+<tr><td>BUZ KRALİÇESİ</td><td>6 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 6,5</strong> 21.09.2026 Sanliurfa 4. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">80</span></td></tr>
+<tr><td>GÖKAYKIZ</td><td>7 oldu</td><td><strong class="black-hit">15 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>ÇİLEK SULTAN</td><td>8 oldu</td><td><strong class="black-hit">6 oldu</strong> <strong class="black-hit">Sabit Ganyan: 80</strong> 21.09.2026 Sanliurfa 7. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">31</span></td></tr>
+<tr><td>ELMAS GÖZLÜM</td><td>10 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 30</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>KIR PENÇE</td><td>11 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 16.09.2026 Elazig 2. Koşu — ŞARTLI 3/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 280.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>21.09.2026 Sanliurfa 4. Koşu</td><td>09.09.2026 Elazig 7. Koşu</td><td>09.09.2026 Elazig 1. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">BUZ KRALİÇESİ</strong></td><td class="hp">26</td><td class="sp">80</td></tr><tr><td class="pos">2.</td><td class="nm">YEŞİLVADİ GÜLÜ</td><td class="hp">—</td><td class="sp">78</td></tr><tr><td class="pos">3.</td><td class="nm">BAŞKUT ANA</td><td class="hp">—</td><td class="sp">75</td></tr><tr><td class="pos">4.</td><td class="nm">SUZANAY</td><td class="hp">—</td><td class="sp">74</td></tr><tr><td class="pos">5.</td><td class="nm">RECEPPAŞA</td><td class="hp">26</td><td class="sp">70</td></tr><tr><td class="pos">6.</td><td class="nm">IŞIKALP</td><td class="hp">20</td><td class="sp">69</td></tr><tr><td class="pos">7.</td><td class="nm">ROYAL EŞLİ</td><td class="hp">12</td><td class="sp">61</td></tr><tr><td class="pos">8.</td><td class="nm">HARŞENA</td><td class="hp">—</td><td class="sp">50</td></tr><tr><td class="pos">9.</td><td class="nm">KETRİN</td><td class="hp">23</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">KIRKDOKUZOĞLU</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">TUANA KIZI</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">KIZIM NİA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">ÇILGINKRAL</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">BABİLHAN</td><td class="hp">—</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ÖZTÜRK PINARI</strong></td><td class="hp">27</td><td class="sp">44</td></tr><tr><td class="pos">2.</td><td class="nm">ÖZGÜRAK</td><td class="hp">24</td><td class="sp">32</td></tr><tr><td class="pos">3.</td><td class="nm">YAZ MELTEMİ</td><td class="hp">25</td><td class="sp">32</td></tr><tr><td class="pos">4.</td><td class="nm">EFSANE YILMAZ</td><td class="hp">21</td><td class="sp">22</td></tr><tr><td class="pos">5.</td><td class="nm">ÇEÇAN BEY</td><td class="hp">9</td><td class="sp">20</td></tr><tr><td class="pos">6.</td><td class="nm">KAHRAMAN</td><td class="hp">10</td><td class="sp">20</td></tr><tr><td class="pos">7.</td><td class="nm">ŞAH TUNALI</td><td class="hp">21</td><td class="sp">17</td></tr><tr><td class="pos">8.</td><td class="nm">EMOŞUN KIZI</td><td class="hp">19</td><td class="sp">16</td></tr><tr><td class="pos">9.</td><td class="nm">TOPRAK ÇİÇEĞİ</td><td class="hp">15</td><td class="sp">14</td></tr><tr><td class="pos">10.</td><td class="nm">ATEŞATAR</td><td class="hp">25</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">MISRADA</td><td class="hp">8</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">ELİFİN IŞIĞI</td><td class="hp">27</td><td class="sp">35</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">SEYYARETAY</strong></td><td class="hp">15</td><td class="sp">31</td></tr><tr><td class="pos">3.</td><td class="nm">MİRZACAN</td><td class="hp">24</td><td class="sp">28</td></tr><tr><td class="pos">4.</td><td class="nm">ATAKAYA HÜKÜMDARI</td><td class="hp">14</td><td class="sp">26</td></tr><tr><td class="pos">5.</td><td class="nm">MİRAÇHAT</td><td class="hp">6</td><td class="sp">20</td></tr><tr><td class="pos">6.</td><td class="nm">FATMA ŞAH</td><td class="hp">—</td><td class="sp">17</td></tr><tr><td class="pos">7.</td><td class="nm">ALGHABRA</td><td class="hp">14</td><td class="sp">1</td></tr><tr><td class="pos">8.</td><td class="nm">KİNG BEDİRHAN</td><td class="hp">14</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">MAVİ DAMLA</td><td class="hp">7</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">URFA KAPLANI</td><td class="hp">26</td><td class="sp">1</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 1</h1>
+<h2>12-DEMİRŞİMŞEK KIZI — Maiden/DHÖW / KUM / 1300m</h2>
+<p>Jokey: <strong class="black-hit">S.KAPLAN</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 12 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">12/2</strong></p>
+<p>Referans tarih: 02.09.2026 <strong class="black-hit">(40 gün ara)</strong> — Maiden/DHÖW/Dişi / KUM / 1200m</p>
+<p>Hipodrom: ELAZIG</p>
+<p>Referans koşu no: 1</p>
+<p>DEMİRŞİMŞEK KIZI <strong class="black-hit">12 oldu</strong> (kazananla +26.80 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 395.000 TL / Bugünkü birincilik 395.000 TL</p>
+<p>Sınıf durumu: sınıf aynı</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>RENKLİ GÜZEL</td><td>1 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3</strong> 09.09.2026 Elazig 6. Koşu — ŞARTLI 3/DHT / KUM / 1200m / Birincilik ikramiyesi: 280.000 TL</td><td class="fig-cell"><span class="fig">54</span></td></tr>
+<tr><td>ELİFİN IŞIĞI</td><td>2 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 4,75</strong> 09.09.2026 Elazig 1. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">35</span></td></tr>
+<tr><td>ALİYE ANA</td><td>3 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 8,5</strong> 09.09.2026 Elazig 4. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">72</span></td></tr>
+<tr><td>KIZIM DAMLA</td><td>4 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 14</strong> 13.09.2026 Adana 3. Koşu — Maiden/DHÖW / SENTETIK / 1200m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">63</span></td></tr>
+<tr><td>TOPRAK ÇİÇEĞİ</td><td>5 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 18</strong> 09.09.2026 Elazig 7. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">14</span></td></tr>
+<tr><td>MISRADA</td><td>6 oldu</td><td><strong class="black-hit">11 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 09.09.2026 Elazig 7. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>ALGHABRA</td><td>7 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 18</strong> 09.09.2026 Elazig 1. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>TİGRİS HANIM</td><td>8 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 20</strong> 19.09.2026 Diyarbakir 4. Koşu — ŞARTLI 19/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">22</span></td></tr>
+<tr><td>MİR ATHENA</td><td>9 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 25</strong> 09.09.2026 Elazig 4. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">81</span></td></tr>
+<tr><td>ROZERİNA</td><td>10 oldu</td><td><strong class="black-hit">5 oldu</strong> <strong class="black-hit">Sabit Ganyan: 9</strong> 21.09.2026 Sanliurfa 7. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">43</span></td></tr>
+<tr><td>MAVİ DAMLA</td><td>11 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 09.09.2026 Elazig 1. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>GÖNLÜMDE KUTUP</td><td>13 oldu</td><td><strong class="black-hit">11 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 09.09.2026 Elazig 4. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>09.09.2026 Elazig 1. Koşu</td><td>09.09.2026 Elazig 4. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ELİFİN IŞIĞI</strong></td><td class="hp">27</td><td class="sp">35</td></tr><tr><td class="pos">2.</td><td class="nm">SEYYARETAY</td><td class="hp">15</td><td class="sp">31</td></tr><tr><td class="pos">3.</td><td class="nm">MİRZACAN</td><td class="hp">24</td><td class="sp">28</td></tr><tr><td class="pos">4.</td><td class="nm">ATAKAYA HÜKÜMDARI</td><td class="hp">14</td><td class="sp">26</td></tr><tr><td class="pos">5.</td><td class="nm">MİRAÇHAT</td><td class="hp">6</td><td class="sp">20</td></tr><tr><td class="pos">6.</td><td class="nm">FATMA ŞAH</td><td class="hp">—</td><td class="sp">17</td></tr><tr><td class="pos">7.</td><td class="nm">ALGHABRA</td><td class="hp">14</td><td class="sp">1</td></tr><tr><td class="pos">8.</td><td class="nm">KİNG BEDİRHAN</td><td class="hp">14</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">MAVİ DAMLA</td><td class="hp">7</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">URFA KAPLANI</td><td class="hp">26</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">MİR ATHENA</strong></td><td class="hp">—</td><td class="sp">81</td></tr><tr><td class="pos">2.</td><td class="nm">RECEPPAŞA</td><td class="hp">22</td><td class="sp">76</td></tr><tr><td class="pos">3.</td><td class="nm">ALİYE ANA</td><td class="hp">23</td><td class="sp">72</td></tr><tr><td class="pos">4.</td><td class="nm">GÜLPAŞA</td><td class="hp">16</td><td class="sp">70</td></tr><tr><td class="pos">5.</td><td class="nm">ADANALI DEMİR</td><td class="hp">25</td><td class="sp">68</td></tr><tr><td class="pos">6.</td><td class="nm">KOĞUN SESİ</td><td class="hp">10</td><td class="sp">52</td></tr><tr><td class="pos">7.</td><td class="nm">RÜZGAR DELİSİ</td><td class="hp">7</td><td class="sp">43</td></tr><tr><td class="pos">8.</td><td class="nm">YAĞMUR ECE</td><td class="hp">19</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">FIRATHAN AĞASI</td><td class="hp">21</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">AĞCILKIZI</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">GÖNLÜMDE KUTUP</td><td class="hp">9</td><td class="sp">1</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 1</h1>
+<h2>14-MY LAGERTHA — Maiden/DHÖW / KUM / 1300m</h2>
+<p>Jokey: <strong class="black-hit">M.E.DOĞAN</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 9 tanesi bir sonraki yarışını koşmuş, 3 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">9/3</strong></p>
+<p>Referans tarih: 14.09.2026 <strong class="black-hit">(28 gün ara)</strong> — ŞARTLI 3/DHÖW / KUM / 1200m</p>
+<p>Hipodrom: SANLIURFA</p>
+<p>Referans koşu no: 4</p>
+<p>MY LAGERTHA <strong class="black-hit">10 oldu</strong> (kazananla +9.85 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 280.000 TL / Bugünkü birincilik 395.000 TL</p>
+<p>Sınıf durumu: sınıf yükseliyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>İLKBAHAR KIZI</td><td>1 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 8,5</strong> 26.09.2026 Diyarbakir 3. Koşu — ŞARTLI 4/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 350.000 TL</td><td class="fig-cell"><span class="fig">47</span></td></tr>
+<tr><td>HUN DAY</td><td>2 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,8</strong> 05.10.2026 Sanliurfa 8. Koşu — ŞARTLI 4/DHÖW / KUM / 1400m / Birincilik ikramiyesi: 350.000 TL</td><td class="fig-cell"><span class="fig">55</span></td></tr>
+<tr><td>BİLDENCAN</td><td>3 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 1,8</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">81</span></td></tr>
+<tr><td>PİRİM ÖZER</td><td>4 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 7</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">76</span></td></tr>
+<tr><td>ÇELİK ŞAHİN</td><td>6 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,4</strong> 28.09.2026 Sanliurfa 2. Koşu — Handikap 14/DHÖW /H3 / KUM / 1700m / Birincilik ikramiyesi: 280.000 TL</td><td class="fig-cell"><span class="fig">79</span></td></tr>
+<tr><td>ÜLFET ŞEKERİ</td><td>11 oldu</td><td><strong class="black-hit">8 oldu</strong> <strong class="black-hit">Sabit Ganyan: 12</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>BİLKAY</td><td>12 oldu</td><td><strong class="black-hit">11 oldu</strong> <strong class="black-hit">Sabit Ganyan: 40</strong> 29.09.2026 Adana 4. Koşu — Maiden/DHÖW / SENTETIK / 1400m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">58</span></td></tr>
+<tr><td>ÜÇKONAKLI</td><td>14 oldu</td><td><strong class="black-hit">14 oldu</strong> <strong class="black-hit">Sabit Ganyan: 80</strong> 30.09.2026 Elazig 8. Koşu — ŞARTLI 19/DHÖW/Dişi / KUM / 1600m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>GÜLENYAR</td><td>16 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>21.09.2026 Sanliurfa 2. Koşu</td><td>28.09.2026 Sanliurfa 2. Koşu</td><td>26.09.2026 Diyarbakir 3. Koşu</td><td>21.09.2026 Sanliurfa 2. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">BİLDENCAN</strong></td><td class="hp">27</td><td class="sp">81</td></tr><tr><td class="pos">2.</td><td class="nm">PİRİM ÖZER</td><td class="hp">23</td><td class="sp">76</td></tr><tr><td class="pos">3.</td><td class="nm">MERCAN ANA</td><td class="hp">10</td><td class="sp">75</td></tr><tr><td class="pos">4.</td><td class="nm">BABA AKİF</td><td class="hp">24</td><td class="sp">75</td></tr><tr><td class="pos">5.</td><td class="nm">ÇEÇAN BEY</td><td class="hp">10</td><td class="sp">74</td></tr><tr><td class="pos">6.</td><td class="nm">BEG DOĞAN</td><td class="hp">—</td><td class="sp">51</td></tr><tr><td class="pos">7.</td><td class="nm">AMBER KIZI</td><td class="hp">—</td><td class="sp">46</td></tr><tr><td class="pos">8.</td><td class="nm">ÜLFET ŞEKERİ</td><td class="hp">22</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">ELMAS GÖZLÜM</td><td class="hp">13</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">GÜLENYAR</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">SOSAN AĞA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">YURDABAKCAN</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">EZDAR GÜLÜ</td><td class="hp">12</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">SERT YİĞİT</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">15.</td><td class="nm">GÖKAYKIZ</td><td class="hp">8</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ÇELİK ŞAHİN</strong></td><td class="hp">38</td><td class="sp">79</td></tr><tr><td class="pos">2.</td><td class="nm">EMOHELİL</td><td class="hp">31</td><td class="sp">74</td></tr><tr><td class="pos">3.</td><td class="nm">KAUÇUKÇU</td><td class="hp">38</td><td class="sp">73</td></tr><tr><td class="pos">4.</td><td class="nm">ELMAS GÖZLÜM</td><td class="hp">13</td><td class="sp">63</td></tr><tr><td class="pos">5.</td><td class="nm">KAVİM</td><td class="hp">41</td><td class="sp">1</td></tr><tr><td class="pos">6.</td><td class="nm">ENESPAŞA</td><td class="hp">36</td><td class="sp">1</td></tr><tr><td class="pos">7.</td><td class="nm">ZEYDANTAY</td><td class="hp">43</td><td class="sp">1</td></tr><tr><td class="pos">8.</td><td class="nm">ŞENERHAN</td><td class="hp">39</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">İLKBAHAR KIZI</strong></td><td class="hp">38</td><td class="sp">47</td></tr><tr><td class="pos">2.</td><td class="nm">ÇİĞDEMGELİN</td><td class="hp">36</td><td class="sp">44</td></tr><tr><td class="pos">3.</td><td class="nm">SON KRALİÇE</td><td class="hp">40</td><td class="sp">41</td></tr><tr><td class="pos">4.</td><td class="nm">RUHİNAZ</td><td class="hp">34</td><td class="sp">39</td></tr><tr><td class="pos">5.</td><td class="nm">VIZVIZ KIZ</td><td class="hp">33</td><td class="sp">35</td></tr><tr><td class="pos">6.</td><td class="nm">TİGRİS HANIM</td><td class="hp">24</td><td class="sp">26</td></tr><tr><td class="pos">7.</td><td class="nm">GÜNÇİÇEK</td><td class="hp">34</td><td class="sp">11</td></tr><tr><td class="pos">8.</td><td class="nm">PİRNAZIN KIZI</td><td class="hp">46</td><td class="sp">8</td></tr><tr><td class="pos">9.</td><td class="nm">BİLGE GÜL</td><td class="hp">6</td><td class="sp">6</td></tr><tr><td class="pos">10.</td><td class="nm">BALTIMORE</td><td class="hp">33</td><td class="sp">2</td></tr><tr><td class="pos">11.</td><td class="nm">LEZGİNTAY</td><td class="hp">44</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">BİLDENCAN</td><td class="hp">27</td><td class="sp">81</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">PİRİM ÖZER</strong></td><td class="hp">23</td><td class="sp">76</td></tr><tr><td class="pos">3.</td><td class="nm">MERCAN ANA</td><td class="hp">10</td><td class="sp">75</td></tr><tr><td class="pos">4.</td><td class="nm">BABA AKİF</td><td class="hp">24</td><td class="sp">75</td></tr><tr><td class="pos">5.</td><td class="nm">ÇEÇAN BEY</td><td class="hp">10</td><td class="sp">74</td></tr><tr><td class="pos">6.</td><td class="nm">BEG DOĞAN</td><td class="hp">—</td><td class="sp">51</td></tr><tr><td class="pos">7.</td><td class="nm">AMBER KIZI</td><td class="hp">—</td><td class="sp">46</td></tr><tr><td class="pos">8.</td><td class="nm">ÜLFET ŞEKERİ</td><td class="hp">22</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">ELMAS GÖZLÜM</td><td class="hp">13</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">GÜLENYAR</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">SOSAN AĞA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">YURDABAKCAN</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">EZDAR GÜLÜ</td><td class="hp">12</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">SERT YİĞİT</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">15.</td><td class="nm">GÖKAYKIZ</td><td class="hp">8</td><td class="sp">1</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 1</h1>
+<h2>15-VARTUHİM — Maiden/DHÖW / KUM / 1300m</h2>
+<p>Jokey: <strong class="black-hit">İ.KATAR</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 13 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">13/2</strong></p>
+<p>Referans tarih: 15.07.2026 <strong class="black-hit">(89 gün ara)</strong> — Maiden/DHÖW/Dişi / KUM / 1200m</p>
+<p>Hipodrom: ELAZIG</p>
+<p>Referans koşu no: 8</p>
+<p>VARTUHİM <strong class="black-hit">11 oldu</strong> (kazananla +17.94 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 395.000 TL / Bugünkü birincilik 395.000 TL</p>
+<p>Sınıf durumu: sınıf aynı</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>RUHİNAZ</td><td>1 oldu</td><td><strong class="black-hit">5 oldu</strong> <strong class="black-hit">Sabit Ganyan: 12</strong> 03.08.2026 Elazig 2. Koşu — ŞARTLI 2/DHÖW/Dişi / KUM / 1500m / Birincilik ikramiyesi: 215.000 TL</td><td class="fig-cell"><span class="fig">11</span></td></tr>
+<tr><td>ROZERİNA</td><td>2 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 1,7</strong> 27.07.2026 Elazig 6. Koşu — Maiden/DHÖ / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">32</span></td></tr>
+<tr><td>RHEA</td><td>3 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 5,5</strong> 30.09.2026 Elazig 8. Koşu — ŞARTLI 19/DHÖW/Dişi / KUM / 1600m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">40</span></td></tr>
+<tr><td>CANU CİGER</td><td>4 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 4,5</strong> 27.07.2026 Elazig 1. Koşu — Maiden/DHÖ / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">35</span></td></tr>
+<tr><td>PRENSES FADİLE</td><td>5 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 18</strong> 27.07.2026 Elazig 6. Koşu — Maiden/DHÖ / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">24</span></td></tr>
+<tr><td>NALDÖKEN FIRTINASI</td><td>6 oldu</td><td><strong class="black-hit">6 oldu</strong> <strong class="black-hit">Sabit Ganyan: 14</strong> 05.08.2026 Elazig 4. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">48</span></td></tr>
+<tr><td>RENGİNKIZ</td><td>7 oldu</td><td><strong class="black-hit">11 oldu</strong> <strong class="black-hit">Sabit Ganyan: 14</strong> 15.08.2026 Diyarbakir 6. Koşu — ŞARTLI 19/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>ADALAR</td><td>8 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,4</strong> 05.08.2026 Elazig 1. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">81</span></td></tr>
+<tr><td>SİMAYKIZIM</td><td>9 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 100</strong> 01.08.2026 Diyarbakir 6. Koşu — ŞARTLI 19/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">2</span></td></tr>
+<tr><td>EMOŞUN KIZI</td><td>10 oldu</td><td><strong class="black-hit">derecesiz</strong> <strong class="black-hit">Sabit Ganyan: 10</strong> 27.07.2026 Elazig 1. Koşu — Maiden/DHÖ / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">veri yok</span></td></tr>
+<tr><td>CAN ARAP</td><td>12 oldu</td><td><strong class="black-hit">13 oldu</strong> <strong class="black-hit">Sabit Ganyan: 40</strong> 05.08.2026 Elazig 4. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>ZÜLBİYE KIZ</td><td>13 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 5</strong> 05.08.2026 Elazig 4. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>BÜYÜK HATUN</td><td>14 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 16</strong> 05.08.2026 Elazig 4. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">83</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>05.08.2026 Elazig 1. Koşu</td><td>05.08.2026 Elazig 4. Koşu</td><td>27.07.2026 Elazig 1. Koşu</td><td>30.09.2026 Elazig 8. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ADALAR</strong></td><td class="hp">26</td><td class="sp">81</td></tr><tr><td class="pos">2.</td><td class="nm">BUZ KRALİÇESİ</td><td class="hp">—</td><td class="sp">78</td></tr><tr><td class="pos">3.</td><td class="nm">BALTIMORE</td><td class="hp">26</td><td class="sp">75</td></tr><tr><td class="pos">4.</td><td class="nm">ALİYE ANA</td><td class="hp">22</td><td class="sp">75</td></tr><tr><td class="pos">5.</td><td class="nm">SEYRAN ABLA</td><td class="hp">11</td><td class="sp">67</td></tr><tr><td class="pos">6.</td><td class="nm">DEMİRŞİMŞEK KIZI</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">7.</td><td class="nm">KOĞUN SESİ</td><td class="hp">10</td><td class="sp">1</td></tr><tr><td class="pos">8.</td><td class="nm">TAÇSIZKIZ</td><td class="hp">18</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">NEHİRAFRA</td><td class="hp">9</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">ARSELYA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">KIZIM DAMLA</td><td class="hp">28</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">BÜYÜK HATUN</strong></td><td class="hp">20</td><td class="sp">83</td></tr><tr><td class="pos">2.</td><td class="nm">ÇİĞDEMGELİN</td><td class="hp">—</td><td class="sp">78</td></tr><tr><td class="pos">3.</td><td class="nm">YAĞMUR ECE</td><td class="hp">8</td><td class="sp">65</td></tr><tr><td class="pos">4.</td><td class="nm">ÖZTÜRK PINARI</td><td class="hp">24</td><td class="sp">61</td></tr><tr><td class="pos">5.</td><td class="nm">EMOŞUN KIZI</td><td class="hp">19</td><td class="sp">60</td></tr><tr><td class="pos">6.</td><td class="nm">NALDÖKEN FIRTINASI</td><td class="hp">—</td><td class="sp">48</td></tr><tr><td class="pos">7.</td><td class="nm">ZÜLBİYE KIZ</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">8.</td><td class="nm">MISRADA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">ALELADE HEJA</td><td class="hp">10</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">ROZERİNA</td><td class="hp">27</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">SERHANTAYIN KIZI</td><td class="hp">6</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">TRIAN</td><td class="hp">9</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">CAN ARAP</td><td class="hp">—</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">YÜREKOĞLU</td><td class="hp">25</td><td class="sp">44</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">CANU CİGER</strong></td><td class="hp">22</td><td class="sp">35</td></tr><tr><td class="pos">3.</td><td class="nm">BİLDENCAN</td><td class="hp">9</td><td class="sp">21</td></tr><tr><td class="pos">4.</td><td class="nm">HIZLI MARTI</td><td class="hp">16</td><td class="sp">20</td></tr><tr><td class="pos">5.</td><td class="nm">ALELADE HEJA</td><td class="hp">10</td><td class="sp">1</td></tr><tr><td class="pos">6.</td><td class="nm">GÜLPAŞA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">7.</td><td class="nm">ŞAHİDE ZÜMRA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">8.</td><td class="nm">NERGİS SULTAN</td><td class="hp">24</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">GÜLDADAŞ</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">OBSİDYEN TAŞI</td><td class="hp">13</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">SERSİ</td><td class="hp">—</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">SEYYARETAY</td><td class="hp">26</td><td class="sp">48</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">RHEA</strong></td><td class="hp">—</td><td class="sp">40</td></tr><tr><td class="pos">3.</td><td class="nm">PRENSES FADİLE</td><td class="hp">26</td><td class="sp">28</td></tr><tr><td class="pos">4.</td><td class="nm">SUZANAY</td><td class="hp">14</td><td class="sp">18</td></tr><tr><td class="pos">5.</td><td class="nm">ALGHABRA</td><td class="hp">14</td><td class="sp">15</td></tr><tr><td class="pos">6.</td><td class="nm">EZGİL FIRTINASI</td><td class="hp">27</td><td class="sp">14</td></tr><tr><td class="pos">7.</td><td class="nm">ALİYE ANA</td><td class="hp">24</td><td class="sp">11</td></tr><tr><td class="pos">8.</td><td class="nm">YAĞMUR ECE</td><td class="hp">19</td><td class="sp">9</td></tr><tr><td class="pos">9.</td><td class="nm">EMOŞUN KIZI</td><td class="hp">19</td><td class="sp">6</td></tr><tr><td class="pos">10.</td><td class="nm">AFRİKA SULTANI</td><td class="hp">20</td><td class="sp">4</td></tr><tr><td class="pos">11.</td><td class="nm">BAŞKUT ANA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">KOĞUN SESİ</td><td class="hp">10</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">NERGİS SULTAN</td><td class="hp">24</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">ÜÇKONAKLI</td><td class="hp">23</td><td class="sp">1</td></tr><tr><td class="pos">15.</td><td class="nm">YAZ MELTEMİ</td><td class="hp">26</td><td class="sp">1</td></tr><tr><td class="pos">16.</td><td class="nm">FATMA ŞAH</td><td class="hp">8</td><td class="sp">1</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+</div>
+<div class="race-block"><div class="race-head">SANLIURFA - KOSU 2</div>
+<h1>SANLIURFA KOŞU 2</h1>
+<p>Secilen kosu: 2</p>
+<div class="gap"></div>
+<p class="no-key">Kilit yaris yok: 2-SECRET GIRL, 3-GREENLIFE, 4-LION ESMER, 5-MR ÇINAR, 6-PAPA CLAS, 7-WIND CITY</p>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 2</h1>
+<h2>1-BECENE REİS — ŞARTLI 4 / KUM / 1400m</h2>
+<p>Jokey: <strong class="black-hit">N.DEMİR</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 6 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">6/2</strong></p>
+<p>Referans tarih: 03.08.2026 <strong class="black-hit">(70 gün ara)</strong> — ŞARTLI 4 / KUM / 1200m</p>
+<p>Hipodrom: ELAZIG</p>
+<p>Referans koşu no: 7</p>
+<p>BECENE REİS <strong class="black-hit">6 oldu</strong> (kazananla +1.23 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 350.000 TL / Bugünkü birincilik 350.000 TL</p>
+<p>Sınıf durumu: sınıf aynı</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>KING OF LINGO</td><td>1 oldu</td><td><strong class="black-hit">5 oldu</strong> <strong class="black-hit">Sabit Ganyan: 4,75</strong> 02.09.2026 Elazig 5. Koşu — ŞARTLI 5 / KUM / 1200m / Birincilik ikramiyesi: 440.000 TL</td><td class="fig-cell"><span class="fig">32</span></td></tr>
+<tr><td>LORD OF KİRVE</td><td>2 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 2</strong> 26.08.2026 Elazig 2. Koşu — Maiden / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">77</span></td></tr>
+<tr><td>INFERNO BLAZE</td><td>3 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,4</strong> 26.08.2026 Elazig 6. Koşu — Maiden / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">75</span></td></tr>
+<tr><td>ASPUWA</td><td>4 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 2,5</strong> 30.09.2026 Elazig 7. Koşu — Handikap 14 /H3 / KUM / 1200m / Birincilik ikramiyesi: 280.000 TL</td><td class="fig-cell"><span class="fig">56</span></td></tr>
+<tr><td>GÖKTEKİ YAĞMUR</td><td>5 oldu</td><td><strong class="black-hit">8 oldu</strong> <strong class="black-hit">Sabit Ganyan: 50</strong> 02.09.2026 Elazig 5. Koşu — ŞARTLI 5 / KUM / 1200m / Birincilik ikramiyesi: 440.000 TL</td><td class="fig-cell"><span class="fig">veri yok</span></td></tr>
+<tr><td>BRAVO GÜR</td><td>7 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 4</strong> 17.08.2026 Elazig 2. Koşu — ŞARTLI 3 / KUM / 1500m / Birincilik ikramiyesi: 280.000 TL</td><td class="fig-cell"><span class="fig">28</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>30.09.2026 Elazig 7. Koşu</td><td>26.08.2026 Elazig 2. Koşu</td><td>17.08.2026 Elazig 2. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ASPUWA</strong></td><td class="hp">42</td><td class="sp">56</td></tr><tr><td class="pos">2.</td><td class="nm">LORD OF KİRVE</td><td class="hp">38</td><td class="sp">53</td></tr><tr><td class="pos">3.</td><td class="nm">ANGEL OF DONYA</td><td class="hp">41</td><td class="sp">49</td></tr><tr><td class="pos">4.</td><td class="nm">LION ESMER</td><td class="hp">42</td><td class="sp">47</td></tr><tr><td class="pos">5.</td><td class="nm">GÖKTEKİ YAĞMUR</td><td class="hp">40</td><td class="sp">41</td></tr><tr><td class="pos">6.</td><td class="nm">ALPERİN KIZI</td><td class="hp">34</td><td class="sp">33</td></tr><tr><td class="pos">7.</td><td class="nm">KING RHAEGAL</td><td class="hp">38</td><td class="sp">3</td></tr><tr><td class="pos">8.</td><td class="nm">ÇELİK STAR</td><td class="hp">33</td><td class="sp">2</td></tr><tr><td class="pos">9.</td><td class="nm">CHEF BUĞRA</td><td class="hp">31</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">LORD OF KİRVE</strong></td><td class="hp">32</td><td class="sp">77</td></tr><tr><td class="pos">2.</td><td class="nm">SAND QUEEN</td><td class="hp">—</td><td class="sp">75</td></tr><tr><td class="pos">3.</td><td class="nm">MERYEMCAN</td><td class="hp">24</td><td class="sp">74</td></tr><tr><td class="pos">4.</td><td class="nm">GLACIUS BOREAS</td><td class="hp">—</td><td class="sp">66</td></tr><tr><td class="pos">5.</td><td class="nm">MEA CULPA</td><td class="hp">—</td><td class="sp">64</td></tr><tr><td class="pos">6.</td><td class="nm">PAPA CLAS</td><td class="hp">—</td><td class="sp">60</td></tr><tr><td class="pos">7.</td><td class="nm">BY SİNANLI</td><td class="hp">12</td><td class="sp">54</td></tr><tr><td class="pos">8.</td><td class="nm">YEĞENİM ŞİRİN</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">ADDISON</td><td class="hp">19</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">POWER OF IRON</td><td class="hp">33</td><td class="sp">36</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">BRAVO GÜR</strong></td><td class="hp">31</td><td class="sp">28</td></tr><tr><td class="pos">3.</td><td class="nm">KING İZZET</td><td class="hp">36</td><td class="sp">15</td></tr><tr><td class="pos">4.</td><td class="nm">ALPERİN KIZI</td><td class="hp">31</td><td class="sp">13</td></tr><tr><td class="pos">5.</td><td class="nm">GRAND NEVA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">6.</td><td class="nm">BY SİNANLI</td><td class="hp">—</td><td class="sp">1</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+</div>
+<div class="race-block"><div class="race-head">SANLIURFA - KOSU 3</div>
+<h1>SANLIURFA KOŞU 3</h1>
+<p>Secilen kosu: 3</p>
+<div class="gap"></div>
+<p class="no-key">Kilit yaris yok: 1-KİKİ FERRO, 2-MARDİ GRAS, 3-MY INVENTION, 4-TYRAXES, 5-BROMANCE, 6-TOWSON, 7-IRISH MILLIONS, 8-REEZ, 9-BERAT KAAN, 11-KING ANCESTOR, 12-PATPAT, 13-SAKLIKAPI, 14-KAROZBEY</p>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 3</h1>
+<h2>10-BAKTAGÖR — Handikap 16 /H3 / KUM / 2100m</h2>
+<p>Jokey: <strong class="black-hit">M.E.DOĞAN</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 5 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">5/2</strong></p>
+<p>Referans tarih: 21.09.2026 <strong class="black-hit">(21 gün ara)</strong> — ŞARTLI 5 / KUM / 2000m</p>
+<p>Hipodrom: SANLIURFA</p>
+<p>Referans koşu no: 6</p>
+<p>BAKTAGÖR <strong class="black-hit">2 oldu</strong> (kazananla +0.50 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 440.000 TL / Bugünkü birincilik 440.000 TL</p>
+<p>Sınıf durumu: sınıf aynı</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>NOW SEE ME</td><td>1 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 2</strong> 26.09.2026 Diyarbakir 4. Koşu — Handikap 16 /H3 / KUM / 1700m / Birincilik ikramiyesi: 440.000 TL</td><td class="fig-cell"><span class="fig">48</span></td></tr>
+<tr><td>PASKALOVIC</td><td>4 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 18</strong> 26.09.2026 Diyarbakir 5. Koşu — ŞARTLI 3 / KUM / 1900m / Birincilik ikramiyesi: 280.000 TL</td><td class="fig-cell"><span class="fig">16</span></td></tr>
+<tr><td>MY BRAVE SON</td><td>5 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 25</strong> 28.09.2026 Sanliurfa 5. Koşu — ŞARTLI 5 / KUM / 1800m / Birincilik ikramiyesi: 440.000 TL</td><td class="fig-cell"><span class="fig">49</span></td></tr>
+<tr><td>LEGANDARY WARRIOR</td><td>6 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 4</strong> 04.10.2026 Adana 2. Koşu — ŞARTLI 4 / KUM / 2100m / Birincilik ikramiyesi: 490.000 TL</td><td class="fig-cell"><span class="fig">66</span></td></tr>
+<tr><td>SYNDICATION</td><td>7 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 16</strong> 28.09.2026 Sanliurfa 6. Koşu — Handikap 15 /H3 / KUM / 1300m / Birincilik ikramiyesi: 350.000 TL</td><td class="fig-cell"><span class="fig">2</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>04.10.2026 Adana 2. Koşu</td><td>28.09.2026 Sanliurfa 5. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">LEGANDARY WARRIOR</strong></td><td class="hp">66</td><td class="sp">66</td></tr><tr><td class="pos">2.</td><td class="nm">SECRET STORM</td><td class="hp">60</td><td class="sp">63</td></tr><tr><td class="pos">3.</td><td class="nm">ROSAS DEL ROSEDAL</td><td class="hp">63</td><td class="sp">61</td></tr><tr><td class="pos">4.</td><td class="nm">CAPTIVATING</td><td class="hp">53</td><td class="sp">58</td></tr><tr><td class="pos">5.</td><td class="nm">MERT KHAN</td><td class="hp">43</td><td class="sp">58</td></tr><tr><td class="pos">6.</td><td class="nm">LAST LEVEL</td><td class="hp">54</td><td class="sp">57</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">MY BRAVE SON</strong></td><td class="hp">66</td><td class="sp">49</td></tr><tr><td class="pos">2.</td><td class="nm">SELANİK PRENSİ</td><td class="hp">78</td><td class="sp">44</td></tr><tr><td class="pos">3.</td><td class="nm">RAND ROWER</td><td class="hp">69</td><td class="sp">35</td></tr><tr><td class="pos">4.</td><td class="nm">MY INVENTION</td><td class="hp">64</td><td class="sp">34</td></tr><tr><td class="pos">5.</td><td class="nm">TYRAXES</td><td class="hp">64</td><td class="sp">33</td></tr><tr><td class="pos">6.</td><td class="nm">APPROVE WAN</td><td class="hp">81</td><td class="sp">33</td></tr><tr><td class="pos">7.</td><td class="nm">ŞERDİL</td><td class="hp">69</td><td class="sp">25</td></tr><tr><td class="pos">8.</td><td class="nm">KİKİ FERRO</td><td class="hp">65</td><td class="sp">23</td></tr><tr><td class="pos">9.</td><td class="nm">BEYAZITHAN</td><td class="hp">85</td><td class="sp">6</td></tr><tr><td class="pos">10.</td><td class="nm">ASALTIN</td><td class="hp">81</td><td class="sp">5</td></tr><tr><td class="pos">11.</td><td class="nm">EL VERDUGO</td><td class="hp">64</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">CALIBRATION</td><td class="hp">81</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">GOLD POWER</td><td class="hp">86</td><td class="sp">1</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+</div>
+<div class="race-block"><div class="race-head">SANLIURFA - KOSU 4</div>
+<h1>SANLIURFA KOŞU 4</h1>
+<p>Secilen kosu: 4</p>
+<div class="gap"></div>
+<p class="no-key">Kilit yaris yok: 1-ALTUNİKİ, 2-AVDANCI, 3-DONDİ OĞLU, 4-ERENTAYIM, 6-MESUTBEYİ, 7-SERT YİĞİT, 8-SUKAS, 10-BİRİNCİSOY, 12-GÖKAYKIZ, 13-HAYDİ BİTANEM, 14-MERCAN ANA, 15-URFA GÜZELİM</p>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 4</h1>
+<h2>5-KIRDOĞAN — Maiden/DHÖW / KUM / 1300m</h2>
+<p>Jokey: <strong class="black-hit">A.ÇANKAYA</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 9 tanesi bir sonraki yarışını koşmuş, 3 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">9/3</strong></p>
+<p>Referans tarih: 14.09.2026 <strong class="black-hit">(28 gün ara)</strong> — ŞARTLI 3/DHÖW / KUM / 1200m</p>
+<p>Hipodrom: SANLIURFA</p>
+<p>Referans koşu no: 4</p>
+<p>KIRDOĞAN <strong class="black-hit">5 oldu</strong> (kazananla +2.16 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 280.000 TL / Bugünkü birincilik 395.000 TL</p>
+<p>Sınıf durumu: sınıf yükseliyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>İLKBAHAR KIZI</td><td>1 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 8,5</strong> 26.09.2026 Diyarbakir 3. Koşu — ŞARTLI 4/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 350.000 TL</td><td class="fig-cell"><span class="fig">47</span></td></tr>
+<tr><td>HUN DAY</td><td>2 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,8</strong> 05.10.2026 Sanliurfa 8. Koşu — ŞARTLI 4/DHÖW / KUM / 1400m / Birincilik ikramiyesi: 350.000 TL</td><td class="fig-cell"><span class="fig">55</span></td></tr>
+<tr><td>BİLDENCAN</td><td>3 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 1,8</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">81</span></td></tr>
+<tr><td>PİRİM ÖZER</td><td>4 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 7</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">76</span></td></tr>
+<tr><td>ÇELİK ŞAHİN</td><td>6 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,4</strong> 28.09.2026 Sanliurfa 2. Koşu — Handikap 14/DHÖW /H3 / KUM / 1700m / Birincilik ikramiyesi: 280.000 TL</td><td class="fig-cell"><span class="fig">79</span></td></tr>
+<tr><td>ÜLFET ŞEKERİ</td><td>11 oldu</td><td><strong class="black-hit">8 oldu</strong> <strong class="black-hit">Sabit Ganyan: 12</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>BİLKAY</td><td>12 oldu</td><td><strong class="black-hit">11 oldu</strong> <strong class="black-hit">Sabit Ganyan: 40</strong> 29.09.2026 Adana 4. Koşu — Maiden/DHÖW / SENTETIK / 1400m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">58</span></td></tr>
+<tr><td>ÜÇKONAKLI</td><td>14 oldu</td><td><strong class="black-hit">14 oldu</strong> <strong class="black-hit">Sabit Ganyan: 80</strong> 30.09.2026 Elazig 8. Koşu — ŞARTLI 19/DHÖW/Dişi / KUM / 1600m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>GÜLENYAR</td><td>16 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>21.09.2026 Sanliurfa 2. Koşu</td><td>28.09.2026 Sanliurfa 2. Koşu</td><td>26.09.2026 Diyarbakir 3. Koşu</td><td>21.09.2026 Sanliurfa 2. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">BİLDENCAN</strong></td><td class="hp">27</td><td class="sp">81</td></tr><tr><td class="pos">2.</td><td class="nm">PİRİM ÖZER</td><td class="hp">23</td><td class="sp">76</td></tr><tr><td class="pos">3.</td><td class="nm">MERCAN ANA</td><td class="hp">10</td><td class="sp">75</td></tr><tr><td class="pos">4.</td><td class="nm">BABA AKİF</td><td class="hp">24</td><td class="sp">75</td></tr><tr><td class="pos">5.</td><td class="nm">ÇEÇAN BEY</td><td class="hp">10</td><td class="sp">74</td></tr><tr><td class="pos">6.</td><td class="nm">BEG DOĞAN</td><td class="hp">—</td><td class="sp">51</td></tr><tr><td class="pos">7.</td><td class="nm">AMBER KIZI</td><td class="hp">—</td><td class="sp">46</td></tr><tr><td class="pos">8.</td><td class="nm">ÜLFET ŞEKERİ</td><td class="hp">22</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">ELMAS GÖZLÜM</td><td class="hp">13</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">GÜLENYAR</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">SOSAN AĞA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">YURDABAKCAN</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">EZDAR GÜLÜ</td><td class="hp">12</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">SERT YİĞİT</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">15.</td><td class="nm">GÖKAYKIZ</td><td class="hp">8</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ÇELİK ŞAHİN</strong></td><td class="hp">38</td><td class="sp">79</td></tr><tr><td class="pos">2.</td><td class="nm">EMOHELİL</td><td class="hp">31</td><td class="sp">74</td></tr><tr><td class="pos">3.</td><td class="nm">KAUÇUKÇU</td><td class="hp">38</td><td class="sp">73</td></tr><tr><td class="pos">4.</td><td class="nm">ELMAS GÖZLÜM</td><td class="hp">13</td><td class="sp">63</td></tr><tr><td class="pos">5.</td><td class="nm">KAVİM</td><td class="hp">41</td><td class="sp">1</td></tr><tr><td class="pos">6.</td><td class="nm">ENESPAŞA</td><td class="hp">36</td><td class="sp">1</td></tr><tr><td class="pos">7.</td><td class="nm">ZEYDANTAY</td><td class="hp">43</td><td class="sp">1</td></tr><tr><td class="pos">8.</td><td class="nm">ŞENERHAN</td><td class="hp">39</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">İLKBAHAR KIZI</strong></td><td class="hp">38</td><td class="sp">47</td></tr><tr><td class="pos">2.</td><td class="nm">ÇİĞDEMGELİN</td><td class="hp">36</td><td class="sp">44</td></tr><tr><td class="pos">3.</td><td class="nm">SON KRALİÇE</td><td class="hp">40</td><td class="sp">41</td></tr><tr><td class="pos">4.</td><td class="nm">RUHİNAZ</td><td class="hp">34</td><td class="sp">39</td></tr><tr><td class="pos">5.</td><td class="nm">VIZVIZ KIZ</td><td class="hp">33</td><td class="sp">35</td></tr><tr><td class="pos">6.</td><td class="nm">TİGRİS HANIM</td><td class="hp">24</td><td class="sp">26</td></tr><tr><td class="pos">7.</td><td class="nm">GÜNÇİÇEK</td><td class="hp">34</td><td class="sp">11</td></tr><tr><td class="pos">8.</td><td class="nm">PİRNAZIN KIZI</td><td class="hp">46</td><td class="sp">8</td></tr><tr><td class="pos">9.</td><td class="nm">BİLGE GÜL</td><td class="hp">6</td><td class="sp">6</td></tr><tr><td class="pos">10.</td><td class="nm">BALTIMORE</td><td class="hp">33</td><td class="sp">2</td></tr><tr><td class="pos">11.</td><td class="nm">LEZGİNTAY</td><td class="hp">44</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">BİLDENCAN</td><td class="hp">27</td><td class="sp">81</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">PİRİM ÖZER</strong></td><td class="hp">23</td><td class="sp">76</td></tr><tr><td class="pos">3.</td><td class="nm">MERCAN ANA</td><td class="hp">10</td><td class="sp">75</td></tr><tr><td class="pos">4.</td><td class="nm">BABA AKİF</td><td class="hp">24</td><td class="sp">75</td></tr><tr><td class="pos">5.</td><td class="nm">ÇEÇAN BEY</td><td class="hp">10</td><td class="sp">74</td></tr><tr><td class="pos">6.</td><td class="nm">BEG DOĞAN</td><td class="hp">—</td><td class="sp">51</td></tr><tr><td class="pos">7.</td><td class="nm">AMBER KIZI</td><td class="hp">—</td><td class="sp">46</td></tr><tr><td class="pos">8.</td><td class="nm">ÜLFET ŞEKERİ</td><td class="hp">22</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">ELMAS GÖZLÜM</td><td class="hp">13</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">GÜLENYAR</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">SOSAN AĞA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">YURDABAKCAN</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">EZDAR GÜLÜ</td><td class="hp">12</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">SERT YİĞİT</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">15.</td><td class="nm">GÖKAYKIZ</td><td class="hp">8</td><td class="sp">1</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 4</h1>
+<h2>9-ASUMAN ABLA — Maiden/DHÖW / KUM / 1300m</h2>
+<p>Jokey: <strong class="black-hit">M.ÇELİK AP</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 10 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">10/2</strong></p>
+<p>Referans tarih: 10.05.2026 <strong class="black-hit">(155 gün ara)</strong> — ŞARTLI 1/DHÖW / KUM / 1100m</p>
+<p>Hipodrom: ADANA</p>
+<p>Referans koşu no: 1</p>
+<p>ASUMAN ABLA <strong class="black-hit">10 oldu</strong> (kazananla +7.05 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 685.000 TL / Bugünkü birincilik 395.000 TL</p>
+<p>Sınıf durumu: sınıf düşüyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>MY EAGLE</td><td>1 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 6,5</strong> 31.05.2026 Adana 2. Koşu — ŞARTLI 4/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 490.000 TL</td><td class="fig-cell"><span class="fig">83</span></td></tr>
+<tr><td>BALLIBİKE</td><td>2 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 6,5</strong> 31.05.2026 Adana 4. Koşu — Maiden/DHÖW / CIM / 1200m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">77</span></td></tr>
+<tr><td>ALARASİ</td><td>3 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 4,25</strong> 23.05.2026 Ankara 8. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 600.000 TL</td><td class="fig-cell"><span class="fig">70</span></td></tr>
+<tr><td>İSKENDER HAN</td><td>4 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 12</strong> 23.05.2026 Ankara 8. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 600.000 TL</td><td class="fig-cell"><span class="fig">76</span></td></tr>
+<tr><td>YURTÇU</td><td>5 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 14</strong> 31.05.2026 Adana 1. Koşu — Maiden/DHÖW / CIM / 1200m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">77</span></td></tr>
+<tr><td>AKÇALIKIZ</td><td>6 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 10</strong> 30.05.2026 Ankara 1. Koşu — Maiden/DHÖW/Dişi / CIM / 1200m / Birincilik ikramiyesi: 600.000 TL</td><td class="fig-cell"><span class="fig">70</span></td></tr>
+<tr><td>KIZIM ERVA</td><td>7 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 14</strong> 18.05.2026 Sanliurfa 7. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">49</span></td></tr>
+<tr><td>BEŞİRHAT</td><td>8 oldu</td><td><strong class="black-hit">5 oldu</strong> <strong class="black-hit">Sabit Ganyan: 30</strong> 19.05.2026 Kocaeli 1. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">51</span></td></tr>
+<tr><td>MERTOLTAY</td><td>9 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 7,5</strong> 25.05.2026 Sanliurfa 7. Koşu — Maiden/DHÖ / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">74</span></td></tr>
+<tr><td>TÜMERK</td><td>11 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 100</strong> 17.08.2026 Bursa 2. Koşu — Maiden/DHÖW / KUM / 1300m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">71</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>31.05.2026 Adana 1. Koşu</td><td>23.05.2026 Ankara 8. Koşu</td><td>31.05.2026 Adana 4. Koşu</td><td>25.05.2026 Sanliurfa 7. Koşu</td><td>31.05.2026 Adana 2. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">YURTÇU</strong></td><td class="hp">—</td><td class="sp">77</td></tr><tr><td class="pos">2.</td><td class="nm">FERİTBATUR</td><td class="hp">38</td><td class="sp">75</td></tr><tr><td class="pos">3.</td><td class="nm">BEMBEYAZ ADAM</td><td class="hp">—</td><td class="sp">68</td></tr><tr><td class="pos">4.</td><td class="nm">RENGİNKIZ</td><td class="hp">16</td><td class="sp">66</td></tr><tr><td class="pos">5.</td><td class="nm">HÜKÜMSÜREN</td><td class="hp">28</td><td class="sp">66</td></tr><tr><td class="pos">6.</td><td class="nm">KIZIM DAMLA</td><td class="hp">—</td><td class="sp">63</td></tr><tr><td class="pos">7.</td><td class="nm">ZÜMRÜTCAN</td><td class="hp">—</td><td class="sp">62</td></tr><tr><td class="pos">8.</td><td class="nm">ŞİRİSTAN</td><td class="hp">—</td><td class="sp">58</td></tr><tr><td class="pos">9.</td><td class="nm">TRIAN</td><td class="hp">9</td><td class="sp">51</td></tr><tr><td class="pos">10.</td><td class="nm">KIR PENÇE</td><td class="hp">—</td><td class="sp">49</td></tr><tr><td class="pos">11.</td><td class="nm">TUANA KIZI</td><td class="hp">—</td><td class="sp">34</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">İSKENDER HAN</strong></td><td class="hp">—</td><td class="sp">76</td></tr><tr><td class="pos">2.</td><td class="nm">UĞURLU BEBEK</td><td class="hp">—</td><td class="sp">74</td></tr><tr><td class="pos">3.</td><td class="nm">ALARASİ</td><td class="hp">—</td><td class="sp">70</td></tr><tr><td class="pos">4.</td><td class="nm">OĞLUM VEFA</td><td class="hp">—</td><td class="sp">68</td></tr><tr><td class="pos">5.</td><td class="nm">KING ULUDAĞ</td><td class="hp">—</td><td class="sp">68</td></tr><tr><td class="pos">6.</td><td class="nm">ARKANBERK</td><td class="hp">—</td><td class="sp">64</td></tr><tr><td class="pos">7.</td><td class="nm">KÜÇÜK AZAT</td><td class="hp">—</td><td class="sp">56</td></tr><tr><td class="pos">8.</td><td class="nm">UYGURKIZI</td><td class="hp">—</td><td class="sp">45</td></tr><tr><td class="pos">9.</td><td class="nm">SERÇE KIZI</td><td class="hp">—</td><td class="sp">33</td></tr><tr><td class="pos">10.</td><td class="nm">YALKINOĞLU</td><td class="hp">—</td><td class="sp">32</td></tr><tr><td class="pos">11.</td><td class="nm">ZEYTİN DİBİ</td><td class="hp">—</td><td class="sp">0</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">ESENLİ RÜZGARI</td><td class="hp">—</td><td class="sp">78</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">BALLIBİKE</strong></td><td class="hp">—</td><td class="sp">77</td></tr><tr><td class="pos">3.</td><td class="nm">ATEŞ KUŞLARI</td><td class="hp">25</td><td class="sp">77</td></tr><tr><td class="pos">4.</td><td class="nm">BEGİHAN</td><td class="hp">—</td><td class="sp">74</td></tr><tr><td class="pos">5.</td><td class="nm">DELİKANLI</td><td class="hp">—</td><td class="sp">73</td></tr><tr><td class="pos">6.</td><td class="nm">DİLFER</td><td class="hp">—</td><td class="sp">63</td></tr><tr><td class="pos">7.</td><td class="nm">TİBET ASLANI</td><td class="hp">—</td><td class="sp">56</td></tr><tr><td class="pos">8.</td><td class="nm">KIZIM ERVA</td><td class="hp">—</td><td class="sp">54</td></tr><tr><td class="pos">9.</td><td class="nm">ASTARA LAÇİN</td><td class="hp">32</td><td class="sp">50</td></tr><tr><td class="pos">10.</td><td class="nm">REYHANLI GÜZEL</td><td class="hp">—</td><td class="sp">43</td></tr><tr><td class="pos">11.</td><td class="nm">AVUS MAZEN</td><td class="hp">—</td><td class="sp">—</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">SOSAN ASLANI</td><td class="hp">—</td><td class="sp">83</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">MERTOLTAY</strong></td><td class="hp">—</td><td class="sp">74</td></tr><tr><td class="pos">3.</td><td class="nm">EMOHELİL</td><td class="hp">—</td><td class="sp">60</td></tr><tr><td class="pos">4.</td><td class="nm">LAVİN DENİZİ</td><td class="hp">—</td><td class="sp">57</td></tr><tr><td class="pos">5.</td><td class="nm">ÇEÇAN BEY</td><td class="hp">—</td><td class="sp">49</td></tr><tr><td class="pos">6.</td><td class="nm">EZDAR GÜLÜ</td><td class="hp">—</td><td class="sp">44</td></tr><tr><td class="pos">7.</td><td class="nm">ELİFNAZ HANIM</td><td class="hp">8</td><td class="sp">41</td></tr><tr><td class="pos">8.</td><td class="nm">HIZLI MARTI</td><td class="hp">—</td><td class="sp">39</td></tr><tr><td class="pos">9.</td><td class="nm">GÜNDÜZLÜ</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">ÇATALCALI</td><td class="hp">7</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">ALTINBORA</td><td class="hp">48</td><td class="sp">84</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">MY EAGLE</strong></td><td class="hp">42</td><td class="sp">83</td></tr><tr><td class="pos">3.</td><td class="nm">FİRİYOZA</td><td class="hp">41</td><td class="sp">71</td></tr><tr><td class="pos">4.</td><td class="nm">MUTLU BAHAR</td><td class="hp">52</td><td class="sp">70</td></tr><tr><td class="pos">5.</td><td class="nm">SERVER BEYİM</td><td class="hp">42</td><td class="sp">69</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 4</h1>
+<h2>11-GOLAÇİYA — Maiden/DHÖW / KUM / 1300m</h2>
+<p>Jokey: <strong class="black-hit">İ.AKYAVUZ</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 9 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">9/2</strong></p>
+<p>Referans tarih: 14.09.2026 <strong class="black-hit">(28 gün ara)</strong> — Maiden/DHÖW/Dişi / CIM / 1500m</p>
+<p>Hipodrom: BURSA</p>
+<p>Referans koşu no: 4</p>
+<p>GOLAÇİYA <strong class="black-hit">11 oldu</strong> (kazananla +5.11 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 545.000 TL / Bugünkü birincilik 395.000 TL</p>
+<p>Sınıf durumu: sınıf düşüyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>BODRUM RÜZGARI</td><td>1 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 18</strong> 09.10.2026 Bursa 8. Koşu — Handikap 15/DHÖW/Dişi /H2 / CIM / 1500m / Birincilik ikramiyesi: 490.000 TL</td><td class="fig-cell"><span class="fig">80</span></td></tr>
+<tr><td>GÜLNARLI</td><td>2 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 2,9</strong> 05.10.2026 Bursa 1. Koşu — Maiden/DHÖW/Dişi / CIM / 1400m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">71</span></td></tr>
+<tr><td>YOLDERE GÜZELİ</td><td>3 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 5,5</strong> 21.09.2026 Bursa 7. Koşu — Maiden/DHÖ / CIM / 1200m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">70</span></td></tr>
+<tr><td>ROZA HANIM</td><td>4 oldu</td><td><strong class="black-hit">6 oldu</strong> <strong class="black-hit">Sabit Ganyan: 6,5</strong> 27.09.2026 Istanbul 4. Koşu — Maiden/DHÖW / SENTETIK / 1400m / Birincilik ikramiyesi: 600.000 TL</td><td class="fig-cell"><span class="fig">62</span></td></tr>
+<tr><td>SAROSLU</td><td>5 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 10</strong> 27.09.2026 Istanbul 8. Koşu — Maiden/DHÖW / SENTETIK / 1400m / Birincilik ikramiyesi: 600.000 TL</td><td class="fig-cell"><span class="fig">73</span></td></tr>
+<tr><td>DOĞAN HANIM</td><td>6 oldu</td><td><strong class="black-hit">8 oldu</strong> <strong class="black-hit">Sabit Ganyan: 50</strong> 25.09.2026 Istanbul 8. Koşu — Maiden/DHÖ / CIM / 1600m / Birincilik ikramiyesi: 600.000 TL</td><td class="fig-cell"><span class="fig">59</span></td></tr>
+<tr><td>KAYANİLİM</td><td>7 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 30</strong> 26.09.2026 Izmir 2. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">32</span></td></tr>
+<tr><td>DAĞARDI</td><td>8 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 21.09.2026 Bursa 5. Koşu — Maiden/DHÖ / CIM / 1200m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">68</span></td></tr>
+<tr><td>DİKKALDIRIM</td><td>12 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 40</strong> 26.09.2026 Izmir 5. Koşu — Maiden/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">40</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>05.10.2026 Bursa 1. Koşu</td><td>27.09.2026 Istanbul 8. Koşu</td><td>09.10.2026 Bursa 8. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">GÜLNARLI</strong></td><td class="hp">36</td><td class="sp">71</td></tr><tr><td class="pos">2.</td><td class="nm">GÜZEL ELAM</td><td class="hp">30</td><td class="sp">71</td></tr><tr><td class="pos">3.</td><td class="nm">İZOTOP</td><td class="hp">34</td><td class="sp">67</td></tr><tr><td class="pos">4.</td><td class="nm">NARENKA</td><td class="hp">28</td><td class="sp">66</td></tr><tr><td class="pos">5.</td><td class="nm">AŞAN SİMAY</td><td class="hp">23</td><td class="sp">65</td></tr><tr><td class="pos">6.</td><td class="nm">BALKIZIM</td><td class="hp">—</td><td class="sp">62</td></tr><tr><td class="pos">7.</td><td class="nm">SEKLAVİ KIZI</td><td class="hp">—</td><td class="sp">61</td></tr><tr><td class="pos">8.</td><td class="nm">ÇİLDUTAY</td><td class="hp">35</td><td class="sp">57</td></tr><tr><td class="pos">9.</td><td class="nm">ATAK KIZ</td><td class="hp">—</td><td class="sp">45</td></tr><tr><td class="pos">10.</td><td class="nm">BATMAN KIZI</td><td class="hp">—</td><td class="sp">41</td></tr><tr><td class="pos">11.</td><td class="nm">ÖZGÜNDEN</td><td class="hp">27</td><td class="sp">38</td></tr><tr><td class="pos">12.</td><td class="nm">TOMBİK</td><td class="hp">—</td><td class="sp">24</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">SAROSLU</strong></td><td class="hp">30</td><td class="sp">73</td></tr><tr><td class="pos">2.</td><td class="nm">ÇİLDUTAY</td><td class="hp">34</td><td class="sp">70</td></tr><tr><td class="pos">3.</td><td class="nm">EFE KAPTAN</td><td class="hp">34</td><td class="sp">70</td></tr><tr><td class="pos">4.</td><td class="nm">ÖZ GÜMÜŞ</td><td class="hp">—</td><td class="sp">70</td></tr><tr><td class="pos">5.</td><td class="nm">BİGASİ</td><td class="hp">15</td><td class="sp">67</td></tr><tr><td class="pos">6.</td><td class="nm">CİHANDERE</td><td class="hp">26</td><td class="sp">65</td></tr><tr><td class="pos">7.</td><td class="nm">VARDAKOSTA</td><td class="hp">10</td><td class="sp">60</td></tr><tr><td class="pos">8.</td><td class="nm">ARZUELA</td><td class="hp">—</td><td class="sp">51</td></tr><tr><td class="pos">9.</td><td class="nm">DEMİR VARGAS</td><td class="hp">8</td><td class="sp">39</td></tr><tr><td class="pos">10.</td><td class="nm">BATAGAY</td><td class="hp">28</td><td class="sp">33</td></tr><tr><td class="pos">11.</td><td class="nm">BOZAĞIN KRALI</td><td class="hp">9</td><td class="sp">27</td></tr><tr><td class="pos">12.</td><td class="nm">SILVIA</td><td class="hp">—</td><td class="sp">27</td></tr><tr><td class="pos">13.</td><td class="nm">BALMEHMET</td><td class="hp">12</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">SARAYTAY</td><td class="hp">38</td><td class="sp">83</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">BODRUM RÜZGARI</strong></td><td class="hp">40</td><td class="sp">80</td></tr><tr><td class="pos">3.</td><td class="nm">UĞURLU BEBEK</td><td class="hp">54</td><td class="sp">79</td></tr><tr><td class="pos">4.</td><td class="nm">ŞÖHRET HANIM</td><td class="hp">60</td><td class="sp">79</td></tr><tr><td class="pos">5.</td><td class="nm">NADİYEKINALI</td><td class="hp">39</td><td class="sp">78</td></tr><tr><td class="pos">6.</td><td class="nm">BİLGE HATUN</td><td class="hp">40</td><td class="sp">76</td></tr><tr><td class="pos">7.</td><td class="nm">DİNAMİKO</td><td class="hp">45</td><td class="sp">75</td></tr><tr><td class="pos">8.</td><td class="nm">İNCİ PAREM</td><td class="hp">54</td><td class="sp">74</td></tr><tr><td class="pos">9.</td><td class="nm">KONÇİÇEK</td><td class="hp">45</td><td class="sp">71</td></tr><tr><td class="pos">10.</td><td class="nm">PATARA</td><td class="hp">37</td><td class="sp">67</td></tr><tr><td class="pos">11.</td><td class="nm">KAZAN GİRİL</td><td class="hp">38</td><td class="sp">65</td></tr><tr><td class="pos">12.</td><td class="nm">PRENSES BERRİN</td><td class="hp">40</td><td class="sp">63</td></tr><tr><td class="pos">13.</td><td class="nm">PİRAYE SULTAN</td><td class="hp">41</td><td class="sp">58</td></tr><tr><td class="pos">14.</td><td class="nm">GÜZELÇAMLI</td><td class="hp">38</td><td class="sp">50</td></tr><tr><td class="pos">15.</td><td class="nm">TOKATHANIN GÜLÜ</td><td class="hp">38</td><td class="sp">3</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+</div>
+<div class="race-block"><div class="race-head">SANLIURFA - KOSU 5</div>
+<h1>SANLIURFA KOŞU 5</h1>
+<p>Secilen kosu: 5</p>
+<div class="gap"></div>
+<p class="no-key">Kilit yaris yok: 2-TAŞTEPE, 3-OĞUZBEYİ, 4-ÇAĞLAYANŞELALE, 5-ESKİ KALELİ, 6-OĞLUMBENİM, 7-RÜZGAR DELEN, 8-AĞASAÇAN, 9-ESSANCAR, 10-PINAR RÜZGARI, 11-ÇELİK SEMEND, 12-PEKALP, 13-ZIMBA GİBİ, 14-GECE IŞIĞI</p>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 5</h1>
+<h2>1-PALA SALİH — ŞARTLI 5/DHÖW / KUM / 2100m</h2>
+<p>Jokey: <strong class="black-hit">M.ÇELİK AP</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 11 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">11/2</strong></p>
+<p>Referans tarih: 06.09.2026 <strong class="black-hit">(36 gün ara)</strong> — ŞARTLI 5/DHÖW / SENTETIK / 1200m</p>
+<p>Hipodrom: ADANA</p>
+<p>Referans koşu no: 5</p>
+<p>PALA SALİH <strong class="black-hit">13 oldu</strong> (kazananla +5.67 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 630.000 TL / Bugünkü birincilik 440.000 TL</p>
+<p>Sınıf durumu: sınıf düşüyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>MİRŞEŞEN</td><td>1 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 25</strong> 13.09.2026 Adana 6. Koşu — KV-6/DHT / KUM / 1500m / Birincilik ikramiyesi: 695.000 TL</td><td class="fig-cell"><span class="fig">38</span></td></tr>
+<tr><td>ARSLAN OĞLU</td><td>2 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 4,75</strong> 20.09.2026 Adana 1. Koşu — Handikap 16/DHÖW /H2 / KUM / 1300m / Birincilik ikramiyesi: 630.000 TL</td><td class="fig-cell"><span class="fig">78</span></td></tr>
+<tr><td>KAANHAKAN</td><td>3 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 4</strong> 23.09.2026 Elazig 6. Koşu — KV-8/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 695.000 TL</td><td class="fig-cell"><span class="fig">62</span></td></tr>
+<tr><td>EMSİDİ</td><td>4 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 40</strong> 13.09.2026 Adana 6. Koşu — KV-6/DHT / KUM / 1500m / Birincilik ikramiyesi: 695.000 TL</td><td class="fig-cell"><span class="fig">44</span></td></tr>
+<tr><td>AĞA TALİP</td><td>5 oldu</td><td><strong class="black-hit">6 oldu</strong> <strong class="black-hit">Sabit Ganyan: 10</strong> 13.09.2026 Adana 6. Koşu — KV-6/DHT / KUM / 1500m / Birincilik ikramiyesi: 695.000 TL</td><td class="fig-cell"><span class="fig">70</span></td></tr>
+<tr><td>AZERBAYCANLI</td><td>7 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 6</strong> 27.09.2026 Adana 3. Koşu — ŞARTLI 3/DHÖ/Y1 / SENTETIK / 2000m / Birincilik ikramiyesi: 400.000 TL</td><td class="fig-cell"><span class="fig">88</span></td></tr>
+<tr><td>TOS FER</td><td>8 oldu</td><td><strong class="black-hit">15 oldu</strong> <strong class="black-hit">Sabit Ganyan: 25</strong> 13.09.2026 Adana 5. Koşu — Handikap 15/DHÖW /H2 / SENTETIK / 1900m / Birincilik ikramiyesi: 490.000 TL</td><td class="fig-cell"><span class="fig">66</span></td></tr>
+<tr><td>İSKİT ALP</td><td>10 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 6,5</strong> 27.09.2026 Adana 3. Koşu — ŞARTLI 3/DHÖ/Y1 / SENTETIK / 2000m / Birincilik ikramiyesi: 400.000 TL</td><td class="fig-cell"><span class="fig">81</span></td></tr>
+<tr><td>ALMAS</td><td>11 oldu</td><td><strong class="black-hit">14 oldu</strong> <strong class="black-hit">Sabit Ganyan: 80</strong> 13.09.2026 Adana 5. Koşu — Handikap 15/DHÖW /H2 / SENTETIK / 1900m / Birincilik ikramiyesi: 490.000 TL</td><td class="fig-cell"><span class="fig">66</span></td></tr>
+<tr><td>DEDE YALAZ</td><td>12 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 30</strong> 23.09.2026 Elazig 6. Koşu — KV-8/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 695.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>ÇİMENGÖZ</td><td>14 oldu</td><td><strong class="black-hit">11 oldu</strong> <strong class="black-hit">Sabit Ganyan: 100</strong> 13.09.2026 Adana 5. Koşu — Handikap 15/DHÖW /H2 / SENTETIK / 1900m / Birincilik ikramiyesi: 490.000 TL</td><td class="fig-cell"><span class="fig">70</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>27.09.2026 Adana 3. Koşu</td><td>23.09.2026 Elazig 6. Koşu</td><td>20.09.2026 Adana 1. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">AZERBAYCANLI</strong></td><td class="hp">64</td><td class="sp">88</td></tr><tr><td class="pos">2.</td><td class="nm">ŞAFAK BEY</td><td class="hp">78</td><td class="sp">88</td></tr><tr><td class="pos">3.</td><td class="nm">BAŞARAN TAY</td><td class="hp">64</td><td class="sp">82</td></tr><tr><td class="pos">4.</td><td class="nm">İSKİT ALP</td><td class="hp">73</td><td class="sp">81</td></tr><tr><td class="pos">5.</td><td class="nm">SİYAH PENÇE</td><td class="hp">74</td><td class="sp">80</td></tr><tr><td class="pos">6.</td><td class="nm">ERSELAY</td><td class="hp">59</td><td class="sp">79</td></tr><tr><td class="pos">7.</td><td class="nm">GÜÇLÜ KRAL</td><td class="hp">57</td><td class="sp">70</td></tr><tr><td class="pos">8.</td><td class="nm">TURGUT BEY</td><td class="hp">34</td><td class="sp">56</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">KAANHAKAN</strong></td><td class="hp">87</td><td class="sp">62</td></tr><tr><td class="pos">2.</td><td class="nm">MELİHTAY</td><td class="hp">71</td><td class="sp">62</td></tr><tr><td class="pos">3.</td><td class="nm">DOĞAN KHAN</td><td class="hp">88</td><td class="sp">60</td></tr><tr><td class="pos">4.</td><td class="nm">DERBEDER ALİ</td><td class="hp">74</td><td class="sp">52</td></tr><tr><td class="pos">5.</td><td class="nm">PAYİDAR KAYA</td><td class="hp">84</td><td class="sp">47</td></tr><tr><td class="pos">6.</td><td class="nm">KENT RÜZGARI</td><td class="hp">96</td><td class="sp">46</td></tr><tr><td class="pos">7.</td><td class="nm">SEHHAR</td><td class="hp">85</td><td class="sp">26</td></tr><tr><td class="pos">8.</td><td class="nm">LAVİSTAKAYA</td><td class="hp">63</td><td class="sp">24</td></tr><tr><td class="pos">9.</td><td class="nm">ÖZAYDIN</td><td class="hp">95</td><td class="sp">21</td></tr><tr><td class="pos">10.</td><td class="nm">DEDE YALAZ</td><td class="hp">70</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">DUMRUL</td><td class="hp">85</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">MUCİZE HAN</td><td class="hp">95</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">ALİMENDER</td><td class="hp">49</td><td class="sp">78</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">ARSLAN OĞLU</strong></td><td class="hp">68</td><td class="sp">78</td></tr><tr><td class="pos">3.</td><td class="nm">CANMERT</td><td class="hp">52</td><td class="sp">75</td></tr><tr><td class="pos">4.</td><td class="nm">TEYAR</td><td class="hp">66</td><td class="sp">73</td></tr><tr><td class="pos">5.</td><td class="nm">SALAHİYET</td><td class="hp">66</td><td class="sp">66</td></tr><tr><td class="pos">6.</td><td class="nm">ÖZGÜNALP</td><td class="hp">67</td><td class="sp">60</td></tr><tr><td class="pos">7.</td><td class="nm">ÇİMENGÖZ</td><td class="hp">34</td><td class="sp">60</td></tr><tr><td class="pos">8.</td><td class="nm">DEMİRDÖVEN KIZI</td><td class="hp">39</td><td class="sp">56</td></tr><tr><td class="pos">9.</td><td class="nm">ALMAS</td><td class="hp">26</td><td class="sp">50</td></tr><tr><td class="pos">10.</td><td class="nm">RÜZGAR DELEN</td><td class="hp">57</td><td class="sp">34</td></tr><tr><td class="pos">11.</td><td class="nm">BALAK GAZİ</td><td class="hp">48</td><td class="sp">10</td></tr><tr><td class="pos">12.</td><td class="nm">BUBUKAN</td><td class="hp">24</td><td class="sp">—</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+</div>
+<div class="race-block"><div class="race-head">SANLIURFA - KOSU 7</div>
+<h1>SANLIURFA KOŞU 7</h1>
+<p>Secilen kosu: 7</p>
+<div class="gap"></div>
+<p class="no-key">Kilit yaris yok: 1-ATEŞATAR, 2-BEG DOĞAN, 4-ÇAKAL ÇÖKERTEN, 5-ÇILGINKRAL, 7-DENİZBERK, 8-ROYAL EŞLİ, 9-YURDABAKCAN, 10-AMBER KIZI, 11-GÜLENYAR, 12-ŞEN ABLAM, 13-ÜÇKONAKLI, 14-VENÜS YILDIZI, 15-ZEYNEP UMAY</p>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 7</h1>
+<h2>3-CORSA — Maiden/DHÖW / KUM / 1300m</h2>
+<p>Jokey: <strong class="black-hit">İ.KATAR</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 10 tanesi bir sonraki yarışını koşmuş, 3 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">10/3</strong></p>
+<p>Referans tarih: 04.05.2026 <strong class="black-hit">(161 gün ara)</strong> — Maiden/DHÖW / KUM / 1100m</p>
+<p>Hipodrom: SANLIURFA</p>
+<p>Referans koşu no: 1</p>
+<p>CORSA <strong class="black-hit">7 oldu</strong> (kazananla +4.80 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 395.000 TL / Bugünkü birincilik 395.000 TL</p>
+<p>Sınıf durumu: sınıf aynı</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>PAPETTİ</td><td>1 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,2</strong> 18.05.2026 Sanliurfa 6. Koşu — ŞARTLI 3/DHÖW / KUM / 1200m / Birincilik ikramiyesi: 280.000 TL</td><td class="fig-cell"><span class="fig">56</span></td></tr>
+<tr><td>BABA AKİF</td><td>2 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 1,95</strong> 25.05.2026 Sanliurfa 1. Koşu — Maiden/DHÖ / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">78</span></td></tr>
+<tr><td>DİLEK ABLA</td><td>3 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 6</strong> 18.05.2026 Sanliurfa 3. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">60</span></td></tr>
+<tr><td>HÜSNÜGÜLÜM</td><td>4 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 6</strong> 18.05.2026 Sanliurfa 3. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">58</span></td></tr>
+<tr><td>ZENGHAT</td><td>5 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,2</strong> 18.05.2026 Sanliurfa 3. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">60</span></td></tr>
+<tr><td>GÜMÜŞÇELİK</td><td>6 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 6</strong> 17.06.2026 Elazig 4. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">91</span></td></tr>
+<tr><td>KURUDUT</td><td>8 oldu</td><td><strong class="black-hit">8 oldu</strong> <strong class="black-hit">Sabit Ganyan: 14</strong> 18.05.2026 Sanliurfa 3. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">40</span></td></tr>
+<tr><td>EZDAR GÜLÜ</td><td>9 oldu</td><td><strong class="black-hit">5 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 18.05.2026 Sanliurfa 1. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">46</span></td></tr>
+<tr><td>ÇAYKARA KIZI</td><td>10 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 80</strong> 18.05.2026 Sanliurfa 7. Koşu — Maiden/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">21</span></td></tr>
+<tr><td>GÖNÜL KALESİ</td><td>11 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 40</strong> 25.05.2026 Sanliurfa 1. Koşu — Maiden/DHÖ / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">80</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>25.05.2026 Sanliurfa 1. Koşu</td><td>17.06.2026 Elazig 4. Koşu</td><td>18.05.2026 Sanliurfa 3. Koşu</td><td>25.05.2026 Sanliurfa 1. Koşu</td><td>18.05.2026 Sanliurfa 3. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">GÖNÜL KALESİ</strong></td><td class="hp">—</td><td class="sp">80</td></tr><tr><td class="pos">2.</td><td class="nm">BABA AKİF</td><td class="hp">—</td><td class="sp">78</td></tr><tr><td class="pos">3.</td><td class="nm">FIRTINA VEYSİ</td><td class="hp">25</td><td class="sp">72</td></tr><tr><td class="pos">4.</td><td class="nm">HÜSNÜGÜLÜM</td><td class="hp">22</td><td class="sp">69</td></tr><tr><td class="pos">5.</td><td class="nm">BİRİNCİSOY</td><td class="hp">—</td><td class="sp">69</td></tr><tr><td class="pos">6.</td><td class="nm">VARTUHİM</td><td class="hp">10</td><td class="sp">68</td></tr><tr><td class="pos">7.</td><td class="nm">ENESPAŞA</td><td class="hp">—</td><td class="sp">68</td></tr><tr><td class="pos">8.</td><td class="nm">PAYZİROBA</td><td class="hp">—</td><td class="sp">34</td></tr><tr><td class="pos">9.</td><td class="nm">AĞADİZDAR</td><td class="hp">—</td><td class="sp">32</td></tr><tr><td class="pos">10.</td><td class="nm">CAN EMİR CAN</td><td class="hp">—</td><td class="sp">11</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">GÜMÜŞÇELİK</strong></td><td class="hp">—</td><td class="sp">91</td></tr><tr><td class="pos">2.</td><td class="nm">ROZERİNA</td><td class="hp">24</td><td class="sp">76</td></tr><tr><td class="pos">3.</td><td class="nm">PİRİM ÖZER</td><td class="hp">22</td><td class="sp">70</td></tr><tr><td class="pos">4.</td><td class="nm">BABA AKİF</td><td class="hp">—</td><td class="sp">68</td></tr><tr><td class="pos">5.</td><td class="nm">EMOŞUN KIZI</td><td class="hp">—</td><td class="sp">68</td></tr><tr><td class="pos">6.</td><td class="nm">RENKLİ GÜZEL</td><td class="hp">—</td><td class="sp">49</td></tr><tr><td class="pos">7.</td><td class="nm">ÖZGÜRAK</td><td class="hp">—</td><td class="sp">44</td></tr><tr><td class="pos">8.</td><td class="nm">ADANALI DEMİR</td><td class="hp">—</td><td class="sp">42</td></tr><tr><td class="pos">9.</td><td class="nm">BİLGİNURKIZI</td><td class="hp">—</td><td class="sp">41</td></tr><tr><td class="pos">10.</td><td class="nm">GÜL ELA</td><td class="hp">7</td><td class="sp">21</td></tr><tr><td class="pos">11.</td><td class="nm">TAÇSIZKIZ</td><td class="hp">—</td><td class="sp">5</td></tr><tr><td class="pos">12.</td><td class="nm">PAYZİROBA</td><td class="hp">7</td><td class="sp">2</td></tr><tr><td class="pos">13.</td><td class="nm">FATMA ŞAH</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">ŞİMŞEK SALİH</td><td class="hp">—</td><td class="sp">—</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ZENGHAT</strong></td><td class="hp">—</td><td class="sp">60</td></tr><tr><td class="pos">2.</td><td class="nm">DİLEK ABLA</td><td class="hp">—</td><td class="sp">60</td></tr><tr><td class="pos">3.</td><td class="nm">HÜSNÜGÜLÜM</td><td class="hp">15</td><td class="sp">58</td></tr><tr><td class="pos">4.</td><td class="nm">RENGİNKIZ</td><td class="hp">13</td><td class="sp">52</td></tr><tr><td class="pos">5.</td><td class="nm">BİRİNCİSOY</td><td class="hp">—</td><td class="sp">50</td></tr><tr><td class="pos">6.</td><td class="nm">İLKBAHAR KIZI</td><td class="hp">—</td><td class="sp">47</td></tr><tr><td class="pos">7.</td><td class="nm">ELİFNAZ HANIM</td><td class="hp">—</td><td class="sp">43</td></tr><tr><td class="pos">8.</td><td class="nm">KURUDUT</td><td class="hp">—</td><td class="sp">40</td></tr><tr><td class="pos">9.</td><td class="nm">SİVASLI HİRA</td><td class="hp">—</td><td class="sp">30</td></tr><tr><td class="pos">10.</td><td class="nm">ALMİNA</td><td class="hp">—</td><td class="sp">13</td></tr><tr><td class="pos">11.</td><td class="nm">CANOĞLU YILDIZI</td><td class="hp">—</td><td class="sp">5</td></tr><tr><td class="pos">12.</td><td class="nm">ŞİRİSTAN</td><td class="hp">—</td><td class="sp">0</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">GÖNÜL KALESİ</td><td class="hp">—</td><td class="sp">80</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">BABA AKİF</strong></td><td class="hp">—</td><td class="sp">78</td></tr><tr><td class="pos">3.</td><td class="nm">FIRTINA VEYSİ</td><td class="hp">25</td><td class="sp">72</td></tr><tr><td class="pos">4.</td><td class="nm">HÜSNÜGÜLÜM</td><td class="hp">22</td><td class="sp">69</td></tr><tr><td class="pos">5.</td><td class="nm">BİRİNCİSOY</td><td class="hp">—</td><td class="sp">69</td></tr><tr><td class="pos">6.</td><td class="nm">VARTUHİM</td><td class="hp">10</td><td class="sp">68</td></tr><tr><td class="pos">7.</td><td class="nm">ENESPAŞA</td><td class="hp">—</td><td class="sp">68</td></tr><tr><td class="pos">8.</td><td class="nm">PAYZİROBA</td><td class="hp">—</td><td class="sp">34</td></tr><tr><td class="pos">9.</td><td class="nm">AĞADİZDAR</td><td class="hp">—</td><td class="sp">32</td></tr><tr><td class="pos">10.</td><td class="nm">CAN EMİR CAN</td><td class="hp">—</td><td class="sp">11</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">ZENGHAT</td><td class="hp">—</td><td class="sp">60</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">DİLEK ABLA</strong></td><td class="hp">—</td><td class="sp">60</td></tr><tr><td class="pos">3.</td><td class="nm">HÜSNÜGÜLÜM</td><td class="hp">15</td><td class="sp">58</td></tr><tr><td class="pos">4.</td><td class="nm">RENGİNKIZ</td><td class="hp">13</td><td class="sp">52</td></tr><tr><td class="pos">5.</td><td class="nm">BİRİNCİSOY</td><td class="hp">—</td><td class="sp">50</td></tr><tr><td class="pos">6.</td><td class="nm">İLKBAHAR KIZI</td><td class="hp">—</td><td class="sp">47</td></tr><tr><td class="pos">7.</td><td class="nm">ELİFNAZ HANIM</td><td class="hp">—</td><td class="sp">43</td></tr><tr><td class="pos">8.</td><td class="nm">KURUDUT</td><td class="hp">—</td><td class="sp">40</td></tr><tr><td class="pos">9.</td><td class="nm">SİVASLI HİRA</td><td class="hp">—</td><td class="sp">30</td></tr><tr><td class="pos">10.</td><td class="nm">ALMİNA</td><td class="hp">—</td><td class="sp">13</td></tr><tr><td class="pos">11.</td><td class="nm">CANOĞLU YILDIZI</td><td class="hp">—</td><td class="sp">5</td></tr><tr><td class="pos">12.</td><td class="nm">ŞİRİSTAN</td><td class="hp">—</td><td class="sp">0</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+<h1>SANLIURFA KOŞU 7</h1>
+<h2>6-DABANLI — Maiden/DHÖW / KUM / 1300m</h2>
+<p>Jokey: <strong class="black-hit">M.ŞAKİR AP</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 9 tanesi bir sonraki yarışını koşmuş, 3 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">9/3</strong></p>
+<p>Referans tarih: 14.09.2026 <strong class="black-hit">(28 gün ara)</strong> — ŞARTLI 3/DHÖW / KUM / 1200m</p>
+<p>Hipodrom: SANLIURFA</p>
+<p>Referans koşu no: 4</p>
+<p>DABANLI <strong class="black-hit">9 oldu</strong> (kazananla +8.17 sn)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 280.000 TL / Bugünkü birincilik 395.000 TL</p>
+<p>Sınıf durumu: sınıf yükseliyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>İLKBAHAR KIZI</td><td>1 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 8,5</strong> 26.09.2026 Diyarbakir 3. Koşu — ŞARTLI 4/DHÖW/Dişi / KUM / 1200m / Birincilik ikramiyesi: 350.000 TL</td><td class="fig-cell"><span class="fig">47</span></td></tr>
+<tr><td>HUN DAY</td><td>2 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,8</strong> 05.10.2026 Sanliurfa 8. Koşu — ŞARTLI 4/DHÖW / KUM / 1400m / Birincilik ikramiyesi: 350.000 TL</td><td class="fig-cell"><span class="fig">55</span></td></tr>
+<tr><td>BİLDENCAN</td><td>3 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 1,8</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">81</span></td></tr>
+<tr><td>PİRİM ÖZER</td><td>4 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 7</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">76</span></td></tr>
+<tr><td>ÇELİK ŞAHİN</td><td>6 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,4</strong> 28.09.2026 Sanliurfa 2. Koşu — Handikap 14/DHÖW /H3 / KUM / 1700m / Birincilik ikramiyesi: 280.000 TL</td><td class="fig-cell"><span class="fig">79</span></td></tr>
+<tr><td>ÜLFET ŞEKERİ</td><td>11 oldu</td><td><strong class="black-hit">8 oldu</strong> <strong class="black-hit">Sabit Ganyan: 12</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>BİLKAY</td><td>12 oldu</td><td><strong class="black-hit">11 oldu</strong> <strong class="black-hit">Sabit Ganyan: 40</strong> 29.09.2026 Adana 4. Koşu — Maiden/DHÖW / SENTETIK / 1400m / Birincilik ikramiyesi: 545.000 TL</td><td class="fig-cell"><span class="fig">58</span></td></tr>
+<tr><td>ÜÇKONAKLI</td><td>14 oldu</td><td><strong class="black-hit">14 oldu</strong> <strong class="black-hit">Sabit Ganyan: 80</strong> 30.09.2026 Elazig 8. Koşu — ŞARTLI 19/DHÖW/Dişi / KUM / 1600m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>GÜLENYAR</td><td>16 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 21.09.2026 Sanliurfa 2. Koşu — Maiden/DHT / KUM / 1200m / Birincilik ikramiyesi: 395.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>21.09.2026 Sanliurfa 2. Koşu</td><td>28.09.2026 Sanliurfa 2. Koşu</td><td>26.09.2026 Diyarbakir 3. Koşu</td><td>21.09.2026 Sanliurfa 2. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">BİLDENCAN</strong></td><td class="hp">27</td><td class="sp">81</td></tr><tr><td class="pos">2.</td><td class="nm">PİRİM ÖZER</td><td class="hp">23</td><td class="sp">76</td></tr><tr><td class="pos">3.</td><td class="nm">MERCAN ANA</td><td class="hp">10</td><td class="sp">75</td></tr><tr><td class="pos">4.</td><td class="nm">BABA AKİF</td><td class="hp">24</td><td class="sp">75</td></tr><tr><td class="pos">5.</td><td class="nm">ÇEÇAN BEY</td><td class="hp">10</td><td class="sp">74</td></tr><tr><td class="pos">6.</td><td class="nm">BEG DOĞAN</td><td class="hp">—</td><td class="sp">51</td></tr><tr><td class="pos">7.</td><td class="nm">AMBER KIZI</td><td class="hp">—</td><td class="sp">46</td></tr><tr><td class="pos">8.</td><td class="nm">ÜLFET ŞEKERİ</td><td class="hp">22</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">ELMAS GÖZLÜM</td><td class="hp">13</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">GÜLENYAR</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">SOSAN AĞA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">YURDABAKCAN</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">EZDAR GÜLÜ</td><td class="hp">12</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">SERT YİĞİT</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">15.</td><td class="nm">GÖKAYKIZ</td><td class="hp">8</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ÇELİK ŞAHİN</strong></td><td class="hp">38</td><td class="sp">79</td></tr><tr><td class="pos">2.</td><td class="nm">EMOHELİL</td><td class="hp">31</td><td class="sp">74</td></tr><tr><td class="pos">3.</td><td class="nm">KAUÇUKÇU</td><td class="hp">38</td><td class="sp">73</td></tr><tr><td class="pos">4.</td><td class="nm">ELMAS GÖZLÜM</td><td class="hp">13</td><td class="sp">63</td></tr><tr><td class="pos">5.</td><td class="nm">KAVİM</td><td class="hp">41</td><td class="sp">1</td></tr><tr><td class="pos">6.</td><td class="nm">ENESPAŞA</td><td class="hp">36</td><td class="sp">1</td></tr><tr><td class="pos">7.</td><td class="nm">ZEYDANTAY</td><td class="hp">43</td><td class="sp">1</td></tr><tr><td class="pos">8.</td><td class="nm">ŞENERHAN</td><td class="hp">39</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">İLKBAHAR KIZI</strong></td><td class="hp">38</td><td class="sp">47</td></tr><tr><td class="pos">2.</td><td class="nm">ÇİĞDEMGELİN</td><td class="hp">36</td><td class="sp">44</td></tr><tr><td class="pos">3.</td><td class="nm">SON KRALİÇE</td><td class="hp">40</td><td class="sp">41</td></tr><tr><td class="pos">4.</td><td class="nm">RUHİNAZ</td><td class="hp">34</td><td class="sp">39</td></tr><tr><td class="pos">5.</td><td class="nm">VIZVIZ KIZ</td><td class="hp">33</td><td class="sp">35</td></tr><tr><td class="pos">6.</td><td class="nm">TİGRİS HANIM</td><td class="hp">24</td><td class="sp">26</td></tr><tr><td class="pos">7.</td><td class="nm">GÜNÇİÇEK</td><td class="hp">34</td><td class="sp">11</td></tr><tr><td class="pos">8.</td><td class="nm">PİRNAZIN KIZI</td><td class="hp">46</td><td class="sp">8</td></tr><tr><td class="pos">9.</td><td class="nm">BİLGE GÜL</td><td class="hp">6</td><td class="sp">6</td></tr><tr><td class="pos">10.</td><td class="nm">BALTIMORE</td><td class="hp">33</td><td class="sp">2</td></tr><tr><td class="pos">11.</td><td class="nm">LEZGİNTAY</td><td class="hp">44</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">BİLDENCAN</td><td class="hp">27</td><td class="sp">81</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">PİRİM ÖZER</strong></td><td class="hp">23</td><td class="sp">76</td></tr><tr><td class="pos">3.</td><td class="nm">MERCAN ANA</td><td class="hp">10</td><td class="sp">75</td></tr><tr><td class="pos">4.</td><td class="nm">BABA AKİF</td><td class="hp">24</td><td class="sp">75</td></tr><tr><td class="pos">5.</td><td class="nm">ÇEÇAN BEY</td><td class="hp">10</td><td class="sp">74</td></tr><tr><td class="pos">6.</td><td class="nm">BEG DOĞAN</td><td class="hp">—</td><td class="sp">51</td></tr><tr><td class="pos">7.</td><td class="nm">AMBER KIZI</td><td class="hp">—</td><td class="sp">46</td></tr><tr><td class="pos">8.</td><td class="nm">ÜLFET ŞEKERİ</td><td class="hp">22</td><td class="sp">1</td></tr><tr><td class="pos">9.</td><td class="nm">ELMAS GÖZLÜM</td><td class="hp">13</td><td class="sp">1</td></tr><tr><td class="pos">10.</td><td class="nm">GÜLENYAR</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">11.</td><td class="nm">SOSAN AĞA</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">12.</td><td class="nm">YURDABAKCAN</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">13.</td><td class="nm">EZDAR GÜLÜ</td><td class="hp">12</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">SERT YİĞİT</td><td class="hp">—</td><td class="sp">1</td></tr><tr><td class="pos">15.</td><td class="nm">GÖKAYKIZ</td><td class="hp">8</td><td class="sp">1</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+</div></div>
+<script>
+(function () {
+  const page = document.getElementById('page');
+  const value = document.getElementById('zoom-value');
+  const key = 'kilitYarisZoom';
+  function readStoredZoom() {
+    try { return Number(localStorage.getItem(key) || '1'); }
+    catch (error) { return 1; }
+  }
+  function storeZoom() {
+    try { localStorage.setItem(key, String(zoom)); }
+    catch (error) { }
+  }
+  let zoom = readStoredZoom();
+  function applyZoom() {
+    zoom = Math.min(1.8, Math.max(0.3, zoom));
+    page.style.transform = 'scale(' + zoom + ')';
+    page.style.width = (100 / zoom) + '%';
+    value.textContent = Math.round(zoom * 100) + '%';
+    storeZoom();
+  }
+  document.getElementById('zoom-in').addEventListener('click', function () { zoom += 0.1; applyZoom(); });
+  document.getElementById('zoom-out').addEventListener('click', function () { zoom -= 0.1; applyZoom(); });
+  value.addEventListener('click', function () { zoom = 1; applyZoom(); });
+  applyZoom();
+}());
+</script>
+
+</body>
+</html>

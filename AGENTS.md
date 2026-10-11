@@ -114,7 +114,10 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
       (örn. `2026-10-10_*` varken `2026-10-0*` eskiler silinir).
     - `beyer raporu\`, `kilit yarış arşivi\`, `sınıf düşme analizi\` →
       yalnızca yeni günün tarihi kalır (örn. `*20261010*`).
-    - `istatistik ve galop\` → üzerine yazıldığı için işlem gerekmez.
+    - `istatistik ve galop\` → dosya adında tarih yoktur (şehir adı);
+      yeni günde yer alMAyan şehirlerin dosyaları silinir
+      (örn. yeni gün Adana+İstanbul ise `Ankara.html`, `Diyarbakir.html`,
+      `Izmir.html` silinir, yalnızca yeni günün şehirleri kalır).
     - `günlük sonuç değerlendirme raporu\` → yalnızca en güncel
       değerlendirme tarihi kalır.
 

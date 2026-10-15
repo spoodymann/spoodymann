@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.3, maximum-scale=5, user-scalable=yes">
+<title>Kilit Yaris 20261016 - Tum Kosular</title>
+<style>
+body { font-family: Arial, Helvetica, sans-serif; color: #050505; margin: 20px; }
+.page { transform-origin: top left; max-width: 1024px; margin: 0 auto; }
+.zoom-bar {
+  position: fixed;
+  top: 10px;
+  right: 12px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  background: #fff;
+  border: 1px solid #cfcfcf;
+  box-shadow: 0 2px 8px rgba(0,0,0,.12);
+}
+.zoom-bar button {
+  min-width: 34px;
+  height: 30px;
+  border: 1px solid #b8b8b8;
+  background: #f7f7f7;
+  color: #000;
+  font-weight: 700;
+  cursor: pointer;
+}
+.zoom-bar button:hover { background: #ededed; }
+.zoom-value {
+  min-width: 48px;
+  text-align: center;
+  font-size: 12px;
+  color: #000;
+  font-weight: 700;
+}
+h1 { color: #000; font-size: 30px; line-height: 1.1; margin: 0 0 10px; font-weight: 800; letter-spacing: 0; }
+h2 { font-size: 16px; margin: 14px 0 8px; font-weight: 700; }
+p { font-size: 14px; line-height: 1.4; margin: 2px 0; }
+.no-key { font-weight: 400; font-size: 14px; color: #050505; margin: 14px 0 20px; }
+.hot-form { color: #d00000; font-weight: 900; margin: -4px 0 8px; }
+.race-line { font-weight: 700; font-size: 15px; color: #000; margin: 18px 0 4px; }
+table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 12px; }
+th { text-align: left; font-weight: 700; border-bottom: 1px solid #d8d8d8; padding: 6px 4px; }
+td { vertical-align: top; border-bottom: 1px solid #eeeeee; padding: 7px 4px; line-height: 1.45; }
+td:nth-child(1), th:nth-child(1) { padding-right: 2px; }
+td:nth-child(2), th:nth-child(2) { text-align: left; white-space: nowrap; padding-left: 2px; padding-right: 4px; }
+td:nth-child(3) { width: 50%; }
+td:nth-child(3) strong {
+  display: inline-block;
+  min-width: 46px;
+  margin-right: 6px;
+  color: #000;
+  font-weight: 900;
+}
+td:nth-child(4), th:nth-child(4) { text-align: right; white-space: nowrap; width: 52px; }
+td.fig-cell { text-align: right; vertical-align: top; }
+.fig {
+  display: inline-block;
+  min-width: 44px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-weight: 900;
+  color: #000;
+}
+
+.gap { height: 6px; }
+strong { font-weight: 700; }
+.black-hit { color: #000; font-weight: 900; }
+.top12-table { width: auto; margin: 0 0 14px; }
+.top12-table td { border-bottom: 0; padding: 2px 18px 2px 0; line-height: 1.4; text-align: left; vertical-align: top; white-space: nowrap; }
+.top12-head-row td { font-size: 12px; font-weight: 700; color: #000; padding-bottom: 4px; }
+.top12-mini { width: auto; margin: 0; font-size: 12px; }
+.top12-mini td, .top12-mini th { border-bottom: 0; padding: 1px 4px; line-height: 1.4; text-align: left; vertical-align: top; white-space: nowrap; }
+.top12-mini th.hp, .top12-mini td.hp, .top12-mini th.sp, .top12-mini td.sp { width: 36px; min-width: 36px; max-width: 36px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 700; color: #000; }
+.top12-mini td.pos { width: 22px; min-width: 22px; text-align: right; color: #333; }
+.top12-mini td.nm { max-width: 190px; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 700px) {
+  body { margin: 12px; padding-top: 46px; }
+  .zoom-bar { top: 6px; right: 6px; }
+  .zoom-bar button { min-width: 44px; height: 40px; font-size: 20px; }
+  .zoom-value { min-width: 54px; font-size: 14px; }
+}
+
+.race-block { margin-bottom: 28px; }
+.race-head { font-size: 20px; font-weight: 800; color: #fff; background: #274060; padding: 8px 12px; border-radius: 4px; margin-bottom: 8px; }
+</style>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0CWBQ8K4X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N0CWBQ8K4X');
+</script></head>
+<body>
+<div class="zoom-bar" aria-label="Yakınlaştırma">
+  <button type="button" id="zoom-out" title="Uzaklaştır">-</button>
+  <span class="zoom-value" id="zoom-value">100%</span>
+  <button type="button" id="zoom-in" title="Yakınlaştır">+</button>
+</div>
+<div class="page" id="page">
+<div class="race-block"><div class="race-head">ISTANBUL - KOSU 4</div>
+<h1>İSTANBUL KOŞU 4</h1>
+<p>Secilen kosu: 4</p>
+<div class="gap"></div>
+<p class="no-key">Kilit yaris yok: 1-BABA ZAMAN, 3-ÇAYCI KIZ, 4-KAFKAESQUE, 5-KOŞAN NUR, 7-MİSS KÜBRA, 8-SİYAH KUŞ, 9-SUSADIM, 10-DELİ ŞİMŞEK, 11-ALDA GÖR, 12-DAŞ FATİH, 13-ASİL MİR, 14-SUBİKE, 15-EFE METE BEY, 16-MAHMUT USTA</p>
+<div class="gap"></div>
+<h1>İSTANBUL KOŞU 4</h1>
+<h2>2-GÜROBASI — SATIŞ 2/DHÖW / SENTETIK / 1400m</h2>
+<p>Jokey: <strong class="black-hit">A.YILDIZ</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 4 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">4/2</strong></p>
+<p>Referans tarih: 02.10.2026 <strong class="black-hit">(14 gün ara)</strong> — G 3/DHT / CIM / 1400m</p>
+<p>Hipodrom: ISTANBUL</p>
+<p>Referans koşu no: 7</p>
+<p>GÜROBASI <strong class="black-hit">11 oldu</strong> (kazananla +7.52 sn) — Son hız: 28 (14)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 2.500.000 TL / Bugünkü birincilik 560.000 TL</p>
+<p>Sınıf durumu: sınıf düşüyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>MUZATCAN</td><td>5 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 14</strong> 14.10.2026 Istanbul 4. Koşu — Kısa Vade Handikap 24/DHÖW /H1 / SENTETIK / 2400m / Birincilik ikramiyesi: 1.130.000 TL</td><td class="fig-cell"><span class="fig">70</span></td></tr>
+<tr><td>SERHUNEFE</td><td>7 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 2,1</strong> 07.10.2026 Istanbul 7. Koşu — ŞARTLI 5/DHÖ / SENTETIK / 1500m / Birincilik ikramiyesi: 730.000 TL</td><td class="fig-cell"><span class="fig">84</span></td></tr>
+<tr><td>MEGAFAUNA</td><td>8 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 5,5</strong> 09.10.2026 Bursa 3. Koşu — Handikap 21/DHT /H2 / CIM / 1400m / Birincilik ikramiyesi: 695.000 TL</td><td class="fig-cell"><span class="fig">79</span></td></tr>
+<tr><td>NAMSAL</td><td>10 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 7</strong> 09.10.2026 Istanbul 6. Koşu — ŞARTLI 4/DHÖ / CIM / 1900m / Birincilik ikramiyesi: 595.000 TL</td><td class="fig-cell"><span class="fig">79</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>09.10.2026 Bursa 3. Koşu</td><td>07.10.2026 Istanbul 7. Koşu</td><td>09.10.2026 Istanbul 6. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">MEGAFAUNA</strong></td><td class="hp">86</td><td class="sp">79</td></tr><tr><td class="pos">2.</td><td class="nm">DEMİRHAN TAYI</td><td class="hp">77</td><td class="sp">77</td></tr><tr><td class="pos">3.</td><td class="nm">YEŞİLKAYA</td><td class="hp">79</td><td class="sp">73</td></tr><tr><td class="pos">4.</td><td class="nm">ALSAKİB</td><td class="hp">71</td><td class="sp">73</td></tr><tr><td class="pos">5.</td><td class="nm">BARBUDA</td><td class="hp">77</td><td class="sp">72</td></tr><tr><td class="pos">6.</td><td class="nm">GÜRCEYHUN</td><td class="hp">78</td><td class="sp">72</td></tr><tr><td class="pos">7.</td><td class="nm">CEBELTUNA</td><td class="hp">76</td><td class="sp">72</td></tr><tr><td class="pos">8.</td><td class="nm">AVCI OĞLUM</td><td class="hp">82</td><td class="sp">71</td></tr><tr><td class="pos">9.</td><td class="nm">TERCAN HAN</td><td class="hp">76</td><td class="sp">71</td></tr><tr><td class="pos">10.</td><td class="nm">MİKSER</td><td class="hp">63</td><td class="sp">56</td></tr><tr><td class="pos">11.</td><td class="nm">JÖN ROME</td><td class="hp">81</td><td class="sp">53</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">SERHUNEFE</strong></td><td class="hp">92</td><td class="sp">84</td></tr><tr><td class="pos">2.</td><td class="nm">KAYIPSIZ</td><td class="hp">92</td><td class="sp">84</td></tr><tr><td class="pos">3.</td><td class="nm">AYAZ DEFNE</td><td class="hp">78</td><td class="sp">78</td></tr><tr><td class="pos">4.</td><td class="nm">FISTIK ÇAMI</td><td class="hp">76</td><td class="sp">78</td></tr><tr><td class="pos">5.</td><td class="nm">BERNAHANIM</td><td class="hp">32</td><td class="sp">74</td></tr><tr><td class="pos">6.</td><td class="nm">TAYYAR BEY</td><td class="hp">44</td><td class="sp">71</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">CANCANER</td><td class="hp">99</td><td class="sp">81</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">NAMSAL</strong></td><td class="hp">85</td><td class="sp">79</td></tr><tr><td class="pos">3.</td><td class="nm">BLUEMOON</td><td class="hp">85</td><td class="sp">76</td></tr><tr><td class="pos">4.</td><td class="nm">ALATTİN</td><td class="hp">83</td><td class="sp">75</td></tr><tr><td class="pos">5.</td><td class="nm">SUBİKE</td><td class="hp">74</td><td class="sp">77</td></tr><tr><td class="pos">6.</td><td class="nm">AĞA TURBO</td><td class="hp">89</td><td class="sp">71</td></tr><tr><td class="pos">7.</td><td class="nm">ASAF BABA</td><td class="hp">80</td><td class="sp">68</td></tr><tr><td class="pos">8.</td><td class="nm">DİNAMİT</td><td class="hp">90</td><td class="sp">64</td></tr><tr><td class="pos">9.</td><td class="nm">KRAL YAZICI</td><td class="hp">60</td><td class="sp">45</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+<h1>İSTANBUL KOŞU 4</h1>
+<h2>6-ULUARAT — SATIŞ 2/DHÖW / SENTETIK / 1400m</h2>
+<p>Jokey: <strong class="black-hit">U.LEVENT AP</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 10 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">10/2</strong></p>
+<p>Referans tarih: 10.10.2025 <strong class="black-hit">(371 gün ara)</strong> — KV-8/DHÖW / KUM / 1400m</p>
+<p>Hipodrom: BURSA</p>
+<p>Referans koşu no: 6</p>
+<p>ULUARAT <strong class="black-hit">2 oldu</strong> (kazananla +0.05 sn) — Son hız: 87 (1)</p>
+<p>İkramiye karşılaştırması: Referans birincilik veri yok / Bugünkü birincilik 560.000 TL</p>
+<p>Sınıf durumu: ikramiye verisi yok</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>RÜZGARDAHAN</td><td>1 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 5,5</strong> 10.11.2025 Bursa 7. Koşu — G 3/DHT / KUM / 2000m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">61</span></td></tr>
+<tr><td>POWER OF QUATRO</td><td>3 oldu</td><td><strong class="black-hit">5 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,4</strong> 18.11.2025 Adana 5. Koşu — KV-6/DHÖ / KUM / 1900m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">79</span></td></tr>
+<tr><td>HIZLI ÇOCUK</td><td>4 oldu</td><td><strong class="black-hit">5 oldu</strong> <strong class="black-hit">Sabit Ganyan: 2,1</strong> 03.11.2025 Bursa 4. Koşu — Kısa Vade Handikap 22/DHÖW /H2 / KUM / 1400m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">76</span></td></tr>
+<tr><td>TUNCER</td><td>5 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 5,5</strong> 23.10.2025 Izmir 6. Koşu — KV-7/DHÖW / KUM / 1400m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">81</span></td></tr>
+<tr><td>HULKİ</td><td>6 oldu</td><td><strong class="black-hit">6 oldu</strong> <strong class="black-hit">Sabit Ganyan: 14</strong> 10.11.2025 Bursa 7. Koşu — G 3/DHT / KUM / 2000m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">78</span></td></tr>
+<tr><td>MUZATCAN</td><td>7 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 9</strong> 24.10.2025 Istanbul 6. Koşu — Kısa Vade Handikap 22/DHÖW /H1 / CIM / 1900m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">70</span></td></tr>
+<tr><td>BAY TAYLAN</td><td>8 oldu</td><td><strong class="black-hit">12 oldu</strong> <strong class="black-hit">Sabit Ganyan: 8,5</strong> 04.11.2025 Kocaeli 5. Koşu — KV-7/DHÖW / KUM / 1500m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">17</span></td></tr>
+<tr><td>ALTINTEPE</td><td>9 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 8,5</strong> 18.08.2026 Kocaeli 4. Koşu — ŞARTLI 3/DHÖW / KUM / 1700m / Birincilik ikramiyesi: 400.000 TL</td><td class="fig-cell"><span class="fig">80</span></td></tr>
+<tr><td>KUTADGU</td><td>10 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 14</strong> 18.11.2025 Adana 5. Koşu — KV-6/DHÖ / KUM / 1900m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">77</span></td></tr>
+<tr><td>IŞINBİKE</td><td>11 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 23.10.2025 Izmir 6. Koşu — KV-7/DHÖW / KUM / 1400m / Birincilik ikramiyesi: veri yok</td><td class="fig-cell"><span class="fig">76</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>18.08.2026 Kocaeli 4. Koşu</td><td>24.10.2025 Istanbul 6. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ALTINTEPE</strong></td><td class="hp">103</td><td class="sp">80</td></tr><tr><td class="pos">2.</td><td class="nm">MÜZEYYEN ABLA</td><td class="hp">78</td><td class="sp">77</td></tr><tr><td class="pos">3.</td><td class="nm">KADER GÜCÜ</td><td class="hp">83</td><td class="sp">76</td></tr><tr><td class="pos">4.</td><td class="nm">BARBUDA</td><td class="hp">79</td><td class="sp">76</td></tr><tr><td class="pos">5.</td><td class="nm">TUTMAÇ</td><td class="hp">40</td><td class="sp">76</td></tr><tr><td class="pos">6.</td><td class="nm">ERDİ BEY</td><td class="hp">83</td><td class="sp">75</td></tr><tr><td class="pos">7.</td><td class="nm">RİGEL</td><td class="hp">75</td><td class="sp">71</td></tr><tr><td class="pos">8.</td><td class="nm">KÖKŞUBAR</td><td class="hp">67</td><td class="sp">70</td></tr><tr><td class="pos">9.</td><td class="nm">YENERSULTAN</td><td class="hp">98</td><td class="sp">70</td></tr><tr><td class="pos">10.</td><td class="nm">BAŞARAN TAY</td><td class="hp">64</td><td class="sp">64</td></tr><tr><td class="pos">11.</td><td class="nm">YER TİTRETEN</td><td class="hp">30</td><td class="sp">56</td></tr><tr><td class="pos">12.</td><td class="nm">NECMİ BABA</td><td class="hp">78</td><td class="sp">52</td></tr><tr><td class="pos">13.</td><td class="nm">CEBEBEY</td><td class="hp">85</td><td class="sp">50</td></tr><tr><td class="pos">14.</td><td class="nm">EL FURAT</td><td class="hp">74</td><td class="sp">27</td></tr><tr><td class="pos">15.</td><td class="nm">BERTUĞHAN</td><td class="hp">66</td><td class="sp">26</td></tr><tr><td class="pos">16.</td><td class="nm">BAY YAKUT</td><td class="hp">66</td><td class="sp">10</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">MUZATCAN</strong></td><td class="hp">95</td><td class="sp">70</td></tr><tr><td class="pos">2.</td><td class="nm">HAZNEDAR</td><td class="hp">96</td><td class="sp">70</td></tr><tr><td class="pos">3.</td><td class="nm">AZİMLİ</td><td class="hp">97</td><td class="sp">69</td></tr><tr><td class="pos">4.</td><td class="nm">DORUĞUN AYAZI</td><td class="hp">86</td><td class="sp">67</td></tr><tr><td class="pos">5.</td><td class="nm">AZAPKAPI</td><td class="hp">77</td><td class="sp">67</td></tr><tr><td class="pos">6.</td><td class="nm">ÖZÜDOĞRU</td><td class="hp">96</td><td class="sp">62</td></tr><tr><td class="pos">7.</td><td class="nm">KUNYA</td><td class="hp">78</td><td class="sp">61</td></tr><tr><td class="pos">8.</td><td class="nm">HAVZALI</td><td class="hp">84</td><td class="sp">60</td></tr><tr><td class="pos">9.</td><td class="nm">ÖZGÜR FURKAN</td><td class="hp">85</td><td class="sp">57</td></tr><tr><td class="pos">10.</td><td class="nm">DİNAMİT</td><td class="hp">94</td><td class="sp">51</td></tr><tr><td class="pos">11.</td><td class="nm">MUCİZE HAN</td><td class="hp">97</td><td class="sp">—</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+</div>
+<div class="race-block"><div class="race-head">ISTANBUL - KOSU 5</div>
+<h1>İSTANBUL KOŞU 5</h1>
+<p>Secilen kosu: 5</p>
+<div class="gap"></div>
+<p class="no-key">Kilit yaris yok: 2-KEŞHANLI, 3-SERHUNEFE, 4-CESURSOY, 5-JET ÇELİK, 6-LOSTRA, 8-YEŞİLKAYA, 9-AKSOYLUCAN, 10-BERNAHANIM</p>
+<div class="gap"></div>
+<h1>İSTANBUL KOŞU 5</h1>
+<h2>1-DORUKBATUR — KV-6/DHÖW / SENTETIK / 1400m</h2>
+<p>Jokey: <strong class="black-hit">A.KURŞUN</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 8 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">8/2</strong></p>
+<p>Referans tarih: 21.09.2026 <strong class="black-hit">(25 gün ara)</strong> — KV-9/DHÖ / CIM / 1400m</p>
+<p>Hipodrom: BURSA</p>
+<p>Referans koşu no: 6</p>
+<p>DORUKBATUR <strong class="black-hit">9 oldu</strong> (kazananla +1.81 sn) — Son hız: 78 (2)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 1.100.000 TL / Bugünkü birincilik 835.000 TL</p>
+<p>Sınıf durumu: sınıf düşüyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>DENİZ KASIRGASI</td><td>1 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 2,5</strong> 02.10.2026 Istanbul 7. Koşu — G 3/DHT / CIM / 1400m / Birincilik ikramiyesi: 2.500.000 TL</td><td class="fig-cell"><span class="fig">65</span></td></tr>
+<tr><td>MEGAFAUNA</td><td>2 oldu</td><td><strong class="black-hit">8 oldu</strong> <strong class="black-hit">Sabit Ganyan: 30</strong> 02.10.2026 Istanbul 7. Koşu — G 3/DHT / CIM / 1400m / Birincilik ikramiyesi: 2.500.000 TL</td><td class="fig-cell"><span class="fig">46</span></td></tr>
+<tr><td>ZİNCİR KOPARAN</td><td>4 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 7,5</strong> 02.10.2026 Istanbul 7. Koşu — G 3/DHT / CIM / 1400m / Birincilik ikramiyesi: 2.500.000 TL</td><td class="fig-cell"><span class="fig">65</span></td></tr>
+<tr><td>GÜLERYÜZ</td><td>5 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 30</strong> 14.10.2026 Istanbul 6. Koşu — G 1/DHT/Dişi / CIM / 1600m / Birincilik ikramiyesi: 4.500.000 TL</td><td class="fig-cell"><span class="fig">62</span></td></tr>
+<tr><td>SERHUNEFE</td><td>6 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 20</strong> 02.10.2026 Istanbul 7. Koşu — G 3/DHT / CIM / 1400m / Birincilik ikramiyesi: 2.500.000 TL</td><td class="fig-cell"><span class="fig">56</span></td></tr>
+<tr><td>FİKRET ABİ</td><td>7 oldu</td><td><strong class="black-hit">5 oldu</strong> <strong class="black-hit">Sabit Ganyan: 12</strong> 01.10.2026 Ankara 5. Koşu — Kısa Vade Handikap 22/DHÖW /H1 / CIM / 1900m / Birincilik ikramiyesi: 975.000 TL</td><td class="fig-cell"><span class="fig">84</span></td></tr>
+<tr><td>CEBELTUNA</td><td>8 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 4,5</strong> 09.10.2026 Bursa 3. Koşu — Handikap 21/DHT /H2 / CIM / 1400m / Birincilik ikramiyesi: 695.000 TL</td><td class="fig-cell"><span class="fig">72</span></td></tr>
+<tr><td>TİRİLYE KARTALI</td><td>10 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 12</strong> 02.10.2026 Istanbul 7. Koşu — G 3/DHT / CIM / 1400m / Birincilik ikramiyesi: 2.500.000 TL</td><td class="fig-cell"><span class="fig">70</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>14.10.2026 Istanbul 6. Koşu</td><td>02.10.2026 Istanbul 7. Koşu</td><td>02.10.2026 Istanbul 7. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">GÜLERYÜZ</strong></td><td class="hp">90</td><td class="sp">62</td></tr><tr><td class="pos">2.</td><td class="nm">KESKİN KUŞ</td><td class="hp">89</td><td class="sp">61</td></tr><tr><td class="pos">3.</td><td class="nm">GÖZPINARI</td><td class="hp">104</td><td class="sp">61</td></tr><tr><td class="pos">4.</td><td class="nm">AYSERA KIZ</td><td class="hp">87</td><td class="sp">59</td></tr><tr><td class="pos">5.</td><td class="nm">AYLAK KIZ</td><td class="hp">82</td><td class="sp">59</td></tr><tr><td class="pos">6.</td><td class="nm">İLLEDE DORU</td><td class="hp">96</td><td class="sp">53</td></tr><tr><td class="pos">7.</td><td class="nm">KILIÇ KIZI</td><td class="hp">93</td><td class="sp">49</td></tr><tr><td class="pos">8.</td><td class="nm">GÜLALP KIZI</td><td class="hp">77</td><td class="sp">47</td></tr><tr><td class="pos">9.</td><td class="nm">ALBASTI TAY</td><td class="hp">81</td><td class="sp">39</td></tr><tr><td class="pos">10.</td><td class="nm">DENİZ KESTANESİ</td><td class="hp">89</td><td class="sp">24</td></tr><tr><td class="pos">11.</td><td class="nm">BELKIS ANA</td><td class="hp">89</td><td class="sp">19</td></tr><tr><td class="pos">12.</td><td class="nm">EPARVEN</td><td class="hp">89</td><td class="sp">10</td></tr><tr><td class="pos">13.</td><td class="nm">MİNİK ANNE</td><td class="hp">95</td><td class="sp">1</td></tr><tr><td class="pos">14.</td><td class="nm">DEMRENİN KIZI</td><td class="hp">81</td><td class="sp">1</td></tr><tr><td class="pos">15.</td><td class="nm">ŞİMŞEK YELELİ</td><td class="hp">78</td><td class="sp">1</td></tr><tr><td class="pos">16.</td><td class="nm">KURŞUNİLİ</td><td class="hp">89</td><td class="sp">1</td></tr><tr><td class="pos">17.</td><td class="nm">BERAY SULTAN</td><td class="hp">80</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">TİRİLYE KARTALI</strong></td><td class="hp">99</td><td class="sp">70</td></tr><tr><td class="pos">2.</td><td class="nm">DENİZ KASIRGASI</td><td class="hp">100</td><td class="sp">65</td></tr><tr><td class="pos">3.</td><td class="nm">ZİNCİR KOPARAN</td><td class="hp">106</td><td class="sp">65</td></tr><tr><td class="pos">4.</td><td class="nm">ASİL OĞLAN</td><td class="hp">91</td><td class="sp">64</td></tr><tr><td class="pos">5.</td><td class="nm">MUZATCAN</td><td class="hp">99</td><td class="sp">63</td></tr><tr><td class="pos">6.</td><td class="nm">GÖKMETE</td><td class="hp">97</td><td class="sp">63</td></tr><tr><td class="pos">7.</td><td class="nm">SERHUNEFE</td><td class="hp">92</td><td class="sp">56</td></tr><tr><td class="pos">8.</td><td class="nm">MEGAFAUNA</td><td class="hp">86</td><td class="sp">46</td></tr><tr><td class="pos">9.</td><td class="nm">SARAFİM</td><td class="hp">93</td><td class="sp">40</td></tr><tr><td class="pos">10.</td><td class="nm">NAMSAL</td><td class="hp">85</td><td class="sp">39</td></tr><tr><td class="pos">11.</td><td class="nm">GÜROBASI</td><td class="hp">78</td><td class="sp">28</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">TİRİLYE KARTALI</td><td class="hp">99</td><td class="sp">70</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">DENİZ KASIRGASI</strong></td><td class="hp">100</td><td class="sp">65</td></tr><tr><td class="pos">3.</td><td class="nm">ZİNCİR KOPARAN</td><td class="hp">106</td><td class="sp">65</td></tr><tr><td class="pos">4.</td><td class="nm">ASİL OĞLAN</td><td class="hp">91</td><td class="sp">64</td></tr><tr><td class="pos">5.</td><td class="nm">MUZATCAN</td><td class="hp">99</td><td class="sp">63</td></tr><tr><td class="pos">6.</td><td class="nm">GÖKMETE</td><td class="hp">97</td><td class="sp">63</td></tr><tr><td class="pos">7.</td><td class="nm">SERHUNEFE</td><td class="hp">92</td><td class="sp">56</td></tr><tr><td class="pos">8.</td><td class="nm">MEGAFAUNA</td><td class="hp">86</td><td class="sp">46</td></tr><tr><td class="pos">9.</td><td class="nm">SARAFİM</td><td class="hp">93</td><td class="sp">40</td></tr><tr><td class="pos">10.</td><td class="nm">NAMSAL</td><td class="hp">85</td><td class="sp">39</td></tr><tr><td class="pos">11.</td><td class="nm">GÜROBASI</td><td class="hp">78</td><td class="sp">28</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+<h1>İSTANBUL KOŞU 5</h1>
+<h2>7-OĞUL ÇINAR — KV-6/DHÖW / SENTETIK / 1400m</h2>
+<p>Jokey: <strong class="black-hit">O.ÖZTÜRK</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 5 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">5/2</strong></p>
+<p>Referans tarih: 25.08.2026 <strong class="black-hit">(52 gün ara)</strong> — KV-6/DHT / KUM / 1500m</p>
+<p>Hipodrom: KOCAELI</p>
+<p>Referans koşu no: 6</p>
+<p>OĞUL ÇINAR <strong class="black-hit">4 oldu</strong> (kazananla +1.97 sn) — Son hız: 66 (9)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 695.000 TL / Bugünkü birincilik 835.000 TL</p>
+<p>Sınıf durumu: sınıf yükseliyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>FERAT</td><td>1 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 5</strong> 03.09.2026 Ankara 5. Koşu — Handikap 15/DHÖW /H1 / KUM / 1500m / Birincilik ikramiyesi: 595.000 TL</td><td class="fig-cell"><span class="fig">72</span></td></tr>
+<tr><td>KARSAVURANLI</td><td>2 oldu</td><td><strong class="black-hit">5 oldu</strong> <strong class="black-hit">Sabit Ganyan: 4,75</strong> 19.09.2026 Ankara 2. Koşu — Handikap 16/DHÖW /H1 / KUM / 2000m / Birincilik ikramiyesi: 730.000 TL</td><td class="fig-cell"><span class="fig">79</span></td></tr>
+<tr><td>MEGAFAUNA</td><td>5 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 16</strong> 31.08.2026 Bursa 4. Koşu — ŞARTLI 5/DHÖ / CIM / 1300m / Birincilik ikramiyesi: 630.000 TL</td><td class="fig-cell"><span class="fig">82</span></td></tr>
+<tr><td>KORKUTELİ BEYİ</td><td>6 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,4</strong> 02.10.2026 Istanbul 5. Koşu — ŞARTLI 3/DHÖW/Y1 / SENTETIK / 1500m / Birincilik ikramiyesi: 470.000 TL</td><td class="fig-cell"><span class="fig">77</span></td></tr>
+<tr><td>CEMHAN</td><td>7 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 30</strong> 02.09.2026 Istanbul 4. Koşu — Handikap 21/DHÖW /H1 / CIM / 1400m / Birincilik ikramiyesi: 835.000 TL</td><td class="fig-cell"><span class="fig">70</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>02.10.2026 Istanbul 5. Koşu</td><td>31.08.2026 Bursa 4. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">KORKUTELİ BEYİ</strong></td><td class="hp">69</td><td class="sp">77</td></tr><tr><td class="pos">2.</td><td class="nm">ASİL MİR</td><td class="hp">82</td><td class="sp">75</td></tr><tr><td class="pos">3.</td><td class="nm">EGETAY</td><td class="hp">62</td><td class="sp">73</td></tr><tr><td class="pos">4.</td><td class="nm">SÖZÜ GEÇER</td><td class="hp">74</td><td class="sp">72</td></tr><tr><td class="pos">5.</td><td class="nm">LEONİDAS</td><td class="hp">71</td><td class="sp">71</td></tr><tr><td class="pos">6.</td><td class="nm">SANCAR</td><td class="hp">91</td><td class="sp">69</td></tr><tr><td class="pos">7.</td><td class="nm">BENİM SULTANIM</td><td class="hp">84</td><td class="sp">61</td></tr><tr><td class="pos">8.</td><td class="nm">MAHMUT USTA</td><td class="hp">87</td><td class="sp">52</td></tr><tr><td class="pos">9.</td><td class="nm">LAZMAN</td><td class="hp">70</td><td class="sp">49</td></tr><tr><td class="pos">10.</td><td class="nm">BELLİ BEY</td><td class="hp">35</td><td class="sp">48</td></tr><tr><td class="pos">11.</td><td class="nm">KAHRAMAN EVLAT</td><td class="hp">64</td><td class="sp">39</td></tr><tr><td class="pos">12.</td><td class="nm">MİSS KÜBRA</td><td class="hp">69</td><td class="sp">9</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">MEGAFAUNA</strong></td><td class="hp">71</td><td class="sp">82</td></tr><tr><td class="pos">2.</td><td class="nm">SERHUNEFE</td><td class="hp">92</td><td class="sp">80</td></tr><tr><td class="pos">3.</td><td class="nm">TARÇINKIZ</td><td class="hp">87</td><td class="sp">80</td></tr><tr><td class="pos">4.</td><td class="nm">HAVZALI</td><td class="hp">80</td><td class="sp">79</td></tr><tr><td class="pos">5.</td><td class="nm">SARAFİM</td><td class="hp">93</td><td class="sp">79</td></tr><tr><td class="pos">6.</td><td class="nm">CANCANER</td><td class="hp">99</td><td class="sp">78</td></tr><tr><td class="pos">7.</td><td class="nm">PRENSES DI</td><td class="hp">77</td><td class="sp">77</td></tr><tr><td class="pos">8.</td><td class="nm">GÜROBASI</td><td class="hp">78</td><td class="sp">77</td></tr><tr><td class="pos">9.</td><td class="nm">AKGOBAK</td><td class="hp">87</td><td class="sp">73</td></tr><tr><td class="pos">10.</td><td class="nm">KÜÇÜK EYYÜP</td><td class="hp">79</td><td class="sp">70</td></tr><tr><td class="pos">11.</td><td class="nm">YANACAK</td><td class="hp">72</td><td class="sp">67</td></tr><tr><td class="pos">12.</td><td class="nm">UMUDUNU KAYBETME</td><td class="hp">68</td><td class="sp">66</td></tr><tr><td class="pos">13.</td><td class="nm">MÜKREMİN</td><td class="hp">71</td><td class="sp">64</td></tr><tr><td class="pos">14.</td><td class="nm">ANEMON ÇİÇEĞİ</td><td class="hp">64</td><td class="sp">57</td></tr><tr><td class="pos">15.</td><td class="nm">AYPOYRAZ</td><td class="hp">—</td><td class="sp">35</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+</div>
+<div class="race-block"><div class="race-head">ISTANBUL - KOSU 7</div>
+<h1>İSTANBUL KOŞU 7</h1>
+<p>Secilen kosu: 7</p>
+<div class="gap"></div>
+<p class="no-key">Kilit yaris yok: 1-NEJDET BAŞKAN, 2-FINALLY ITS TIME, 4-KOKO LOKO, 5-VENUS DOOM, 6-MR HERMES, 7-KING MAHİR, 8-AGUA REGIA</p>
+<div class="gap"></div>
+<h1>İSTANBUL KOŞU 7</h1>
+<h2>3-HARP — Handikap 16 /H1 / SENTETIK / 2000m</h2>
+<p>Jokey: <strong class="black-hit">Y.GÖKÇE AP</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 6 tanesi bir sonraki yarışını koşmuş, 2 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">6/2</strong></p>
+<p>Referans tarih: 11.09.2026 <strong class="black-hit">(35 gün ara)</strong> — Handikap 17 /H1 / CIM / 2100m</p>
+<p>Hipodrom: ISTANBUL</p>
+<p>Referans koşu no: 4</p>
+<p>HARP <strong class="black-hit">7 oldu</strong> (kazananla +0.66 sn) — Son hız: 74 (6)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 795.000 TL / Bugünkü birincilik 730.000 TL</p>
+<p>Sınıf durumu: sınıf düşüyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>LUPELIUS</td><td>1 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 10</strong> 27.09.2026 Istanbul 9. Koşu — KV-8 / CIM / 1900m / Birincilik ikramiyesi: 1.130.000 TL</td><td class="fig-cell"><span class="fig">72</span></td></tr>
+<tr><td>LAND OF LEGENDS</td><td>2 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 1,75</strong> 02.10.2026 Istanbul 9. Koşu — ŞARTLI 5 / SENTETIK / 2400m / Birincilik ikramiyesi: 730.000 TL</td><td class="fig-cell"><span class="fig">78</span></td></tr>
+<tr><td>ŞAFAKATEŞ</td><td>4 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 1,35</strong> 18.09.2026 Istanbul 3. Koşu — SATIŞ 3 / SENTETIK / 2000m / Birincilik ikramiyesi: 630.000 TL</td><td class="fig-cell"><span class="fig">77</span></td></tr>
+<tr><td>GÜNEYİM</td><td>5 oldu</td><td><strong class="black-hit">4 oldu</strong> <strong class="black-hit">Sabit Ganyan: 10</strong> 30.09.2026 Istanbul 3. Koşu — SATIŞ 4 / SENTETIK / 2100m / Birincilik ikramiyesi: 730.000 TL</td><td class="fig-cell"><span class="fig">82</span></td></tr>
+<tr><td>BLACKFYRE</td><td>6 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 2,2</strong> 25.09.2026 Istanbul 1. Koşu — SATIŞ 2 / CIM / 2100m / Birincilik ikramiyesi: 560.000 TL</td><td class="fig-cell"><span class="fig">76</span></td></tr>
+<tr><td>BERMEDEE</td><td>8 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 20</strong> 22.09.2026 Ankara 4. Koşu — Handikap 17 /H1 / KUM / 2000m / Birincilik ikramiyesi: 795.000 TL</td><td class="fig-cell"><span class="fig">60</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>02.10.2026 Istanbul 9. Koşu</td><td>18.09.2026 Istanbul 3. Koşu</td><td>25.09.2026 Istanbul 1. Koşu</td><td>27.09.2026 Istanbul 9. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">LAND OF LEGENDS</strong></td><td class="hp">69</td><td class="sp">78</td></tr><tr><td class="pos">2.</td><td class="nm">JACKAL TROUBLE</td><td class="hp">39</td><td class="sp">78</td></tr><tr><td class="pos">3.</td><td class="nm">FINALLY ITS TIME</td><td class="hp">66</td><td class="sp">77</td></tr><tr><td class="pos">4.</td><td class="nm">NART THE BATTLE</td><td class="hp">57</td><td class="sp">77</td></tr><tr><td class="pos">5.</td><td class="nm">RAIN BEAUTY</td><td class="hp">48</td><td class="sp">76</td></tr><tr><td class="pos">6.</td><td class="nm">ANGLE RISING</td><td class="hp">50</td><td class="sp">73</td></tr><tr><td class="pos">7.</td><td class="nm">BLACK BLAZE</td><td class="hp">28</td><td class="sp">72</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">ŞAFAKATEŞ</strong></td><td class="hp">76</td><td class="sp">77</td></tr><tr><td class="pos">2.</td><td class="nm">HOLA Y CHAO</td><td class="hp">68</td><td class="sp">76</td></tr><tr><td class="pos">3.</td><td class="nm">ALAMETİ FARİKA</td><td class="hp">73</td><td class="sp">74</td></tr><tr><td class="pos">4.</td><td class="nm">CHILO</td><td class="hp">69</td><td class="sp">73</td></tr><tr><td class="pos">5.</td><td class="nm">LA COPA</td><td class="hp">63</td><td class="sp">71</td></tr><tr><td class="pos">6.</td><td class="nm">INVINCIBLE ARES</td><td class="hp">25</td><td class="sp">70</td></tr><tr><td class="pos">7.</td><td class="nm">MS EVDOXIA</td><td class="hp">9</td><td class="sp">53</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">STEEL ROCK</td><td class="hp">62</td><td class="sp">77</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">BLACKFYRE</strong></td><td class="hp">68</td><td class="sp">76</td></tr><tr><td class="pos">3.</td><td class="nm">GENERAL EL CID</td><td class="hp">32</td><td class="sp">75</td></tr><tr><td class="pos">4.</td><td class="nm">ALPHECCA</td><td class="hp">49</td><td class="sp">74</td></tr><tr><td class="pos">5.</td><td class="nm">COSAS</td><td class="hp">19</td><td class="sp">74</td></tr><tr><td class="pos">6.</td><td class="nm">WALK WITH STARS</td><td class="hp">51</td><td class="sp">73</td></tr><tr><td class="pos">7.</td><td class="nm">IRON CLEM</td><td class="hp">42</td><td class="sp">73</td></tr><tr><td class="pos">8.</td><td class="nm">VEN CONMİGO</td><td class="hp">35</td><td class="sp">71</td></tr><tr><td class="pos">9.</td><td class="nm">LADYBIRD</td><td class="hp">40</td><td class="sp">71</td></tr><tr><td class="pos">10.</td><td class="nm">SWEET VICTORY</td><td class="hp">39</td><td class="sp">69</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">TURAMUN</td><td class="hp">77</td><td class="sp">74</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">LUPELIUS</strong></td><td class="hp">76</td><td class="sp">72</td></tr><tr><td class="pos">3.</td><td class="nm">LORD OF DRAGON</td><td class="hp">85</td><td class="sp">71</td></tr><tr><td class="pos">4.</td><td class="nm">GOLDRAKHAN</td><td class="hp">90</td><td class="sp">71</td></tr><tr><td class="pos">5.</td><td class="nm">JAEHAERA</td><td class="hp">89</td><td class="sp">70</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+</div>
+<div class="race-block"><div class="race-head">ISTANBUL - KOSU 8</div>
+<h1>İSTANBUL KOŞU 8</h1>
+<p>Secilen kosu: 8</p>
+<div class="gap"></div>
+<p class="no-key">Kilit yaris yok: 1-GÜMBÜRHAN, 2-SERDENİZ, 3-TAHAYYÜL, 4-KRAL YAZICI, 5-TRAKTÖR, 6-ESEN BATU, 7-ÖNDER, 8-FETTAHZADE, 9-AYBENOVA, 10-HAYALİNOĞLU, 11-YALIKIZI, 12-ÇALIŞTAY, 13-CABİRE SULTAN, 14-KALEM KIRAN, 15-MENDERES KIZI, 16-ÇELİK ABİ, 17-TAYYAR BEY</p>
+<div class="gap"></div>
+<h1>İSTANBUL KOŞU 8</h1>
+<h2>18-SEVDA ŞAMPİYONU — Handikap 15/DHÖW /H1 / SENTETIK / 1400m</h2>
+<p>Jokey: <strong class="black-hit">U.LEVENT AP</strong></p>
+<p class="hot-form">Sıcak form (Son koşusundaki rakiplerinden 17 tanesi bir sonraki yarışını koşmuş, 3 tanesi birincilik elde etmiştir.)</p>
+<p>Referans grup: <strong class="black-hit">17/3</strong></p>
+<p>Referans tarih: 05.06.2026 <strong class="black-hit">(133 gün ara)</strong> — ŞARTLI 3/DHÖW/Dişi / SENTETIK / 1400m</p>
+<p>Hipodrom: ISTANBUL</p>
+<p>Referans koşu no: 8</p>
+<p>SEVDA ŞAMPİYONU <strong class="black-hit">18 oldu</strong> (kazananla +8.29 sn) — Son hız: 20 (17)</p>
+<p>İkramiye karşılaştırması: Referans birincilik 470.000 TL / Bugünkü birincilik 595.000 TL</p>
+<p>Sınıf durumu: sınıf yükseliyor</p>
+<table>
+<thead><tr><th>At</th><th>Ref. sıra</th><th>Dereceler</th><th>Hız</th></tr></thead>
+<tbody>
+<tr><td>SEMRAKAYA</td><td>1 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3</strong> 16.06.2026 Ankara 7. Koşu — ŞARTLI 4/DHÖW/Dişi/Y2 / CIM / 2200m / Birincilik ikramiyesi: 595.000 TL</td><td class="fig-cell"><span class="fig">82</span></td></tr>
+<tr><td>YALIKIZI</td><td>2 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 25</strong> 24.06.2026 Istanbul 9. Koşu — SATIŞ 3/DHÖW / SENTETIK / 1500m / Birincilik ikramiyesi: 630.000 TL</td><td class="fig-cell"><span class="fig">62</span></td></tr>
+<tr><td>MAVİ LADİN</td><td>3 oldu</td><td><strong class="black-hit">15 oldu</strong> <strong class="black-hit">Sabit Ganyan: 18</strong> 22.06.2026 Bursa 10. Koşu — Handikap 16/DHÖW/Dişi /H2 / CIM / 1200m / Birincilik ikramiyesi: 630.000 TL</td><td class="fig-cell"><span class="fig">61</span></td></tr>
+<tr><td>SAKIZ ADASI</td><td>4 oldu</td><td><strong class="black-hit">2 oldu</strong> <strong class="black-hit">Sabit Ganyan: 10</strong> 03.07.2026 Istanbul 1. Koşu — ŞARTLI 3/DHÖW / SENTETIK / 1400m / Birincilik ikramiyesi: 470.000 TL</td><td class="fig-cell"><span class="fig">77</span></td></tr>
+<tr><td>GECE GÜZELİ</td><td>5 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 5</strong> 11.06.2026 Kocaeli 9. Koşu — ŞARTLI 3/DHÖW/Dişi / KUM / 1700m / Birincilik ikramiyesi: 400.000 TL</td><td class="fig-cell"><span class="fig">72</span></td></tr>
+<tr><td>SÜTLİMAN</td><td>6 oldu</td><td><strong class="black-hit">6 oldu</strong> <strong class="black-hit">Sabit Ganyan: 3,6</strong> 12.06.2026 Bursa 5. Koşu — ŞARTLI 3/DHÖW/Dişi / KUM / 2000m / Birincilik ikramiyesi: 400.000 TL</td><td class="fig-cell"><span class="fig">67</span></td></tr>
+<tr><td>NERGİSLİK TAY</td><td>7 oldu</td><td><strong class="black-hit">3 oldu</strong> <strong class="black-hit">Sabit Ganyan: 7</strong> 27.09.2026 Adana 8. Koşu — ŞARTLI 3/DHÖW/Dişi / SENTETIK / 2000m / Birincilik ikramiyesi: 400.000 TL</td><td class="fig-cell"><span class="fig">83</span></td></tr>
+<tr><td>ECEDURU</td><td>8 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 20</strong> 04.07.2026 Diyarbakir 1. Koşu — Handikap 15/DHÖ/Dişi /H3 / KUM / 1900m / Birincilik ikramiyesi: 350.000 TL</td><td class="fig-cell"><span class="fig">1</span></td></tr>
+<tr><td>GÜZEL HUYLUM</td><td>9 oldu</td><td><strong class="black-hit">10 oldu</strong> <strong class="black-hit">Sabit Ganyan: 100</strong> 10.06.2026 Istanbul 6. Koşu — KV-7/DHT/Dişi / CIM / 1600m / Birincilik ikramiyesi: 975.000 TL</td><td class="fig-cell"><span class="fig">65</span></td></tr>
+<tr><td>KIZIM ATİK</td><td>10 oldu</td><td><strong class="black-hit">6 oldu</strong> <strong class="black-hit">Sabit Ganyan: 100</strong> 01.07.2026 Istanbul 9. Koşu — Handikap 14/DHÖW/Dişi /H1 / SENTETIK / 1200m / Birincilik ikramiyesi: 470.000 TL</td><td class="fig-cell"><span class="fig">66</span></td></tr>
+<tr><td>JULNAR</td><td>11 oldu</td><td><strong class="black-hit">15 oldu</strong> <strong class="black-hit">Sabit Ganyan: 60</strong> 19.06.2026 Istanbul 4. Koşu — Handikap 15/DHÖW /H2 / CIM / 1900m / Birincilik ikramiyesi: 595.000 TL</td><td class="fig-cell"><span class="fig">44</span></td></tr>
+<tr><td>GÜLÜMSE BİRAZ</td><td>12 oldu</td><td><strong class="black-hit">6 oldu</strong> <strong class="black-hit">Sabit Ganyan: 100</strong> 15.06.2026 Bursa 9. Koşu — Handikap 15/DHÖW /H2 / CIM / 1700m / Birincilik ikramiyesi: 490.000 TL</td><td class="fig-cell"><span class="fig">79</span></td></tr>
+<tr><td>YEŞİLKAYA</td><td>13 oldu</td><td><strong class="black-hit">1 oldu</strong> <strong class="black-hit">Sabit Ganyan: 50</strong> 22.06.2026 Bursa 10. Koşu — Handikap 16/DHÖW/Dişi /H2 / CIM / 1200m / Birincilik ikramiyesi: 630.000 TL</td><td class="fig-cell"><span class="fig">86</span></td></tr>
+<tr><td>ZAMAN HARİKA</td><td>14 oldu</td><td><strong class="black-hit">7 oldu</strong> <strong class="black-hit">Sabit Ganyan: 25</strong> 12.06.2026 Istanbul 1. Koşu — ŞARTLI 4/DHÖW / SENTETIK / 2000m / Birincilik ikramiyesi: 595.000 TL</td><td class="fig-cell"><span class="fig">40</span></td></tr>
+<tr><td>ÇELİKBENGÜ</td><td>15 oldu</td><td><strong class="black-hit">9 oldu</strong> <strong class="black-hit">Sabit Ganyan: 100</strong> 17.07.2026 Istanbul 2. Koşu — Handikap 16/DHÖW/Dişi /H1 / CIM / 1200m / Birincilik ikramiyesi: 730.000 TL</td><td class="fig-cell"><span class="fig">52</span></td></tr>
+<tr><td>CİLVELOY</td><td>16 oldu</td><td><strong class="black-hit">15 oldu</strong> <strong class="black-hit">Sabit Ganyan: 100</strong> 19.06.2026 Istanbul 8. Koşu — ŞARTLI 3/DHÖ / CIM / 1400m / Birincilik ikramiyesi: 470.000 TL</td><td class="fig-cell"><span class="fig">37</span></td></tr>
+<tr><td>İSTANBUL GÜZELİ</td><td>17 oldu</td><td><strong class="black-hit">14 oldu</strong> <strong class="black-hit">Sabit Ganyan: 100</strong> 25.06.2026 Istanbul 9. Koşu — Handikap 16/DHÖW /H1 / SENTETIK / 1400m / Birincilik ikramiyesi: 730.000 TL</td><td class="fig-cell"><span class="fig">35</span></td></tr>
+</tbody>
+</table>
+<table class="top12-table">
+<tbody>
+<tr class="top12-head-row"><td>11.06.2026 Kocaeli 9. Koşu</td><td>16.06.2026 Ankara 7. Koşu</td><td>22.06.2026 Bursa 10. Koşu</td><td>03.07.2026 Istanbul 1. Koşu</td></tr>
+<tr class="top12-body-row">
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">GECE GÜZELİ</strong></td><td class="hp">41</td><td class="sp">72</td></tr><tr><td class="pos">2.</td><td class="nm">KIVIRCIKKIZ</td><td class="hp">41</td><td class="sp">71</td></tr><tr><td class="pos">3.</td><td class="nm">LUNA</td><td class="hp">40</td><td class="sp">68</td></tr><tr><td class="pos">4.</td><td class="nm">KANATLANAN</td><td class="hp">33</td><td class="sp">67</td></tr><tr><td class="pos">5.</td><td class="nm">KOPUK UÇURTMA</td><td class="hp">58</td><td class="sp">67</td></tr><tr><td class="pos">6.</td><td class="nm">NEFESİMOL</td><td class="hp">32</td><td class="sp">66</td></tr><tr><td class="pos">7.</td><td class="nm">TÜRKÖREN</td><td class="hp">32</td><td class="sp">65</td></tr><tr><td class="pos">8.</td><td class="nm">ACEM KIZIM</td><td class="hp">29</td><td class="sp">63</td></tr><tr><td class="pos">9.</td><td class="nm">İYİMSER</td><td class="hp">39</td><td class="sp">61</td></tr><tr><td class="pos">10.</td><td class="nm">BERİVANCAN</td><td class="hp">33</td><td class="sp">55</td></tr><tr><td class="pos">11.</td><td class="nm">PAMUK ELLA</td><td class="hp">—</td><td class="sp">35</td></tr><tr><td class="pos">12.</td><td class="nm">TUNCA TAY</td><td class="hp">30</td><td class="sp">30</td></tr><tr><td class="pos">13.</td><td class="nm">ASEL SULTAN</td><td class="hp">41</td><td class="sp">30</td></tr><tr><td class="pos">14.</td><td class="nm">BUĞLEMİM</td><td class="hp">36</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">SEMRAKAYA</strong></td><td class="hp">62</td><td class="sp">82</td></tr><tr><td class="pos">2.</td><td class="nm">YUMURCAK</td><td class="hp">36</td><td class="sp">81</td></tr><tr><td class="pos">3.</td><td class="nm">GÜLALP KIZI</td><td class="hp">46</td><td class="sp">80</td></tr><tr><td class="pos">4.</td><td class="nm">KUZGUNİ YEŞİL</td><td class="hp">41</td><td class="sp">80</td></tr><tr><td class="pos">5.</td><td class="nm">GÜMBÜRBERK</td><td class="hp">61</td><td class="sp">76</td></tr><tr><td class="pos">6.</td><td class="nm">YETİMABLA</td><td class="hp">32</td><td class="sp">66</td></tr><tr><td class="pos">7.</td><td class="nm">ANADOLU YAZI</td><td class="hp">35</td><td class="sp">50</td></tr><tr><td class="pos">8.</td><td class="nm">MENDERES KIZI</td><td class="hp">41</td><td class="sp">44</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm"><strong class="black-hit">YEŞİLKAYA</strong></td><td class="hp">52</td><td class="sp">86</td></tr><tr><td class="pos">2.</td><td class="nm">ÇİLEK HÜMA</td><td class="hp">50</td><td class="sp">85</td></tr><tr><td class="pos">3.</td><td class="nm">KIR PAPATYASI</td><td class="hp">68</td><td class="sp">83</td></tr><tr><td class="pos">4.</td><td class="nm">DİSTİLE</td><td class="hp">51</td><td class="sp">82</td></tr><tr><td class="pos">5.</td><td class="nm">MÜRDÜN KIZ</td><td class="hp">35</td><td class="sp">81</td></tr><tr><td class="pos">6.</td><td class="nm">KOPUK UÇURTMA</td><td class="hp">58</td><td class="sp">80</td></tr><tr><td class="pos">7.</td><td class="nm">ZİNAMIN</td><td class="hp">56</td><td class="sp">79</td></tr><tr><td class="pos">8.</td><td class="nm">EĞRİCAN</td><td class="hp">52</td><td class="sp">78</td></tr><tr><td class="pos">9.</td><td class="nm">AYCASA</td><td class="hp">42</td><td class="sp">78</td></tr><tr><td class="pos">10.</td><td class="nm">SİYAH KUŞ</td><td class="hp">58</td><td class="sp">77</td></tr><tr><td class="pos">11.</td><td class="nm">UÇAN HÜMA</td><td class="hp">58</td><td class="sp">76</td></tr><tr><td class="pos">12.</td><td class="nm">PRENSES MEHLİKA</td><td class="hp">62</td><td class="sp">73</td></tr><tr><td class="pos">13.</td><td class="nm">KUZGUNLAR</td><td class="hp">13</td><td class="sp">67</td></tr><tr><td class="pos">14.</td><td class="nm">CAVİDANCAN</td><td class="hp">46</td><td class="sp">63</td></tr><tr><td class="pos">15.</td><td class="nm">MAVİ LADİN</td><td class="hp">52</td><td class="sp">61</td></tr><tr><td class="pos">16.</td><td class="nm">ESENYIL</td><td class="hp">52</td><td class="sp">58</td></tr><tr><td class="pos">17.</td><td class="nm">AKGÜNEY</td><td class="hp">35</td><td class="sp">58</td></tr><tr><td class="pos">18.</td><td class="nm">ÖRNEKKIZ</td><td class="hp">26</td><td class="sp">1</td></tr><tr><td class="pos">19.</td><td class="nm">ANADOLUNUN SAZI</td><td class="hp">45</td><td class="sp">1</td></tr><tr><td class="pos">20.</td><td class="nm">HÜMALI KIZ</td><td class="hp">41</td><td class="sp">1</td></tr></tbody></table></td>
+<td><table class="top12-mini"><thead><tr><th></th><th></th><th class="hp">H.P</th><th class="sp">Hız</th></tr></thead><tbody><tr><td class="pos">1.</td><td class="nm">YAĞIZATEŞ</td><td class="hp">63</td><td class="sp">78</td></tr><tr><td class="pos">2.</td><td class="nm"><strong class="black-hit">SAKIZ ADASI</strong></td><td class="hp">64</td><td class="sp">77</td></tr><tr><td class="pos">3.</td><td class="nm">KARAKTERLİ</td><td class="hp">53</td><td class="sp">76</td></tr><tr><td class="pos">4.</td><td class="nm">İNZİBAT</td><td class="hp">48</td><td class="sp">73</td></tr><tr><td class="pos">5.</td><td class="nm">MEHMETGİLLER</td><td class="hp">74</td><td class="sp">72</td></tr><tr><td class="pos">6.</td><td class="nm">ALTIN DOST</td><td class="hp">42</td><td class="sp">70</td></tr><tr><td class="pos">7.</td><td class="nm">BAY ARAZ</td><td class="hp">41</td><td class="sp">69</td></tr><tr><td class="pos">8.</td><td class="nm">RÜZGARIN ŞAHI</td><td class="hp">38</td><td class="sp">57</td></tr><tr><td class="pos">9.</td><td class="nm">GELİDONYA</td><td class="hp">—</td><td class="sp">55</td></tr><tr><td class="pos">10.</td><td class="nm">DAĞLIOĞLU</td><td class="hp">—</td><td class="sp">52</td></tr><tr><td class="pos">11.</td><td class="nm">GELİLEO</td><td class="hp">—</td><td class="sp">52</td></tr><tr><td class="pos">12.</td><td class="nm">TEKFORD ACL</td><td class="hp">25</td><td class="sp">39</td></tr><tr><td class="pos">13.</td><td class="nm">ÇAL BABA</td><td class="hp">36</td><td class="sp">28</td></tr></tbody></table></td>
+</tr>
+</tbody>
+</table>
+<div class="gap"></div>
+</div></div>
+<script>
+(function () {
+  const page = document.getElementById('page');
+  const value = document.getElementById('zoom-value');
+  const key = 'kilitYarisZoom';
+  function readStoredZoom() {
+    try { return Number(localStorage.getItem(key) || '1'); }
+    catch (error) { return 1; }
+  }
+  function storeZoom() {
+    try { localStorage.setItem(key, String(zoom)); }
+    catch (error) { }
+  }
+  let zoom = readStoredZoom();
+  function applyZoom() {
+    zoom = Math.min(1.8, Math.max(0.3, zoom));
+    page.style.transform = 'scale(' + zoom + ')';
+    page.style.width = (100 / zoom) + '%';
+    value.textContent = Math.round(zoom * 100) + '%';
+    storeZoom();
+  }
+  document.getElementById('zoom-in').addEventListener('click', function () { zoom += 0.1; applyZoom(); });
+  document.getElementById('zoom-out').addEventListener('click', function () { zoom -= 0.1; applyZoom(); });
+  value.addEventListener('click', function () { zoom = 1; applyZoom(); });
+  applyZoom();
+}());
+</script>
+
+</body>
+</html>

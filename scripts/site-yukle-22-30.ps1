@@ -308,7 +308,7 @@ foreach ($k in $kartVerisi) {
 if ($eksikler.Count -gt 0) {
     Write-Output "EKSIKLERE RAGMEN DEVAM: hedef tarih $ddMMyyyy icin eksik kaynaklar: $($eksikler -join ', ')"
     Write-Output 'Mevcut raporlar yuklenecek, eksikler sonra tamamlanacak.'
-    if (-not $WhatIf) { BildirimGoster 'Spoodyman yukleme (eksik var)' "Eksik ($($eksikler.Count)): $ddMMyyyy" }
+    # TEK BILDIRIM politikasi (15.10.2026): ara bildirim yok, sadece sonda tek bildirim.
 }
 if ($isList.Count -eq 0) {
     Write-Output "DURDU: hedef tarih $ddMMyyyy icin HIC rapor bulunamadi - siteye hicbir sey yazilmadi (eski raporlar korundu)."
@@ -541,7 +541,10 @@ if (-not $WhatIf) {
         }
     } catch {
         Write-Output "UYARI: otomatik commit/push yapilamadi ($($_.Exception.Message))"
-        BildirimGoster 'Spoodyman yukleme bitti (push YAPILAMADI)' $commitTam
+        $commitTam = "$commitTam (push YAPILAMADI)"
     }
-    BildirimGoster 'Spoodyman 22:30 yukleme bitti' $commitTam
+    # TEK BILDIRIM: basari + eksik + push durumu tek seste birlesir.
+    $sonMesaj = $commitTam
+    if ($eksikler.Count -gt 0) { $sonMesaj = "$sonMesaj | Eksik ($($eksikler.Count)): $($eksikler -join ', ')" }
+    BildirimGoster 'Spoodyman 22:30 yukleme bitti' $sonMesaj
 }

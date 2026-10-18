@@ -1,6 +1,7 @@
 ﻿param(
     [string]$Tarih = "",
     [switch]$WhatIf,
+    [switch]$Force,
     [string[]]$SkipTur = @()
 )
 
@@ -20,14 +21,24 @@
 # - Onceki gunun rapor dosya/kart/URL'lerini siler
 # - Kaynak klasorlerdeki eski tarihli dosyalari siler (AGENTS.md madde 11:
 #   yalnizca en guncel gun kalir; istatistikte yeni gunde olmayan sehirler silinir)
-# Kullanim: powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\site-yukle-22-30.ps1 [-Tarih 10/09/2026] [-WhatIf] [-SkipTur istatistik]
+# Kullanim: powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\site-yukle-22-30.ps1 [-Tarih 10/09/2026] [-WhatIf] [-Force] [-SkipTur istatistik]
 #   -SkipTur: bu seferlik atlanacak tur(ler). Or: -SkipTur istatistik / -SkipTur @('istatistik','tempo')
 #   Gecerli degerler: beyer, kilit, tempo, istatistik (istat), sinif (sinif-dusme). Varsayilan: bos (5 tur zorunlu).
+#   -Force: Cumartesi atlama kuralini gormezden gelir (Cumartesi 23:59 tam akisindan cagrilir).
 
 $ErrorActionPreference = 'Stop'
 $RepoRoot = Split-Path $PSScriptRoot -Parent
 $RaporDir = Join-Path $RepoRoot 'rapor'
 $NoBom = New-Object Text.UTF8Encoding($false)
+
+# ---------- 0a. Cumartesi 22:05 yuklemesini atla ----------
+# Cumartesi gunu ana akis 23:59'a alindi; site yuklemesi tam akis sonunda
+# (23:59 gorevi -> --saturday-full --site-upload, -Force ile) yapilir.
+# -Force ile cagrildiginda (Cumartesi tam akisindan) atlanmaz.
+if (-not $Force -and -not $WhatIf -and $Tarih -eq '' -and (Get-Date).DayOfWeek -eq 'Saturday') {
+    Write-Output "Cumartesi: 22:05 site yukleme atlandi (23:59 tam akis sonrasi yuklenecek)."
+    exit 0
+}
 
 # ---------- 0. Zincirleme: 22:00 gorevleri bitmeden baslama ----------
 $OndeGorevler = @(

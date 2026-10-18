@@ -122,6 +122,8 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
       değerlendirme tarihi kalır.
 
 ## Diğer kurallar
+- **"Siteye yükle" (veya "yükle", "push da yap") dendiğinde commit+push'u HER ZAMAN asistan yapar;
+  kullanıcının ayrıca belirtmesine GEREK YOK (script olsun olmasın, ad-hoc değişiklikler dahil).**
 - Commit+push otomatiktir (asistan/script yapar). SADECE otomatik push düşerse
   kullanıcıya raporları commit/push için adım adım talimat ver
   (GitHub Desktop: Commit to main → Push origin).

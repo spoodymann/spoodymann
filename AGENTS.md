@@ -138,3 +138,24 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
   (`daily_gidisat_otomasyon.py` içinde kapalı; `--gidishat` ile açılır).
   `gidisat_tempo_stil_raporu.html` de 26.09.2026 kararıyla ARTIK ÜRETİLMEZ
   (aynı `--gidishat` bayrağına bağlı).
+
+## KULVAR KOLONU (TEMPO RAPORLARI) — ZORUNLU, 25.10.2026
+
+- Her tempo raporunda (`rapor/<sehir>-<gun>-<ay>-tempo.html`) **Kulvar** kolonu
+  olmak ZORUNDADIR: atın bugünkü kulvar (start) numarası + o kulvarın bu
+  pist/mesafedeki koşu/galibiyet sayısı ve kazanma yüzdesi.
+  Kolon **Pozisyonlar ile Tarih arasında** yer alır; açıklama kutusunda
+  `Kulvar:` notu ve kapsanan tarih aralığı bulunur.
+- Üretim: `...\tjk_beyer_project\src\inject_tempo_gate_stats.py`
+  (`report_frontrunner.py` raporu yazdıktan sonra otomatik çağırır).
+- Yükleme güvencesi: `scripts/site-yukle-22-30.ps1` tempo dosyasını kopyalamadan
+  önce kulvar yoksa kendisi ekler; hâlâ yoksa `EKSIK: ... kulvar kolonu YOK`
+  yazar, bildirimde `KULVAR YOK` geçer ve script **çıkış kodu 1** verir
+  (günlük akışta `SiteYukle=1` görünür).
+- 25.10.2026 kök neden: otomasyonun kullandığı Python'da `bs4` yoktu ve hata
+  `try/except` içinde yutuluyordu. `inject_tempo_gate_stats.py` artık `bs4`'ü
+  proje içindeki `.codex-python-packages` klasöründen yükler; `report_frontrunner.py`
+  modül yüklenemezse çıkış kodu 5 verir.
+- Kulvar eksikse ilk bakılacaklar: (1) tempo kaynağı `frontrunner\` dosyasında
+  `class="gate-chip"` var mı, (2) `data\programs\<tarih>_<sehir>_program_raw.csv`
+  mevcut mu, (3) Python'da `bs4` yükleniyor mu.

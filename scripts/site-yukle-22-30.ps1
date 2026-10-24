@@ -280,7 +280,7 @@ function KulvarEkle([string]$kaynak, [string]$sehir) {
     $py = BulKulvarPython
     if (-not $py) { Write-Output 'UYARI: kulvar icin python bulunamadi.'; return }
     $cikti = & $py $KulvarScript --date $HedefIso --report-dir (Split-Path $kaynak -Parent) `
-        --pattern (Split-Path $kaynak -Leaf) --track $sehir.ToUpper() `
+        --pattern (Split-Path $kaynak -Leaf) --track $sehir.ToUpperInvariant() `
         --program-dir $KulvarProgramDir 2>&1
     if ($LASTEXITCODE -ne 0) {
         Write-Output "UYARI: kulvar eklenemedi ($sehir, kod $LASTEXITCODE): $($cikti -join ' | ')"

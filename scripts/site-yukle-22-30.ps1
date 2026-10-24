@@ -78,6 +78,11 @@ $SrcSinif  = 'C:\Users\Monster\OneDrive\Desktop\sınıf düşme analizi'
 $SrcSinifEski = 'C:\Users\Monster\OneDrive\Desktop\gidişhat analizi'
 $SrcTempo  = 'C:\Users\Monster\OneDrive\Desktop\frontrunner'
 $SrcDeger  = 'C:\Users\Monster\OneDrive\Desktop\günlük sonuç değerlendirme raporu'
+# Kulvar kolonu (tempo raporlarinda ZORUNLU): uretici proje ve yardimci script.
+$BeyerProje = 'C:\Users\Monster\Documents\Codex\2026-05-25\tjk-org-sitesinden-son-1-y\tjk_beyer_project'
+$KulvarScript = Join-Path $BeyerProje 'src\inject_tempo_gate_stats.py'
+$KulvarProgramDir = Join-Path $BeyerProje 'data\programs'
+$PyKulvar = ''
 
 $AyDosya = @{ '01'='ocak'; '02'='subat'; '03'='mart'; '04'='nisan'; '05'='mayis'; '06'='haziran';
               '07'='temmuz'; '08'='agustos'; '09'='eylul'; '10'='ekim'; '11'='kasim'; '12'='aralik' }
@@ -245,6 +250,45 @@ function KopyalaRapor([string]$kaynak, [string]$hedefAd, [switch]$BeyerTemizle) 
     return $hedef
 }
 
+# ---------- 3a. Kulvar kolonu (tempo raporlarinda ZORUNLU) ----------
+# 25.10.2026: Kulvar kolonu gunluk akista sessizce kayboluyordu (uretim
+# python'unda bs4 yoktu, hata yutuluyordu). Artik yukleme sirasinda
+# eksikse yeniden eklenir; hala eksikse yukleme sonunda cikis kodu 1 olur.
+function BulKulvarPython {
+    if ($script:PyKulvar -ne '') { return $script:PyKulvar }
+    $adaylar = @(
+        'C:\Users\Monster\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+    )
+    $cmd = Get-Command python.exe -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($cmd) { $adaylar += $cmd.Source }
+    foreach ($a in $adaylar) {
+        if ($a -and (Test-Path $a)) { $script:PyKulvar = $a; return $a }
+    }
+    return $null
+}
+
+function KulvarVarMi([string]$yol) {
+    if (-not (Test-Path $yol)) { return $false }
+    return ((OkuDosya $yol) -match 'class="gate-chip"')
+}
+
+function KulvarEkle([string]$kaynak, [string]$sehir) {
+    if (-not (Test-Path $KulvarScript)) {
+        Write-Output "UYARI: kulvar script yok: $KulvarScript"
+        return
+    }
+    $py = BulKulvarPython
+    if (-not $py) { Write-Output 'UYARI: kulvar icin python bulunamadi.'; return }
+    $cikti = & $py $KulvarScript --date $HedefIso --report-dir (Split-Path $kaynak -Parent) `
+        --pattern (Split-Path $kaynak -Leaf) --track $sehir.ToUpper() `
+        --program-dir $KulvarProgramDir 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output "UYARI: kulvar eklenemedi ($sehir, kod $LASTEXITCODE): $($cikti -join ' | ')"
+    }
+}
+
+$kulvarEksik = New-Object System.Collections.Generic.List[string]
+
 $yeniDosyalar = New-Object System.Collections.Generic.List[string]
 $isList = @()
 $kartVerisi = @()
@@ -280,7 +324,7 @@ foreach ($sehir in $sira) {
         $bulundu['kilit'] = $true
     } else { Write-Output "EKSIK: $g icin kilit kaynagi yok." }
     if ($tempo) {
-        $isList += [pscustomobject]@{ Tur='tempo'; SehirGoster=$g; Kaynak=$tempo.FullName; KaynakAd=$tempo.Name; HedefAd="$taban-tempo.html"; BeyerTemizle=$false; Bilgi='' }
+        $isList += [pscustomobject]@{ Tur='tempo'; Sehir=$sehir; SehirGoster=$g; Kaynak=$tempo.FullName; KaynakAd=$tempo.Name; HedefAd="$taban-tempo.html"; BeyerTemizle=$false; Bilgi='' }
         $bulundu['tempo'] = $true
     } else { Write-Output "EKSIK: $g icin tempo kaynagi yok." }
     if ($istat) {
@@ -327,11 +371,23 @@ if ($isList.Count -eq 0) {
     exit 2
 }
 foreach ($is in $isList) {
+    if ($is.Tur -eq 'tempo' -and -not $WhatIf -and -not (KulvarVarMi $is.Kaynak)) {
+        KulvarEkle $is.Kaynak $is.Sehir
+    }
     if ($is.BeyerTemizle) { KopyalaRapor $is.Kaynak $is.HedefAd -BeyerTemizle | Out-Null }
     else { KopyalaRapor $is.Kaynak $is.HedefAd | Out-Null }
     $yeniDosyalar.Add($is.HedefAd) | Out-Null
     if ($is.Bilgi -ne '') { Write-Output "OK $($is.Tur): $($is.KaynakAd) -> $($is.HedefAd) ($($is.Bilgi))" }
     else { Write-Output "OK $($is.Tur): $($is.KaynakAd) -> $($is.HedefAd)" }
+    if ($is.Tur -eq 'tempo') {
+        $hedefYol = Join-Path $RaporDir $is.HedefAd
+        if (KulvarVarMi $hedefYol) {
+            Write-Output "OK kulvar: $($is.HedefAd)"
+        } else {
+            Write-Output "EKSIK: $($is.HedefAd) tempo raporunda kulvar kolonu YOK."
+            $kulvarEksik.Add($is.HedefAd) | Out-Null
+        }
+    }
 }
 
 # ---------- 4. Degerlendirme (onceki gun) ----------
@@ -511,6 +567,11 @@ Write-Output "OK sitemap: $($yeniUrl.Count) URL eklendi"
 # ---------- 8. Ozet ----------
 Write-Output '---'
 Write-Output "Eklenen dosya: $($yeniDosyalar.Count), eklenen kart: $($yeniKartlar.Count)"
+if ($kulvarEksik.Count -gt 0) {
+    Write-Output "UYARI: kulvar kolonu eksik tempo raporlari: $($kulvarEksik -join ', ')"
+} else {
+    Write-Output 'OK kulvar: tum tempo raporlarinda kulvar kolonu var.'
+}
 $eski = ($silinenTarihler -join ', ')
 if ($eski -eq '') { $eski = 'yok' }
 Write-Output "Silinen eski raporlar: $eski"
@@ -557,5 +618,8 @@ if (-not $WhatIf) {
     # TEK BILDIRIM: basari + eksik + push durumu tek seste birlesir.
     $sonMesaj = $commitTam
     if ($eksikler.Count -gt 0) { $sonMesaj = "$sonMesaj | Eksik ($($eksikler.Count)): $($eksikler -join ', ')" }
+    if ($kulvarEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | KULVAR YOK: $($kulvarEksik -join ', ')" }
     BildirimGoster 'Spoodyman 22:30 yukleme bitti' $sonMesaj
 }
+# Kulvar kolonu eksikse yukleme "basarili" sayilmaz (gunluk akis SiteYukle=1 gosterir).
+if ($kulvarEksik.Count -gt 0) { exit 1 }

@@ -122,6 +122,10 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
       değerlendirme tarihi kalır.
 
 ## Diğer kurallar
+- **git yolu:** `git` artık normal şekilde çalışır (kısayol:
+  `C:\Users\Monster\AppData\Roaming\npm\git.cmd` → `C:\Program Files\Git\cmd\git.exe`).
+  Yine de "git bulunamadı" hatası alırsan tam yolu kullan:
+  `& "C:\Program Files\Git\cmd\git.exe" status`.
 - **"Siteye yükle" (veya "yükle", "push da yap") dendiğinde commit+push'u HER ZAMAN asistan yapar;
   kullanıcının ayrıca belirtmesine GEREK YOK (script olsun olmasın, ad-hoc değişiklikler dahil).**
 - Commit+push otomatiktir (asistan/script yapar). SADECE otomatik push düşerse

@@ -161,4 +161,5 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
   mevcut mu, (3) Python'da `bs4` yükleniyor mu, (4) program CSV'sinde **St** kolonu
   `5 - DS` gibi ek notlu mu (25.10.2026: yalnızca rakam bekleyen `isdigit()`
   kontrolü yüzünden o atların kulvarı boş kalıyordu; `parse_program` artık
-  baştaki rakamı alır).
+  baştaki rakamı alır). **St = kulvar (start) numarasıdır**; yanındaki `DS`
+  üst simgesi TJK'da "Tercihli Start" demektir, numarayı değiştirmez.

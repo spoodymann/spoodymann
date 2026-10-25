@@ -158,4 +158,7 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
   modül yüklenemezse çıkış kodu 5 verir.
 - Kulvar eksikse ilk bakılacaklar: (1) tempo kaynağı `frontrunner\` dosyasında
   `class="gate-chip"` var mı, (2) `data\programs\<tarih>_<sehir>_program_raw.csv`
-  mevcut mu, (3) Python'da `bs4` yükleniyor mu.
+  mevcut mu, (3) Python'da `bs4` yükleniyor mu, (4) program CSV'sinde **St** kolonu
+  `5 - DS` gibi ek notlu mu (25.10.2026: yalnızca rakam bekleyen `isdigit()`
+  kontrolü yüzünden o atların kulvarı boş kalıyordu; `parse_program` artık
+  baştaki rakamı alır).

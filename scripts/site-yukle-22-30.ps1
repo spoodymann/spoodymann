@@ -288,6 +288,7 @@ function KulvarEkle([string]$kaynak, [string]$sehir) {
 }
 
 $kulvarEksik = New-Object System.Collections.Generic.List[string]
+$sinifTickEksik = New-Object System.Collections.Generic.List[string]
 
 $yeniDosyalar = New-Object System.Collections.Generic.List[string]
 $isList = @()
@@ -386,6 +387,19 @@ foreach ($is in $isList) {
         } else {
             Write-Output "EKSIK: $($is.HedefAd) tempo raporunda kulvar kolonu YOK."
             $kulvarEksik.Add($is.HedefAd) | Out-Null
+        }
+    }
+    if ($is.Tur -eq 'sinif') {
+        # 28.10.2026 kurali: sinif dusme raporunda 6 ay / 1 yil en dusuk ikramiye
+        # kolonlari ve sadece tik isareti olmali (uretec eski kalirsa burada yakalanir).
+        $hedefYol = Join-Path $RaporDir $is.HedefAd
+        $tSinif = OkuDosya $hedefYol
+        $tikVar = ($tSinif -match 'Son 6 Ay En D[^<]*k') -and ($tSinif -match 'Son 1 Y[^<]*l En D[^<]*k') -and ($tSinif -match "class='tick'")
+        if ($tikVar) {
+            Write-Output "OK sinif tik: $($is.HedefAd)"
+        } else {
+            Write-Output "EKSIK: $($is.HedefAd) sinif-dusme raporunda 6 AY/1 YIL tik kolonlari YOK."
+            $sinifTickEksik.Add($is.HedefAd) | Out-Null
         }
     }
 }
@@ -572,6 +586,11 @@ if ($kulvarEksik.Count -gt 0) {
 } else {
     Write-Output 'OK kulvar: tum tempo raporlarinda kulvar kolonu var.'
 }
+if ($sinifTickEksik.Count -gt 0) {
+    Write-Output "UYARI: 6 ay/1 yil tik kolonlari eksik sinif-dusme raporlari: $($sinifTickEksik -join ', ')"
+} else {
+    Write-Output 'OK sinif tik: tum sinif-dusme raporlarinda 6 ay/1 yil tik kolonlari var.'
+}
 $eski = ($silinenTarihler -join ', ')
 if ($eski -eq '') { $eski = 'yok' }
 Write-Output "Silinen eski raporlar: $eski"
@@ -619,6 +638,7 @@ if (-not $WhatIf) {
     $sonMesaj = $commitTam
     if ($eksikler.Count -gt 0) { $sonMesaj = "$sonMesaj | Eksik ($($eksikler.Count)): $($eksikler -join ', ')" }
     if ($kulvarEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | KULVAR YOK: $($kulvarEksik -join ', ')" }
+    if ($sinifTickEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | SINIF TIK YOK: $($sinifTickEksik -join ', ')" }
     BildirimGoster 'Spoodyman 22:30 yukleme bitti' $sonMesaj
 }
 # Kulvar kolonu eksikse yukleme "basarili" sayilmaz (gunluk akis SiteYukle=1 gosterir).

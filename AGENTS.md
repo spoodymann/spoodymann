@@ -177,4 +177,8 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
   (`load_horse_history`, `prize_window_stats`, `tick_cell`).
   Geçmiş = program CSV arşivi + DB sonuçları, (tarih, pist, koşu no) ile tekilleşir.
 - Şartlı 1 koşularında tik konmaz (sınıf vurgusu yapılmaz kuralı).
+- Yükleme güvencesi: `scripts/site-yukle-22-30.ps1` kopyaladıktan sonra
+  `Son 6 Ay En Düşük` + `Son 1 Yıl En Düşük` başlıklarını ve `class='tick'`
+  hücresini arar; yoksa `EKSIK: ... tik kolonlari YOK` yazar, bildirimde
+  `SINIF TIK YOK` geçer (üreteç eski sürüme dönerse burada yakalanır).
 

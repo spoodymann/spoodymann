@@ -166,16 +166,15 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
 
 ## SINIF DÜŞME ANALİZİ EK KOLONLARI — ZORUNLU, 28.10.2026
 
-- `rapor/<sehir>-<gun>-<ay>-sinif-dusme.html` tablosunda artık şu kolonlar da var:
-  `Son Kazandığı İkramiye` (atın 1. olduğu en son koşunun 1.lik ikramiyesi +
-  tarih/pist/koşu no), `Son 6 Ay En Düşük` ve `Son 1 Yıl En Düşük` (penceredeki
-  en düşük 1.lik ikramiyesi, `n=` koşu sayısı ile).
-- Bugünkü ikramiye, pencerenin en düşük ikramiyesine **eşit veya daha düşükse**
-  hücre sarı zemin + `EN DÜŞÜK` rozeti alır (at kendi döneminin en düşük
-  ikramiyesine koşuyor demektir).
+- `rapor/<sehir>-<gun>-<ay>-sinif-dusme.html` tablosunda şu iki kolon da var:
+  `Son 6 Ay En Düşük` ve `Son 1 Yıl En Düşük`.
+- Hücrede **sadece tik (✓)** bulunur: bugünkü ikramiye, atın o pencere içinde
+  koştuğu en düşük 1.lik ikramiyesine eşit veya daha düşükse yeşil tik konur
+  (eşitlikte en az 2 geçmiş koşu aranır). Aksi halde hücre boş bırakılır.
+- 28.10.2026 ikinci karar: `Son Kazandığı İkramiye` kolonu **KALDIRILDI**
+  (kullanıcı isteği); değer/n/rozet metinleri yerine yalnızca tik gösterilir.
 - Üretim: `...\tjk_beyer_project\work\make_sinif_dusme_analizi.py`
-  (`load_horse_history`, `last_won_race`, `prize_window_stats`).
-  Geçmiş = program CSV arşivi (kazanma bilgisi yok) + DB sonuçları
-  (`runners.finish_position = 1` → kazanma), (tarih, pist, koşu no) ile tekilleşir.
-- Şartlı 1 koşularında `EN DÜŞÜK` rozeti verilmez (sınıf vurgusu yapılmaz kuralı).
+  (`load_horse_history`, `prize_window_stats`, `tick_cell`).
+  Geçmiş = program CSV arşivi + DB sonuçları, (tarih, pist, koşu no) ile tekilleşir.
+- Şartlı 1 koşularında tik konmaz (sınıf vurgusu yapılmaz kuralı).
 

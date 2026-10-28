@@ -163,3 +163,19 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
   kontrolü yüzünden o atların kulvarı boş kalıyordu; `parse_program` artık
   baştaki rakamı alır). **St = kulvar (start) numarasıdır**; yanındaki `DS`
   üst simgesi TJK'da "Tercihli Start" demektir, numarayı değiştirmez.
+
+## SINIF DÜŞME ANALİZİ EK KOLONLARI — ZORUNLU, 28.10.2026
+
+- `rapor/<sehir>-<gun>-<ay>-sinif-dusme.html` tablosunda artık şu kolonlar da var:
+  `Son Kazandığı İkramiye` (atın 1. olduğu en son koşunun 1.lik ikramiyesi +
+  tarih/pist/koşu no), `Son 6 Ay En Düşük` ve `Son 1 Yıl En Düşük` (penceredeki
+  en düşük 1.lik ikramiyesi, `n=` koşu sayısı ile).
+- Bugünkü ikramiye, pencerenin en düşük ikramiyesine **eşit veya daha düşükse**
+  hücre sarı zemin + `EN DÜŞÜK` rozeti alır (at kendi döneminin en düşük
+  ikramiyesine koşuyor demektir).
+- Üretim: `...\tjk_beyer_project\work\make_sinif_dusme_analizi.py`
+  (`load_horse_history`, `last_won_race`, `prize_window_stats`).
+  Geçmiş = program CSV arşivi (kazanma bilgisi yok) + DB sonuçları
+  (`runners.finish_position = 1` → kazanma), (tarih, pist, koşu no) ile tekilleşir.
+- Şartlı 1 koşularında `EN DÜŞÜK` rozeti verilmez (sınıf vurgusu yapılmaz kuralı).
+

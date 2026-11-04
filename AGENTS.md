@@ -182,3 +182,16 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
   hücresini arar; yoksa `EKSIK: ... tik kolonlari YOK` yazar, bildirimde
   `SINIF TIK YOK` geçer (üreteç eski sürüme dönerse burada yakalanır).
 
+
+## SINIF DUSME KENDINI ONARMA (04.11.2026, HER ZAMAN UYGULA)
+
+- `scripts\site-yukle-22-30.ps1`, hedef gun icin `sinif düsme analizi`
+  klasorunde `<tarih>_<sehir>_sinif_dusme_analizi.html` bulamazsa yukleme
+  sirasinda `tjk_beyer_project\work\make_sinif_dusme_analizi.py --date <tarih>`
+  calistirir ve kaynagi yeniden uretir.
+- Onarima ragmen sinif-dusme raporu yoksa script cikis kodu **1** verir ve
+  bildirimde `SINIF DUSME YOK: <sehir>` gecer. Boylece 22:00 akisinda rapor
+  uretilmese bile 22:05 yuklemesi raporu tamamlar veya sorunu gorunur kilar.
+- Manuel onarim:
+  `python work\make_sinif_dusme_analizi.py --date YYYY-MM-DD`
+  (calisma dizini: `tjk_beyer_project`).

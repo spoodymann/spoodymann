@@ -81,6 +81,7 @@ $SrcDeger  = 'C:\Users\Monster\OneDrive\Desktop\günlük sonuç değerlendirme r
 # Kulvar kolonu (tempo raporlarinda ZORUNLU): uretici proje ve yardimci script.
 $BeyerProje = 'C:\Users\Monster\Documents\Codex\2026-05-25\tjk-org-sitesinden-son-1-y\tjk_beyer_project'
 $KulvarScript = Join-Path $BeyerProje 'src\inject_tempo_gate_stats.py'
+$SinifScript = Join-Path $BeyerProje 'work\make_sinif_dusme_analizi.py'
 $KulvarProgramDir = Join-Path $BeyerProje 'data\programs'
 $PyKulvar = ''
 
@@ -287,8 +288,30 @@ function KulvarEkle([string]$kaynak, [string]$sehir) {
     }
 }
 
+# 04.11.2026: sinif-dusme kaynagi eksikse (22:00 akisi bir nedenle uretemediyse)
+# yukleme sirasinda kendini onarir; rapor yine de siteye cikar.
+$script:SinifUretildi = $false
+function SinifUret {
+    if ($script:SinifUretildi) { return }
+    $script:SinifUretildi = $true
+    if (-not (Test-Path $SinifScript)) {
+        Write-Output "UYARI: sinif-dusme script yok: $SinifScript"
+        return
+    }
+    $py = BulKulvarPython
+    if (-not $py) { Write-Output 'UYARI: sinif-dusme icin python bulunamadi.'; return }
+    Write-Output "BILGI: sinif-dusme kaynagi eksik - yeniden uretiliyor ($HedefIso)."
+    $cikti = & $py $SinifScript --date $HedefIso 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output "UYARI: sinif-dusme uretilemedi (kod $LASTEXITCODE): $($cikti -join ' | ')"
+    } else {
+        Write-Output 'OK sinif-dusme yeniden uretildi.'
+    }
+}
+
 $kulvarEksik = New-Object System.Collections.Generic.List[string]
 $sinifTickEksik = New-Object System.Collections.Generic.List[string]
+$sinifEksik = New-Object System.Collections.Generic.List[string]
 
 $yeniDosyalar = New-Object System.Collections.Generic.List[string]
 $isList = @()
@@ -312,6 +335,11 @@ foreach ($sehir in $sira) {
     }
     $sinif = Get-ChildItem $SrcSinif -Filter "${HedefIso}_${sehir}_sinif_dusme_analizi.html" -ErrorAction SilentlyContinue | Select-Object -First 1
     if (-not $sinif -and (Test-Path $SrcSinifEski)) { $sinif = Get-ChildItem $SrcSinifEski -Filter "${HedefIso}_${sehir}_sinif_dusme_analizi.html" -ErrorAction SilentlyContinue | Select-Object -First 1 }
+    if (-not $sinif -and -not $WhatIf) {
+        SinifUret
+        $sinif = Get-ChildItem $SrcSinif -Filter "${HedefIso}_${sehir}_sinif_dusme_analizi.html" -ErrorAction SilentlyContinue | Select-Object -First 1
+        if (-not $sinif -and (Test-Path $SrcSinifEski)) { $sinif = Get-ChildItem $SrcSinifEski -Filter "${HedefIso}_${sehir}_sinif_dusme_analizi.html" -ErrorAction SilentlyContinue | Select-Object -First 1 }
+    }
     $tempo = Get-ChildItem $SrcTempo -Filter '*.html' -ErrorAction SilentlyContinue | Where-Object { $_.Name -match "^${HedefIso}_onde_giden_.*" -and $_.Name -match ("_" + [regex]::Escape($sehir) + "(_|\.)") } | Select-Object -First 1
 
     if ($beyer) {
@@ -337,7 +365,7 @@ foreach ($sehir in $sira) {
         $kosuS = ([regex]::Matches($t, '<section')).Count
         $isList += [pscustomobject]@{ Tur='sinif'; SehirGoster=$g; Kaynak=$sinif.FullName; KaynakAd=$sinif.Name; HedefAd="$taban-sinif-dusme.html"; BeyerTemizle=$false; Bilgi="$kosuS kosu" }
         $bulundu['sinif'] = $kosuS
-    } else { Write-Output "EKSIK: $g icin sinif-dusme kaynagi yok." }
+    } else { Write-Output "EKSIK: $g icin sinif-dusme kaynagi yok."; $sinifEksik.Add($g) | Out-Null }
     $kartVerisi += [pscustomobject]@{ Sehir = $sehir; Goster = $g; Taban = $taban; Rapor = $bulundu }
 }
 
@@ -639,7 +667,10 @@ if (-not $WhatIf) {
     if ($eksikler.Count -gt 0) { $sonMesaj = "$sonMesaj | Eksik ($($eksikler.Count)): $($eksikler -join ', ')" }
     if ($kulvarEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | KULVAR YOK: $($kulvarEksik -join ', ')" }
     if ($sinifTickEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | SINIF TIK YOK: $($sinifTickEksik -join ', ')" }
+    if ($sinifEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | SINIF DUSME YOK: $($sinifEksik -join ', ')" }
     BildirimGoster 'Spoodyman 22:30 yukleme bitti' $sonMesaj
 }
 # Kulvar kolonu eksikse yukleme "basarili" sayilmaz (gunluk akis SiteYukle=1 gosterir).
 if ($kulvarEksik.Count -gt 0) { exit 1 }
+# Sinif-dusme raporu eksikse de yukleme basarisiz sayilir (04.11.2026 karari).
+if ($sinifEksik.Count -gt 0) { exit 1 }

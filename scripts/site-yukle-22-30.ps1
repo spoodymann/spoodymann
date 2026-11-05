@@ -167,7 +167,8 @@ function Invoke-PagesDeployKontrol {
         $log.Add("Pages deploy kontrol ($i/$Deneme): $($sha.Substring(0,7)) izleniyor...") | Out-Null
         $durum = 'timeout'
         $apiCevap = $false
-        $bitis = (Get-Date).AddSeconds(300)
+        $apiBloke = $false
+        $bitis = (Get-Date).AddSeconds(240)
         while ((Get-Date) -lt $bitis) {
             try {
                 $runs = Invoke-RestMethod -Uri "https://api.github.com/repos/$ghRepo/actions/runs?per_page=15" -Headers $apiBaslik -TimeoutSec 30
@@ -177,10 +178,16 @@ function Invoke-PagesDeployKontrol {
                     if ($run.status -eq 'completed') { $durum = $run.conclusion } else { $durum = $run.status }
                 }
             } catch {
-                $log.Add("UYARI: Actions API sorgulanamadi ($($_.Exception.Message))") | Out-Null
+                $apiMesaj = $_.Exception.Message
+                $log.Add("UYARI: Actions API sorgulanamadi ($apiMesaj)") | Out-Null
+                # Rate limit / yetki hatasinda bos commit uretmemek icin dur.
+                if ($apiMesaj -match 'rate limit|403|Forbidden|API rate') { $apiBloke = $true; break }
             }
             if ($durum -in @('success','failure','cancelled','timed_out')) { break }
-            Start-Sleep -Seconds 15
+            Start-Sleep -Seconds 20
+        }
+        if ($apiBloke) {
+            return [pscustomobject]@{ Sonuc = 'UYARI: Pages deploy kontrol edilemedi (GitHub API rate limit/erisim).'; Log = $log }
         }
         if (-not $apiCevap) {
             return [pscustomobject]@{ Sonuc = 'UYARI: Pages deploy kontrol edilemedi (GitHub API erisilemedi).'; Log = $log }

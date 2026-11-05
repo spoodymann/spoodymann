@@ -105,6 +105,14 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
    Otomatik push DÜŞERSE kullanıcıya kısa commit mesajı ver
    (GitHub Desktop: Commit to main → Push origin).
 
+10b. **Pages deploy doğrulaması (05.11.2026, HER ZAMAN UYGULA):** Push başarılı olsa da
+   GitHub Pages "deploy" adımı düşebilir; bu durumda site eski içerikte kalır
+   (05.11.2026'da 6 Kasım raporlarının yayınlanmamasının nedeni buydu). Artık
+   `site-yukle-22-30.ps1` adım 8c push sonrası Actions çalışmasını izler ve canlı
+   dosyanın 200 döndüğünü doğrular; deploy düşerse boş commit ile en fazla 2 kez
+   yeniden tetikler. Yine yayınlanmazsa bildirimde
+   `HATA: Pages deploy yayinlanmadi` geçer ve script çıkış kodu 1 verir.
+
 11. **KAYNAK KLASÖR TEMİZLİĞİ (10.10.2026'dan itibaren, HER ZAMAN UYGULA):**
     Yeni günün raporları siteye yüklendikten sonra masaüstündeki kaynak
     klasörlerdeki eski tarihli dosyalar KALICI OLARAK SİLİNİR (yalnızca

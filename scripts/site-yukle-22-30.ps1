@@ -138,6 +138,88 @@ function BildirimGoster([string]$baslik, [string]$mesaj) {
     }
 }
 
+# ---------- GitHub Pages deploy kontrolu (05.11.2026) ----------
+# 05.11.2026: push basarili oldu ama Pages "deploy" adimi dustu; site yeni gunun
+# raporlari yerine eski icerigi gostermeye devam etti. Bu fonksiyon push sonrasi
+# Actions calismasini izler, deploy dustuyse bos commit ile yeniden tetikler
+# (en fazla 3 deneme) ve canli dosyanin 200 dondugunu dogrular.
+# Donus: 'OK ...' / 'HATA: ...' / 'UYARI: ...'
+function Invoke-PagesDeployKontrol {
+    param(
+        [string]$GitExe,
+        [string]$Repo,
+        [string]$Yol,          # site kokune gore yol, orn. rapor/bursa-6-kasim.html
+        [int]$Deneme = 3
+    )
+    $ghRepo = 'spoodymann/spoodymann'
+    $siteTaban = 'https://spoodymann.github.io/spoodymann'
+    try {
+        $remote = & $GitExe -C $Repo remote get-url origin 2>$null
+        if ($remote -match 'github\.com[:/]([^/]+)/([^/]+?)(?:\.git)?\s*$') { $ghRepo = "$($Matches[1])/$($Matches[2])" }
+    } catch { }
+    try { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 } catch { }
+    $apiBaslik = @{ 'User-Agent' = 'spoodyman-uploader'; 'Accept' = 'application/vnd.github+json' }
+    $log = New-Object System.Collections.Generic.List[string]
+
+    $durum = 'timeout'
+    for ($i = 1; $i -le $Deneme; $i++) {
+        $sha = (& $GitExe -C $Repo rev-parse HEAD | Out-String).Trim()
+        $log.Add("Pages deploy kontrol ($i/$Deneme): $($sha.Substring(0,7)) izleniyor...") | Out-Null
+        $durum = 'timeout'
+        $apiCevap = $false
+        $bitis = (Get-Date).AddSeconds(300)
+        while ((Get-Date) -lt $bitis) {
+            try {
+                $runs = Invoke-RestMethod -Uri "https://api.github.com/repos/$ghRepo/actions/runs?per_page=15" -Headers $apiBaslik -TimeoutSec 30
+                $apiCevap = $true
+                $run = @($runs.workflow_runs | Where-Object { $_.head_sha -eq $sha -and $_.name -eq 'pages build and deployment' }) | Select-Object -First 1
+                if ($run) {
+                    if ($run.status -eq 'completed') { $durum = $run.conclusion } else { $durum = $run.status }
+                }
+            } catch {
+                $log.Add("UYARI: Actions API sorgulanamadi ($($_.Exception.Message))") | Out-Null
+            }
+            if ($durum -in @('success','failure','cancelled','timed_out')) { break }
+            Start-Sleep -Seconds 15
+        }
+        if (-not $apiCevap) {
+            return [pscustomobject]@{ Sonuc = 'UYARI: Pages deploy kontrol edilemedi (GitHub API erisilemedi).'; Log = $log }
+        }
+        if ($durum -eq 'success') {
+            # Deploy basarili: canli dosya gercekten yayinda mi? (CDN gecikmesi icin bekle)
+            $canli = $false
+            $canliBitis = (Get-Date).AddSeconds(120)
+            while ((Get-Date) -lt $canliBitis) {
+                $u = "$siteTaban/$Yol" + "?v=" + [int64]([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())
+                try {
+                    $resp = Invoke-WebRequest -Uri $u -UseBasicParsing -Method Head -TimeoutSec 20 -Headers @{ 'Cache-Control' = 'no-cache' }
+                    if ($resp.StatusCode -eq 200) { $canli = $true; break }
+                } catch { }
+                Start-Sleep -Seconds 10
+            }
+            if ($canli) { return [pscustomobject]@{ Sonuc = "OK (deploy $i. denemede yayinda)"; Log = $log } }
+            $log.Add("UYARI: deploy basarili gorunuyor ama canli dosya henuz 200 donmedi: $Yol") | Out-Null
+            $durum = 'canli-yok'
+        }
+        if ($i -lt $Deneme) {
+            try {
+                $log.Add("Pages deploy dustu ($durum) - bos commit ile yeniden tetikleniyor ($i).") | Out-Null
+                & $GitExe -C $Repo commit --allow-empty -m "pages deploy tekrar denemesi ($i)" | Out-Null
+                & $GitExe -C $Repo push origin main 2>&1 | Out-Null
+                if ($LASTEXITCODE -ne 0) {
+                    $log.Add('UYARI: tekrar deneme push basarisiz.') | Out-Null
+                    break
+                }
+                $log.Add('OK tekrar deneme push edildi.') | Out-Null
+            } catch {
+                $log.Add("UYARI: tekrar deneme yapilamadi ($($_.Exception.Message))") | Out-Null
+                break
+            }
+        }
+    }
+    return [pscustomobject]@{ Sonuc = "HATA: Pages deploy yayinlanmadi ($durum)."; Log = $log }
+}
+
 # ---------- 1. Hedef tarihi belirle ----------
 $HedefIso = ''
 $sehirler = New-Object System.Collections.Generic.HashSet[string]
@@ -631,10 +713,12 @@ if ($silinenTarihler.Count -gt 0) {
 Write-Output "Onerilen commit mesaji: $commitTam"
 $mesajDosya = 'C:\Users\Monster\OneDrive\Desktop\spoodyman-commit-mesaji.txt'
 $mesajIcerik = "Tarih: $(Get-Date -Format 'dd.MM.yyyy HH:mm')`r`nOnerilen commit mesaji: $commitTam`r`nEklenen dosya: $($yeniDosyalar.Count), eklenen kart: $($yeniKartlar.Count)`r`nSilinen eski raporlar: $eski`r`n"
+$deployDurum = ''
 if (-not $WhatIf) {
     [System.IO.File]::WriteAllText($mesajDosya, $mesajIcerik, $NoBom)
     Write-Output "Commit mesaji dosyaya yazildi: $mesajDosya"
     # ---------- 8b. Otomatik commit + push (19.09.2026) ----------
+    $pushYapildi = $false
     try {
         $GitExe = (Get-Command git.exe -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source -First 1)
         if (-not $GitExe) {
@@ -657,10 +741,26 @@ if (-not $WhatIf) {
             & $GitExe -C $RepoRoot push origin main
             if ($LASTEXITCODE -ne 0) { throw "git push basarisiz (kod $LASTEXITCODE). GitHub Desktop'tan Push origin yapin." }
             Write-Output 'OK git push: origin main'
+            $pushYapildi = $true
         }
     } catch {
         Write-Output "UYARI: otomatik commit/push yapilamadi ($($_.Exception.Message))"
         $commitTam = "$commitTam (push YAPILAMADI)"
+    }
+    # ---------- 8c. Pages deploy dogrulama + otomatik tekrar (05.11.2026) ----------
+    # Push basarili olsa da GitHub Pages deploy adimi dusebiliyor; o zaman site
+    # eski icerikte kalir. Deploy izlenir, gerekirse yeniden tetiklenir.
+    $deployDurum = ''
+    if ($pushYapildi) {
+        if ($yeniDosyalar.Count -gt 0) { $ornekYol = 'rapor/' + $yeniDosyalar[0] } else { $ornekYol = 'raporlar.html' }
+        try {
+            $deploySonuc = Invoke-PagesDeployKontrol -GitExe $GitExe -Repo $RepoRoot -Yol $ornekYol
+            foreach ($satir in $deploySonuc.Log) { Write-Output $satir }
+            $deployDurum = [string]$deploySonuc.Sonuc
+        } catch {
+            $deployDurum = "UYARI: Pages deploy kontrolu yapilamadi ($($_.Exception.Message))"
+        }
+        Write-Output "Pages deploy: $deployDurum"
     }
     # TEK BILDIRIM: basari + eksik + push durumu tek seste birlesir.
     $sonMesaj = $commitTam
@@ -668,9 +768,12 @@ if (-not $WhatIf) {
     if ($kulvarEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | KULVAR YOK: $($kulvarEksik -join ', ')" }
     if ($sinifTickEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | SINIF TIK YOK: $($sinifTickEksik -join ', ')" }
     if ($sinifEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | SINIF DUSME YOK: $($sinifEksik -join ', ')" }
+    if ($deployDurum -ne '' -and $deployDurum -notlike 'OK*') { $sonMesaj = "$sonMesaj | $deployDurum" }
     BildirimGoster 'Spoodyman 22:30 yukleme bitti' $sonMesaj
 }
 # Kulvar kolonu eksikse yukleme "basarili" sayilmaz (gunluk akis SiteYukle=1 gosterir).
 if ($kulvarEksik.Count -gt 0) { exit 1 }
 # Sinif-dusme raporu eksikse de yukleme basarisiz sayilir (04.11.2026 karari).
 if ($sinifEksik.Count -gt 0) { exit 1 }
+# Pages deploy yayinlanmadiysa site guncellenmemis demektir (05.11.2026 karari).
+if ($deployDurum -like 'HATA*') { exit 1 }

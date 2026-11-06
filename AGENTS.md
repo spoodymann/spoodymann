@@ -112,6 +112,9 @@ Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazı
    dosyanın 200 döndüğünü doğrular; deploy düşerse boş commit ile en fazla 2 kez
    yeniden tetikler. Yine yayınlanmazsa bildirimde
    `HATA: Pages deploy yayinlanmadi` geçer ve script çıkış kodu 1 verir.
+   Deploy 15 dk'ya kadar beklenir; hâlâ `in_progress` ise **yeni commit atılmaz**
+   (sağlıklı deploy iptal edilmesin), sadece `UYARI` verilir. 06.11.2026'da Pages
+   deploy'u 6 dk sürdüğü için eski 4 dk sınırı yanlış "düştü" sayıyordu.
 
 11. **KAYNAK KLASÖR TEMİZLİĞİ (10.10.2026'dan itibaren, HER ZAMAN UYGULA):**
     Yeni günün raporları siteye yüklendikten sonra masaüstündeki kaynak

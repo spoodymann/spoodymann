@@ -168,7 +168,11 @@ function Invoke-PagesDeployKontrol {
         $durum = 'timeout'
         $apiCevap = $false
         $apiBloke = $false
-        $bitis = (Get-Date).AddSeconds(240)
+        # Pages deploy yogun saatlerde 4 dk'dan uzun surebiliyor (06.11.2026:
+        # 0521e42 deploy'u 4 dk'dan fazla "in_progress" kaldi). Bu yuzden bekleme
+        # 15 dk; suresi dolunca SAGLIKLI deploy'u iptal etmemek icin tekrar
+        # tetiklenmez, sadece UYARI verilir.
+        $bitis = (Get-Date).AddSeconds(900)
         while ((Get-Date) -lt $bitis) {
             try {
                 $runs = Invoke-RestMethod -Uri "https://api.github.com/repos/$ghRepo/actions/runs?per_page=15" -Headers $apiBaslik -TimeoutSec 30
@@ -192,10 +196,14 @@ function Invoke-PagesDeployKontrol {
         if (-not $apiCevap) {
             return [pscustomobject]@{ Sonuc = 'UYARI: Pages deploy kontrol edilemedi (GitHub API erisilemedi).'; Log = $log }
         }
+        if ($durum -in @('in_progress','queued','timeout')) {
+            # Deploy hala suruyor: iptal etmemek icin yeni commit ATILMAZ.
+            return [pscustomobject]@{ Sonuc = "UYARI: Pages deploy hala suruyor ($durum) - site birkac dakika icinde guncellenebilir."; Log = $log }
+        }
         if ($durum -eq 'success') {
             # Deploy basarili: canli dosya gercekten yayinda mi? (CDN gecikmesi icin bekle)
             $canli = $false
-            $canliBitis = (Get-Date).AddSeconds(120)
+            $canliBitis = (Get-Date).AddSeconds(180)
             while ((Get-Date) -lt $canliBitis) {
                 $u = "$siteTaban/$Yol" + "?v=" + [int64]([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())
                 try {
@@ -205,14 +213,16 @@ function Invoke-PagesDeployKontrol {
                 Start-Sleep -Seconds 10
             }
             if ($canli) { return [pscustomobject]@{ Sonuc = "OK (deploy $i. denemede yayinda)"; Log = $log } }
-            $log.Add("UYARI: deploy basarili gorunuyor ama canli dosya henuz 200 donmedi: $Yol") | Out-Null
-            $durum = 'canli-yok'
+            $log.Add("UYARI: deploy basarili ama canli dosya henuz 200 donmedi: $Yol") | Out-Null
+            return [pscustomobject]@{ Sonuc = 'UYARI: Pages deploy basarili ama canli dosya henuz yayinda degil (CDN gecikmesi olabilir).'; Log = $log }
         }
         if ($i -lt $Deneme) {
             try {
                 $log.Add("Pages deploy dustu ($durum) - bos commit ile yeniden tetikleniyor ($i).") | Out-Null
                 & $GitExe -C $Repo commit --allow-empty -m "pages deploy tekrar denemesi ($i)" | Out-Null
-                & $GitExe -C $Repo push origin main 2>&1 | Out-Null
+                # 2>&1 KULLANMA: PowerShell 5.1'de git'in stderr satiri
+                # NativeCommandError'a donusup basarili push'u hata gibi gosteriyor.
+                & $GitExe -C $Repo push origin main | Out-Null
                 if ($LASTEXITCODE -ne 0) {
                     $log.Add('UYARI: tekrar deneme push basarisiz.') | Out-Null
                     break

@@ -250,7 +250,7 @@ if ($Tarih -ne '') {
 # gunun sehir listesi icin gerekli).
 if (Test-Path $SrcBeyer) {
         foreach ($f in Get-ChildItem $SrcBeyer -Filter '*.html') {
-            $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal)?\.html$')
+            $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal|_ayni_yuzey)?\.html$')
             if ($m.Success) { $tarihler.Add($m.Groups[2].Value); $sehirTarih.Add($m.Groups[2].Value + '|' + $m.Groups[1].Value.ToLower()) | Out-Null }
         }
     }
@@ -421,6 +421,7 @@ foreach ($sehir in $sira) {
     $bulundu = @{}
 
     $beyer = Get-ChildItem $SrcBeyer -Filter "program_beyer_${sehir}_${basic}_normal.html" -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $beyer) { $beyer = Get-ChildItem $SrcBeyer -Filter "program_beyer_${sehir}_${basic}_ayni_yuzey.html" -ErrorAction SilentlyContinue | Select-Object -First 1 }
     if (-not $beyer) { $beyer = Get-ChildItem $SrcBeyer -Filter "program_beyer_${sehir}_${basic}.html" -ErrorAction SilentlyContinue | Select-Object -First 1 }
     $kilit = Get-ChildItem $SrcKilit -Filter "kilit_yaris_${sehir}_tum_kosular_${basic}.html" -ErrorAction SilentlyContinue | Select-Object -First 1
     $istat = Get-ChildItem $SrcIstat -Filter '*.html' -ErrorAction SilentlyContinue | Where-Object { (ToAsciiLower ([System.IO.Path]::GetFileNameWithoutExtension($_.Name))) -eq (ToAsciiLower $sehir) } | Select-Object -First 1
@@ -578,7 +579,7 @@ foreach ($f in Get-ChildItem $RaporDir -Filter '*.html') {
 # ---------- 5b. Kaynak klasor temizligi (AGENTS.md madde 11: yalnizca en guncel gun kalir) ----------
 if (Test-Path $SrcBeyer) {
     foreach ($f in Get-ChildItem $SrcBeyer -Filter '*.html' -ErrorAction SilentlyContinue) {
-        $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal)?\.html$')
+        $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal|_ayni_yuzey)?\.html$')
         if ($m.Success -and $m.Groups[2].Value -ne $basic) {
             Write-Output "SIL (kaynak beyer): $($f.Name)"
             if (-not $WhatIf) { Remove-Item $f.FullName -Force }

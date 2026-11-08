@@ -250,7 +250,7 @@ if ($Tarih -ne '') {
 # gunun sehir listesi icin gerekli).
 if (Test-Path $SrcBeyer) {
         foreach ($f in Get-ChildItem $SrcBeyer -Filter '*.html') {
-            $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal|_ayni_yuzey)?\.html$')
+            $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal|_ayni_yuzey|_ayni_sehir)?\.html$')
             if ($m.Success) { $tarihler.Add($m.Groups[2].Value); $sehirTarih.Add($m.Groups[2].Value + '|' + $m.Groups[1].Value.ToLower()) | Out-Null }
         }
     }
@@ -579,7 +579,7 @@ foreach ($f in Get-ChildItem $RaporDir -Filter '*.html') {
 # ---------- 5b. Kaynak klasor temizligi (AGENTS.md madde 11: yalnizca en guncel gun kalir) ----------
 if (Test-Path $SrcBeyer) {
     foreach ($f in Get-ChildItem $SrcBeyer -Filter '*.html' -ErrorAction SilentlyContinue) {
-        $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal|_ayni_yuzey)?\.html$')
+        $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal|_ayni_yuzey|_ayni_sehir)?\.html$')
         if ($m.Success -and $m.Groups[2].Value -ne $basic) {
             Write-Output "SIL (kaynak beyer): $($f.Name)"
             if (-not $WhatIf) { Remove-Item $f.FullName -Force }

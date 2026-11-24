@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-16"?>
+
+<Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
+
+  <RegistrationInfo>
+
+    <Date>2026-08-15T23:42:07</Date>
+
+    <Author>DESKTOP-MTBKEF4\Monster</Author>
+
+    <URI>\TJK Gunluk Diyarbakir Beyer</URI>
+
+  </RegistrationInfo>
+
+  <Principals>
+
+    <Principal id="Author">
+
+      <UserId>S-1-5-21-204731495-3832477162-1458433579-1001</UserId>
+
+      <LogonType>InteractiveToken</LogonType>
+
+    </Principal>
+
+  </Principals>
+
+  <Settings>
+
+    <DisallowStartIfOnBatteries>false</DisallowStartIfOnBatteries>
+
+    <StopIfGoingOnBatteries>false</StopIfGoingOnBatteries>
+
+    <MultipleInstancesPolicy>IgnoreNew</MultipleInstancesPolicy>
+
+    <StartWhenAvailable>true</StartWhenAvailable>
+
+    <IdleSettings>
+
+      <Duration>PT10M</Duration>
+
+      <WaitTimeout>PT1H</WaitTimeout>
+
+      <StopOnIdleEnd>true</StopOnIdleEnd>
+
+      <RestartOnIdle>false</RestartOnIdle>
+
+    </IdleSettings>
+
+  </Settings>
+
+  <Triggers>
+
+    <CalendarTrigger>
+
+      <StartBoundary>2026-08-23T23:59:00+03:00</StartBoundary>
+
+      <ScheduleByWeek>
+
+        <WeeksInterval>1</WeeksInterval>
+
+        <DaysOfWeek>
+
+          <Saturday />
+
+        </DaysOfWeek>
+
+      </ScheduleByWeek>
+
+    </CalendarTrigger>
+
+  </Triggers>
+
+  <Actions Context="Author">
+
+    <Exec>
+
+      <Command>C:\Users\Monster\Documents\Codex\2026-05-25\tjk-org-sitesinden-son-1-y\tjk_beyer_project\run_daily_diyarbakir_results.bat</Command>
+
+    </Exec>
+
+  </Actions>
+
+</Task>

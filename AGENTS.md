@@ -5,6 +5,21 @@ Bu repo, Spoodyman at yarışı raporları sitesidir (`raporlar.html` liste sayf
 **ÖNEMLİ:** Çalışılacak asıl repo klasörü: `C:\Users\Monster\OneDrive\Belgeler\GitHub\spoodyman`
 (Düzenlemeler buraya yapılır; commit+push OTOMATİKTİR — `scripts/site-yukle-22-30.ps1` 8b adımı yapar. Düşerse kullanıcı GitHub Desktop ile basar.)
 
+## Günlük akış konsolidasyonu (YENİ)
+
+Tüm günlük akış (beyer üretimi, 22:00 görevleri, site yükleme, rapor üretimi) şu klasörde toplanmıştır:
+`C:\Users\Monster\OneDrive\Belgeler\GitHub\spoodyman\daily-flow`
+
+- `README.md` — genel bakış
+- `GUNLUK_AKIS.md` — adım adım günlük akış
+- `YOLLAR.md` — tüm kaynak/dış proje yolları
+- `GOREV_ZAMANLAYICI.md` — Windows görevleri
+- `MANUEL_KOMUTLAR.md` — manuel komutlar
+- `SORUN_GIDERME.md` — hata çözümleri
+- `external-agents/`, `runners/`, `scheduled-tasks/` — kopyalar ve XML export'lar
+
+OpenCode dışında bir yapay zeka bu klasörü okuyarak günlük akışı sürdürebilir.
+
 ## Günlük rapor ekleme iş akışı (HER GÜN otomatik uygula)
 
 Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazır gelir:

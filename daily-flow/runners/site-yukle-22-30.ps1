@@ -1,0 +1,797 @@
+﻿param(
+    [string]$Tarih = "",
+    [switch]$WhatIf,
+    [switch]$Force,
+    [string[]]$SkipTur = @()
+)
+
+# 22:30 site yukleme otomasyonu (ZINCIRLI MOD - 15.09.2026'dan itibaren):
+# - 22:00 gorevleri bitmeden BASLAMAZ. Script 22:05'te tetiklenir, once
+#   4 onde-gorevin bitmesini bekler, hepsi bitince "bittigi gibi" yuklemeye gecer.
+# - Onde-gorevler: TJK Gunluk Beyer Sonuc ve Program, KilitYarisDailyReport,
+#   TJKGunlukRapor_2200, GidisatOtomasyonGunluk2200.
+#   (SpoodymanDailyEval 28.09.2026'da SILINDI: olmayan daily_eval.ps1'e bakiyordu;
+#   degerlendirme raporlarini daily_results_beyer.py zaten uretiyor.)
+# - Bekleme suresince kaynak klasorler hazir degilse adim 3b'deki eksiklik
+#   politikasi calisir: eksikler loglanir + bildirim gosterilir, mevcut
+#   raporlar yine de siteye yuklenir (30.09.2026 karari).
+# - Masaustundeki kaynak klasorlerden hedef gunun raporlarini bulur
+# - rapor/ klasorune kopyalar (gtag + Beyer temizligi uygular)
+# - raporlar.html ve index.html kartlarini + sitemap.xml'i gunceller
+# - Onceki gunun rapor dosya/kart/URL'lerini siler
+# - Kaynak klasorlerdeki eski tarihli dosyalari siler (AGENTS.md madde 11:
+#   yalnizca en guncel gun kalir; istatistikte yeni gunde olmayan sehirler silinir)
+# Kullanim: powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\site-yukle-22-30.ps1 [-Tarih 10/09/2026] [-WhatIf] [-Force] [-SkipTur istatistik]
+#   -SkipTur: bu seferlik atlanacak tur(ler). Or: -SkipTur istatistik / -SkipTur @('istatistik','tempo')
+#   Gecerli degerler: beyer, kilit, tempo, istatistik (istat), sinif (sinif-dusme). Varsayilan: bos (5 tur zorunlu).
+#   -Force: Cumartesi atlama kuralini gormezden gelir (Cumartesi 23:59 tam akisindan cagrilir).
+
+$ErrorActionPreference = 'Stop'
+$RepoRoot = Split-Path $PSScriptRoot -Parent
+$RaporDir = Join-Path $RepoRoot 'rapor'
+$NoBom = New-Object Text.UTF8Encoding($false)
+
+# ---------- 0a. Cumartesi 22:05 yuklemesini atla ----------
+# Cumartesi gunu ana akis 23:59'a alindi; site yuklemesi tam akis sonunda
+# (23:59 gorevi -> --saturday-full --site-upload, -Force ile) yapilir.
+# -Force ile cagrildiginda (Cumartesi tam akisindan) atlanmaz.
+if (-not $Force -and -not $WhatIf -and $Tarih -eq '' -and (Get-Date).DayOfWeek -eq 'Saturday') {
+    Write-Output "Cumartesi: 22:05 site yukleme atlandi (23:59 tam akis sonrasi yuklenecek)."
+    exit 0
+}
+
+# ---------- 0. Zincirleme: 22:00 gorevleri bitmeden baslama ----------
+$OndeGorevler = @(
+    '\TJK Gunluk Beyer Sonuc ve Program',
+    '\KilitYarisDailyReport',
+    '\TJKGunlukRapor_2200',
+    '\GidisatOtomasyonGunluk2200'
+)
+$BeklemeSureSn = 120 * 60   # en fazla 2 saat bekle (22:05 -> 00:05)
+$KontrolAralikSn = 60
+$baslangic = Get-Date
+while ($true) {
+    $calisan = @()
+    foreach ($g in $OndeGorevler) {
+        try {
+            $bilgi = schtasks /Query /TN $g /V /FO LIST 2>&1 | Out-String
+            if ($bilgi -match 'Status:\s*Running') { $calisan += $g }
+        } catch { $calisan += "$g (sorgulanamadi)" }
+    }
+    if ($calisan.Count -eq 0) {
+        Write-Output "Onde-gorevler bitti, yuklemeye geciliyor. (bekleme: $([int]((Get-Date) - $baslangic).TotalMinutes) dk)"
+        break
+    }
+    if (((Get-Date) - $baslangic).TotalSeconds -ge $BeklemeSureSn) {
+        Write-Output "UYARI: zaman asimi (2 saat) - hala calisan: $($calisan -join ', '). Eksiksizlik kilidi eksikleri yakalayacak."
+        break
+    }
+    Write-Output "Bekleniyor... calisan onde-gorev: $($calisan -join ', ') ($(Get-Date -Format 'HH:mm:ss'))"
+    Start-Sleep -Seconds $KontrolAralikSn
+}
+
+$SrcKilit  = 'C:\Users\Monster\OneDrive\Desktop\kilit yarış arşivi'
+$SrcBeyer  = 'C:\Users\Monster\OneDrive\Desktop\beyer raporu'
+$SrcIstat  = 'C:\Users\Monster\OneDrive\Desktop\istatistik ve galop'
+if (-not (Test-Path $SrcIstat)) { $SrcIstat = 'C:\Users\Monster\OneDrive\Desktop\istatistik' }
+$SrcSinif  = 'C:\Users\Monster\OneDrive\Desktop\sınıf düşme analizi'
+$SrcSinifEski = 'C:\Users\Monster\OneDrive\Desktop\gidişhat analizi'
+$SrcTempo  = 'C:\Users\Monster\OneDrive\Desktop\frontrunner'
+$SrcDeger  = 'C:\Users\Monster\OneDrive\Desktop\günlük sonuç değerlendirme raporu'
+# Kulvar kolonu (tempo raporlarinda ZORUNLU): uretici proje ve yardimci script.
+$BeyerProje = 'C:\Users\Monster\Documents\Codex\2026-05-25\tjk-org-sitesinden-son-1-y\tjk_beyer_project'
+$KulvarScript = Join-Path $BeyerProje 'src\inject_tempo_gate_stats.py'
+$SinifScript = Join-Path $BeyerProje 'work\make_sinif_dusme_analizi.py'
+$KulvarProgramDir = Join-Path $BeyerProje 'data\programs'
+$PyKulvar = ''
+
+$AyDosya = @{ '01'='ocak'; '02'='subat'; '03'='mart'; '04'='nisan'; '05'='mayis'; '06'='haziran';
+              '07'='temmuz'; '08'='agustos'; '09'='eylul'; '10'='ekim'; '11'='kasim'; '12'='aralik' }
+$AyAd = @{ '01'='Ocak'; '02'='Şubat'; '03'='Mart'; '04'='Nisan'; '05'='Mayıs'; '06'='Haziran';
+           '07'='Temmuz'; '08'='Ağustos'; '09'='Eylül'; '10'='Ekim'; '11'='Kasım'; '12'='Aralık' }
+$AyTers = @{ 'ocak'='01'; 'subat'='02'; 'mart'='03'; 'nisan'='04'; 'mayis'='05'; 'haziran'='06';
+             'temmuz'='07'; 'agustos'='08'; 'eylul'='09'; 'ekim'='10'; 'kasim'='11'; 'aralik'='12' }
+$SehirAd = @{ 'istanbul'='İstanbul'; 'elazig'='Elazığ'; 'ankara'='Ankara'; 'kocaeli'='Kocaeli';
+              'izmir'='İzmir'; 'bursa'='Bursa'; 'adana'='Adana'; 'diyarbakir'='Diyarbakır'; 'sanliurfa'='Şanlıurfa' }
+
+$Gtag = @'
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-N0CWBQ8K4X"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N0CWBQ8K4X');
+</script>
+'@
+
+function ToAsciiLower([string]$s) {
+    $s = $s.ToLowerInvariant()
+    $s = $s.Replace('İ','i').Replace('ı','i').Replace('ş','s').Replace('ğ','g').Replace('ü','u').Replace('ö','o').Replace('ç','c')
+    return $s
+}
+
+function SehirGoster([string]$sehir) {
+    if ($SehirAd.ContainsKey($sehir)) { return $SehirAd[$sehir] }
+    return $sehir.Substring(0,1).ToUpper() + $sehir.Substring(1)
+}
+
+function YazDosya([string]$yol, [string]$icerik) {
+    if ($WhatIf) { Write-Output "[WhatIf] yazilacak: $yol"; return }
+    [System.IO.File]::WriteAllText($yol, $icerik, $NoBom)
+}
+
+function OkuDosya([string]$yol) {
+    return [System.IO.File]::ReadAllText($yol)
+}
+
+function BildirimGoster([string]$baslik, [string]$mesaj) {
+    try {
+        [Windows.UI.Notifications.ToastNotificationManager, Windows.UI.Notifications, ContentType = WindowsRuntime] | Out-Null
+        $sablon = [Windows.UI.Notifications.ToastNotificationManager]::GetTemplateContent([Windows.UI.Notifications.ToastTemplateType]::ToastText02)
+        $metinler = $sablon.GetElementsByTagName('text')
+        $metinler.Item(0).AppendChild($sablon.CreateTextNode($baslik)) | Out-Null
+        $metinler.Item(1).AppendChild($sablon.CreateTextNode($mesaj)) | Out-Null
+        $bildirim = [Windows.UI.Notifications.ToastNotification]::new($sablon)
+        [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNotifier('{1AC14E77-02E7-4E5D-B744-2EB1AE5198B7}\WindowsPowerShell\v1.0\powershell.exe').Show($bildirim)
+    } catch {
+        Write-Output "UYARI: bildirim gosterilemedi ($($_.Exception.Message))"
+    }
+}
+
+# ---------- GitHub Pages deploy kontrolu (05.11.2026) ----------
+# 05.11.2026: push basarili oldu ama Pages "deploy" adimi dustu; site yeni gunun
+# raporlari yerine eski icerigi gostermeye devam etti. Bu fonksiyon push sonrasi
+# Actions calismasini izler, deploy dustuyse bos commit ile yeniden tetikler
+# (en fazla 3 deneme) ve canli dosyanin 200 dondugunu dogrular.
+# Donus: 'OK ...' / 'HATA: ...' / 'UYARI: ...'
+function Invoke-PagesDeployKontrol {
+    param(
+        [string]$GitExe,
+        [string]$Repo,
+        [string]$Yol,          # site kokune gore yol, orn. rapor/bursa-6-kasim.html
+        [int]$Deneme = 3
+    )
+    $ghRepo = 'spoodymann/spoodymann'
+    $siteTaban = 'https://spoodymann.github.io/spoodymann'
+    try {
+        $remote = & $GitExe -C $Repo remote get-url origin 2>$null
+        if ($remote -match 'github\.com[:/]([^/]+)/([^/]+?)(?:\.git)?\s*$') { $ghRepo = "$($Matches[1])/$($Matches[2])" }
+    } catch { }
+    try { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 } catch { }
+    $apiBaslik = @{ 'User-Agent' = 'spoodyman-uploader'; 'Accept' = 'application/vnd.github+json' }
+    $log = New-Object System.Collections.Generic.List[string]
+
+    $durum = 'timeout'
+    for ($i = 1; $i -le $Deneme; $i++) {
+        $sha = (& $GitExe -C $Repo rev-parse HEAD | Out-String).Trim()
+        $log.Add("Pages deploy kontrol ($i/$Deneme): $($sha.Substring(0,7)) izleniyor...") | Out-Null
+        $durum = 'timeout'
+        $apiCevap = $false
+        $apiBloke = $false
+        # Pages deploy yogun saatlerde 4 dk'dan uzun surebiliyor (06.11.2026:
+        # 0521e42 deploy'u 4 dk'dan fazla "in_progress" kaldi). Bu yuzden bekleme
+        # 15 dk; suresi dolunca SAGLIKLI deploy'u iptal etmemek icin tekrar
+        # tetiklenmez, sadece UYARI verilir.
+        $bitis = (Get-Date).AddSeconds(900)
+        while ((Get-Date) -lt $bitis) {
+            try {
+                $runs = Invoke-RestMethod -Uri "https://api.github.com/repos/$ghRepo/actions/runs?per_page=15" -Headers $apiBaslik -TimeoutSec 30
+                $apiCevap = $true
+                $run = @($runs.workflow_runs | Where-Object { $_.head_sha -eq $sha -and $_.name -eq 'pages build and deployment' }) | Select-Object -First 1
+                if ($run) {
+                    if ($run.status -eq 'completed') { $durum = $run.conclusion } else { $durum = $run.status }
+                }
+            } catch {
+                $apiMesaj = $_.Exception.Message
+                $log.Add("UYARI: Actions API sorgulanamadi ($apiMesaj)") | Out-Null
+                # Rate limit / yetki hatasinda bos commit uretmemek icin dur.
+                if ($apiMesaj -match 'rate limit|403|Forbidden|API rate') { $apiBloke = $true; break }
+            }
+            if ($durum -in @('success','failure','cancelled','timed_out')) { break }
+            Start-Sleep -Seconds 20
+        }
+        if ($apiBloke) {
+            return [pscustomobject]@{ Sonuc = 'UYARI: Pages deploy kontrol edilemedi (GitHub API rate limit/erisim).'; Log = $log }
+        }
+        if (-not $apiCevap) {
+            return [pscustomobject]@{ Sonuc = 'UYARI: Pages deploy kontrol edilemedi (GitHub API erisilemedi).'; Log = $log }
+        }
+        if ($durum -in @('in_progress','queued','timeout')) {
+            # Deploy hala suruyor: iptal etmemek icin yeni commit ATILMAZ.
+            return [pscustomobject]@{ Sonuc = "UYARI: Pages deploy hala suruyor ($durum) - site birkac dakika icinde guncellenebilir."; Log = $log }
+        }
+        if ($durum -eq 'success') {
+            # Deploy basarili: canli dosya gercekten yayinda mi? (CDN gecikmesi icin bekle)
+            $canli = $false
+            $canliBitis = (Get-Date).AddSeconds(180)
+            while ((Get-Date) -lt $canliBitis) {
+                $u = "$siteTaban/$Yol" + "?v=" + [int64]([DateTimeOffset]::UtcNow.ToUnixTimeSeconds())
+                try {
+                    $resp = Invoke-WebRequest -Uri $u -UseBasicParsing -Method Head -TimeoutSec 20 -Headers @{ 'Cache-Control' = 'no-cache' }
+                    if ($resp.StatusCode -eq 200) { $canli = $true; break }
+                } catch { }
+                Start-Sleep -Seconds 10
+            }
+            if ($canli) { return [pscustomobject]@{ Sonuc = "OK (deploy $i. denemede yayinda)"; Log = $log } }
+            $log.Add("UYARI: deploy basarili ama canli dosya henuz 200 donmedi: $Yol") | Out-Null
+            return [pscustomobject]@{ Sonuc = 'UYARI: Pages deploy basarili ama canli dosya henuz yayinda degil (CDN gecikmesi olabilir).'; Log = $log }
+        }
+        if ($i -lt $Deneme) {
+            try {
+                $log.Add("Pages deploy dustu ($durum) - bos commit ile yeniden tetikleniyor ($i).") | Out-Null
+                & $GitExe -C $Repo commit --allow-empty -m "pages deploy tekrar denemesi ($i)" | Out-Null
+                # 2>&1 KULLANMA: PowerShell 5.1'de git'in stderr satiri
+                # NativeCommandError'a donusup basarili push'u hata gibi gosteriyor.
+                & $GitExe -C $Repo push origin main | Out-Null
+                if ($LASTEXITCODE -ne 0) {
+                    $log.Add('UYARI: tekrar deneme push basarisiz.') | Out-Null
+                    break
+                }
+                $log.Add('OK tekrar deneme push edildi.') | Out-Null
+            } catch {
+                $log.Add("UYARI: tekrar deneme yapilamadi ($($_.Exception.Message))") | Out-Null
+                break
+            }
+        }
+    }
+    return [pscustomobject]@{ Sonuc = "HATA: Pages deploy yayinlanmadi ($durum)."; Log = $log }
+}
+
+# ---------- 1. Hedef tarihi belirle ----------
+$HedefIso = ''
+$sehirler = New-Object System.Collections.Generic.HashSet[string]
+$tarihler = New-Object System.Collections.Generic.List[string]
+$sehirTarih = New-Object System.Collections.Generic.List[string]
+if ($Tarih -ne '') {
+    $d = [datetime]::ParseExact($Tarih, 'dd/MM/yyyy', [System.Globalization.CultureInfo]::InvariantCulture)
+    $HedefIso = $d.ToString('yyyy-MM-dd')
+}
+# Kaynaklari HER ZAMAN tara (hem otomatik tarih tespiti hem de -Tarih ile verilen
+# gunun sehir listesi icin gerekli).
+if (Test-Path $SrcBeyer) {
+        foreach ($f in Get-ChildItem $SrcBeyer -Filter '*.html') {
+            $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal|_ayni_yuzey|_ayni_sehir)?\.html$')
+            if ($m.Success) { $tarihler.Add($m.Groups[2].Value); $sehirTarih.Add($m.Groups[2].Value + '|' + $m.Groups[1].Value.ToLower()) | Out-Null }
+        }
+    }
+    if (Test-Path $SrcKilit) {
+        foreach ($f in Get-ChildItem $SrcKilit -Filter '*.html') {
+            $m = [regex]::Match($f.Name, '^kilit_yaris_(.+)_tum_kosular_(\d{8})\.html$')
+            if ($m.Success) { $tarihler.Add($m.Groups[2].Value); $sehirTarih.Add($m.Groups[2].Value + '|' + $m.Groups[1].Value.ToLower()) | Out-Null }
+        }
+    }
+    if (Test-Path $SrcSinif) {
+        foreach ($f in Get-ChildItem $SrcSinif -Filter '*.html') {
+            $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_(.+)_sinif_dusme_analizi\.html$')
+            if ($m.Success) { $tarihler.Add($m.Groups[1].Value.Replace('-','')); $sehirTarih.Add($m.Groups[1].Value.Replace('-','') + '|' + (ToAsciiLower $m.Groups[2].Value)) | Out-Null }
+        }
+    }
+    if (Test-Path $SrcSinifEski) {
+        foreach ($f in Get-ChildItem $SrcSinifEski -Filter '*.html') {
+            $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_(.+)_sinif_dusme_analizi\.html$')
+            if ($m.Success) { $tarihler.Add($m.Groups[1].Value.Replace('-','')); $sehirTarih.Add($m.Groups[1].Value.Replace('-','') + '|' + (ToAsciiLower $m.Groups[2].Value)) | Out-Null }
+        }
+    }
+    if (Test-Path $SrcTempo) {
+        foreach ($f in Get-ChildItem $SrcTempo -Filter '*.html') {
+            $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_onde_giden_.+\.html$')
+            if ($m.Success) { $tarihler.Add($m.Groups[1].Value.Replace('-','')) }
+        }
+    }
+    if ($HedefIso -eq '') {
+        if ($tarihler.Count -eq 0) { Write-Output 'HATA: kaynak klasorlerde tarihli rapor bulunamadi.'; exit 1 }
+        $enYeni = ($tarihler | Sort-Object -Descending | Select-Object -First 1)
+        $HedefIso = $enYeni.Substring(0,4) + '-' + $enYeni.Substring(4,2) + '-' + $enYeni.Substring(6,2)
+    }
+$Hedef = [datetime]::ParseExact($HedefIso, 'yyyy-MM-dd', $null)
+$gun = $Hedef.Day.ToString()
+$ayNo = $Hedef.ToString('MM')
+$hedefAy = $AyDosya[$ayNo]
+$TarihEtiket = "$gun $($AyAd[$ayNo]) $($Hedef.Year)"
+$ddMMyyyy = $Hedef.ToString('dd/MM/yyyy', [System.Globalization.CultureInfo]::InvariantCulture)
+$basic = $Hedef.ToString('yyyyMMdd')
+Write-Output "Hedef tarih: $ddMMyyyy"
+
+# Sehirler: yalnizca hedef tarihe ait cekirdek dosyalardan (beyerkilit/sinif)
+$hedefBasicSehir = $Hedef.ToString('yyyyMMdd')
+foreach ($kayit in $sehirTarih) {
+    $parca = $kayit -split '\|', 2
+    if ($parca[0] -eq $hedefBasicSehir) { $sehirler.Add($parca[1]) | Out-Null }
+}
+if ($sehirler.Count -eq 0) { Write-Output 'HATA: hedef tarihe ait sehir bulunamadi (kaynaklar eksik olabilir).'; exit 1 }
+
+# ---------- 2. Sehir siralamasi (ilk yaris saati) ----------
+$sira = New-Object System.Collections.Generic.List[string]
+try {
+    $cikti = & (Join-Path $PSScriptRoot 'tjk-ilk-yaris-saati.ps1') -Tarih $ddMMyyyy 2>&1 | Out-String
+    foreach ($satir in $cikti -split "`r?`n") {
+        $m = [regex]::Match($satir.Trim(), '^(.+?)\s+-> ilk yaris (\d{2}:\d{2})$')
+        if ($m.Success) {
+            $ad = ToAsciiLower ($m.Groups[1].Value.Trim())
+            foreach ($s in @($sehirler)) {
+                if ((ToAsciiLower $s) -eq $ad -and -not $sira.Contains($s)) { $sira.Add($s) }
+            }
+        }
+    }
+    if ($sira.Count -eq 0) { throw 'parse edilemedi' }
+    Write-Output "Siralama (TJK ilk yaris): $($sira -join ', ')"
+} catch {
+    Write-Output "UYARI: ilk yaris saati alinamadi ($($_.Exception.Message)) - mevcut site sirasi kullaniliyor."
+    $sira = New-Object System.Collections.Generic.List[string]
+    $mevcut = OkuDosya (Join-Path $RepoRoot 'raporlar.html')
+    foreach ($m in [regex]::Matches($mevcut, 'href="rapor/([a-z]+)-\d{1,2}-(?:ocak|subat|mart|nisan|mayis|haziran|temmuz|agustos|eylul|ekim|kasim|aralik)(?:-[a-z-]+)?\.html"')) {
+        $s = $m.Groups[1].Value
+        if ($sehirler.Contains($s) -and -not $sira.Contains($s)) { $sira.Add($s) }
+    }
+    foreach ($s in ($sehirler | Sort-Object)) { if (-not $sira.Contains($s)) { $sira.Add($s) } }
+}
+foreach ($s in ($sehirler | Sort-Object)) { if (-not $sira.Contains($s)) { $sira.Add($s) } }
+
+# ---------- 3. Rapor dosyalari ----------
+function KopyalaRapor([string]$kaynak, [string]$hedefAd, [switch]$BeyerTemizle) {
+    $hedef = Join-Path $RaporDir $hedefAd
+    $t = OkuDosya $kaynak
+    if ($t -notmatch 'googletagmanager') {
+        $t = $t -replace '</head>', ($Gtag + '</head>')
+    }
+    if ($BeyerTemizle) {
+        $parcalar = [regex]::Split($t, '(?s)(<div class="mesafe-fark-note">.*?</div>)')
+        for ($i = 0; $i -lt $parcalar.Count; $i++) {
+            if ($parcalar[$i] -notmatch '^<div class="mesafe-fark-note">') {
+                $parcalar[$i] = $parcalar[$i] -replace 'Beyer\s+(\d+)', '$1'
+                $parcalar[$i] = $parcalar[$i] -replace ' Beyer ', ' '
+            }
+        }
+        $t = $parcalar -join ''
+        # 03.10.2026: "Son yaris ayni pist/mesafe" kutulari kaldirildi (HER ZAMAN UYGULA)
+        $t = [regex]::Replace($t, '\s*<div class="match-notes">.*?</div>\s*</div>', '', [System.Text.RegularExpressions.RegexOptions]::Singleline)
+    }
+    YazDosya $hedef $t
+    return $hedef
+}
+
+# ---------- 3a. Kulvar kolonu (tempo raporlarinda ZORUNLU) ----------
+# 25.10.2026: Kulvar kolonu gunluk akista sessizce kayboluyordu (uretim
+# python'unda bs4 yoktu, hata yutuluyordu). Artik yukleme sirasinda
+# eksikse yeniden eklenir; hala eksikse yukleme sonunda cikis kodu 1 olur.
+function BulKulvarPython {
+    if ($script:PyKulvar -ne '') { return $script:PyKulvar }
+    $adaylar = @(
+        'C:\Users\Monster\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe'
+    )
+    $cmd = Get-Command python.exe -ErrorAction SilentlyContinue | Select-Object -First 1
+    if ($cmd) { $adaylar += $cmd.Source }
+    foreach ($a in $adaylar) {
+        if ($a -and (Test-Path $a)) { $script:PyKulvar = $a; return $a }
+    }
+    return $null
+}
+
+function KulvarVarMi([string]$yol) {
+    if (-not (Test-Path $yol)) { return $false }
+    return ((OkuDosya $yol) -match 'class="gate-chip"')
+}
+
+function KulvarEkle([string]$kaynak, [string]$sehir) {
+    if (-not (Test-Path $KulvarScript)) {
+        Write-Output "UYARI: kulvar script yok: $KulvarScript"
+        return
+    }
+    $py = BulKulvarPython
+    if (-not $py) { Write-Output 'UYARI: kulvar icin python bulunamadi.'; return }
+    $cikti = & $py $KulvarScript --date $HedefIso --report-dir (Split-Path $kaynak -Parent) `
+        --pattern (Split-Path $kaynak -Leaf) --track $sehir.ToUpperInvariant() `
+        --program-dir $KulvarProgramDir 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output "UYARI: kulvar eklenemedi ($sehir, kod $LASTEXITCODE): $($cikti -join ' | ')"
+    }
+}
+
+# 04.11.2026: sinif-dusme kaynagi eksikse (22:00 akisi bir nedenle uretemediyse)
+# yukleme sirasinda kendini onarir; rapor yine de siteye cikar.
+$script:SinifUretildi = $false
+function SinifUret {
+    if ($script:SinifUretildi) { return }
+    $script:SinifUretildi = $true
+    if (-not (Test-Path $SinifScript)) {
+        Write-Output "UYARI: sinif-dusme script yok: $SinifScript"
+        return
+    }
+    $py = BulKulvarPython
+    if (-not $py) { Write-Output 'UYARI: sinif-dusme icin python bulunamadi.'; return }
+    Write-Output "BILGI: sinif-dusme kaynagi eksik - yeniden uretiliyor ($HedefIso)."
+    $cikti = & $py $SinifScript --date $HedefIso 2>&1
+    if ($LASTEXITCODE -ne 0) {
+        Write-Output "UYARI: sinif-dusme uretilemedi (kod $LASTEXITCODE): $($cikti -join ' | ')"
+    } else {
+        Write-Output 'OK sinif-dusme yeniden uretildi.'
+    }
+}
+
+$kulvarEksik = New-Object System.Collections.Generic.List[string]
+$sinifTickEksik = New-Object System.Collections.Generic.List[string]
+$sinifEksik = New-Object System.Collections.Generic.List[string]
+
+$yeniDosyalar = New-Object System.Collections.Generic.List[string]
+$isList = @()
+$kartVerisi = @()
+foreach ($sehir in $sira) {
+    $g = SehirGoster $sehir
+    $taban = "$sehir-$gun-$hedefAy"
+    $bulundu = @{}
+
+    $beyer = Get-ChildItem $SrcBeyer -Filter "program_beyer_${sehir}_${basic}_normal.html" -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $beyer) { $beyer = Get-ChildItem $SrcBeyer -Filter "program_beyer_${sehir}_${basic}_ayni_yuzey.html" -ErrorAction SilentlyContinue | Select-Object -First 1 }
+    if (-not $beyer) { $beyer = Get-ChildItem $SrcBeyer -Filter "program_beyer_${sehir}_${basic}.html" -ErrorAction SilentlyContinue | Select-Object -First 1 }
+    $kilit = Get-ChildItem $SrcKilit -Filter "kilit_yaris_${sehir}_tum_kosular_${basic}.html" -ErrorAction SilentlyContinue | Select-Object -First 1
+    $istat = Get-ChildItem $SrcIstat -Filter '*.html' -ErrorAction SilentlyContinue | Where-Object { (ToAsciiLower ([System.IO.Path]::GetFileNameWithoutExtension($_.Name))) -eq (ToAsciiLower $sehir) } | Select-Object -First 1
+    if ($istat) {
+        $tIstatKontrol = OkuDosya $istat.FullName
+        $mIstatTarih = [regex]::Match($tIstatKontrol, '<title>[^<]*?(\d{2})\.(\d{2})\.(\d{4})')
+        if (-not $mIstatTarih.Success -or $mIstatTarih.Groups[1].Value.TrimStart('0') -ne $gun -or $mIstatTarih.Groups[2].Value -ne $ayNo -or $mIstatTarih.Groups[3].Value -ne $Hedef.Year.ToString()) {
+            Write-Output "EKSIK: $g icin istatistik dosyasi bayat ($($istat.Name)) - yok sayildi."
+            $istat = $null
+        }
+    }
+    $sinif = Get-ChildItem $SrcSinif -Filter "${HedefIso}_${sehir}_sinif_dusme_analizi.html" -ErrorAction SilentlyContinue | Select-Object -First 1
+    if (-not $sinif -and (Test-Path $SrcSinifEski)) { $sinif = Get-ChildItem $SrcSinifEski -Filter "${HedefIso}_${sehir}_sinif_dusme_analizi.html" -ErrorAction SilentlyContinue | Select-Object -First 1 }
+    if (-not $sinif -and -not $WhatIf) {
+        SinifUret
+        $sinif = Get-ChildItem $SrcSinif -Filter "${HedefIso}_${sehir}_sinif_dusme_analizi.html" -ErrorAction SilentlyContinue | Select-Object -First 1
+        if (-not $sinif -and (Test-Path $SrcSinifEski)) { $sinif = Get-ChildItem $SrcSinifEski -Filter "${HedefIso}_${sehir}_sinif_dusme_analizi.html" -ErrorAction SilentlyContinue | Select-Object -First 1 }
+    }
+    $tempo = Get-ChildItem $SrcTempo -Filter '*.html' -ErrorAction SilentlyContinue | Where-Object { $_.Name -match "^${HedefIso}_onde_giden_.*" -and $_.Name -match ("_" + [regex]::Escape($sehir) + "(_|\.)") } | Select-Object -First 1
+
+    if ($beyer) {
+        $t = OkuDosya $beyer.FullName
+        $kosu = ([regex]::Matches($t, '<section')).Count
+        $isList += [pscustomobject]@{ Tur='beyer'; SehirGoster=$g; Kaynak=$beyer.FullName; KaynakAd=$beyer.Name; HedefAd="$taban.html"; BeyerTemizle=$true; Bilgi="$kosu kosu" }
+        $bulundu['beyer'] = $kosu
+    } else { Write-Output "EKSIK: $g icin beyer kaynagi yok." }
+    if ($kilit) {
+        $isList += [pscustomobject]@{ Tur='kilit'; SehirGoster=$g; Kaynak=$kilit.FullName; KaynakAd=$kilit.Name; HedefAd="$taban-kilit-yaris.html"; BeyerTemizle=$false; Bilgi='' }
+        $bulundu['kilit'] = $true
+    } else { Write-Output "EKSIK: $g icin kilit kaynagi yok." }
+    if ($tempo) {
+        $isList += [pscustomobject]@{ Tur='tempo'; Sehir=$sehir; SehirGoster=$g; Kaynak=$tempo.FullName; KaynakAd=$tempo.Name; HedefAd="$taban-tempo.html"; BeyerTemizle=$false; Bilgi='' }
+        $bulundu['tempo'] = $true
+    } else { Write-Output "EKSIK: $g icin tempo kaynagi yok." }
+    if ($istat) {
+        $isList += [pscustomobject]@{ Tur='istatistik'; SehirGoster=$g; Kaynak=$istat.FullName; KaynakAd=$istat.Name; HedefAd="$taban-istatistik.html"; BeyerTemizle=$false; Bilgi='' }
+        $bulundu['istat'] = $true
+    } else { Write-Output "EKSIK: $g icin istatistik kaynagi yok." }
+    if ($sinif) {
+        $t = OkuDosya $sinif.FullName
+        $kosuS = ([regex]::Matches($t, '<section')).Count
+        $isList += [pscustomobject]@{ Tur='sinif'; SehirGoster=$g; Kaynak=$sinif.FullName; KaynakAd=$sinif.Name; HedefAd="$taban-sinif-dusme.html"; BeyerTemizle=$false; Bilgi="$kosuS kosu" }
+        $bulundu['sinif'] = $kosuS
+    } else { Write-Output "EKSIK: $g icin sinif-dusme kaynagi yok."; $sinifEksik.Add($g) | Out-Null }
+    $kartVerisi += [pscustomobject]@{ Sehir = $sehir; Goster = $g; Taban = $taban; Rapor = $bulundu }
+}
+
+# ---------- 3b. Eksiklik politikasi (30.09.2026 karari): eksik tur yuklemeye ENGEL DEGIL ----------
+# Eksikler loglanir + bildirim gosterilir, mevcut raporlar siteye yuklenir, eksik olan sonra tamamlanir.
+# -SkipTur parametresi geriye uyumluluk icin duruyor (artik kilit icin gerekli degil).
+# Tek durma sarti: HIC rapor bulunamadiysa (yuklenecek bir sey yoksa) eski site korunur.
+$skipNorm = @()
+foreach ($s in $SkipTur) {
+    $sl = ($s.ToString()).ToLowerInvariant().Trim()
+    if ($sl -like 'istat*') { $skipNorm += 'istat' }
+    elseif ($sl -like 'sinif*') { $skipNorm += 'sinif' }
+    elseif ($sl -eq 'kilit-yaris' -or $sl -eq 'kilit') { $skipNorm += 'kilit' }
+    elseif ($sl -ne '') { $skipNorm += $sl }
+}
+if ($skipNorm.Count -gt 0) { Write-Output "BILGI: SkipTur aktif - atlanan: $($skipNorm -join ', ')" }
+$eksikler = New-Object System.Collections.Generic.List[string]
+foreach ($k in $kartVerisi) {
+    foreach ($tur in @('beyer','kilit','tempo','istat','sinif')) {
+        if ($skipNorm -contains $tur) { continue }
+        if (-not $k.Rapor.ContainsKey($tur)) { $eksikler.Add("$($k.Goster)/$tur") | Out-Null }
+    }
+}
+if ($eksikler.Count -gt 0) {
+    Write-Output "EKSIKLERE RAGMEN DEVAM: hedef tarih $ddMMyyyy icin eksik kaynaklar: $($eksikler -join ', ')"
+    Write-Output 'Mevcut raporlar yuklenecek, eksikler sonra tamamlanacak.'
+    # TEK BILDIRIM politikasi (15.10.2026): ara bildirim yok, sadece sonda tek bildirim.
+}
+if ($isList.Count -eq 0) {
+    Write-Output "DURDU: hedef tarih $ddMMyyyy icin HIC rapor bulunamadi - siteye hicbir sey yazilmadi (eski raporlar korundu)."
+    if (-not $WhatIf) { BildirimGoster 'Spoodyman yukleme DURDU' "Hic rapor yok: $ddMMyyyy" }
+    exit 2
+}
+foreach ($is in $isList) {
+    if ($is.Tur -eq 'tempo' -and -not $WhatIf -and -not (KulvarVarMi $is.Kaynak)) {
+        KulvarEkle $is.Kaynak $is.Sehir
+    }
+    if ($is.BeyerTemizle) { KopyalaRapor $is.Kaynak $is.HedefAd -BeyerTemizle | Out-Null }
+    else { KopyalaRapor $is.Kaynak $is.HedefAd | Out-Null }
+    $yeniDosyalar.Add($is.HedefAd) | Out-Null
+    if ($is.Bilgi -ne '') { Write-Output "OK $($is.Tur): $($is.KaynakAd) -> $($is.HedefAd) ($($is.Bilgi))" }
+    else { Write-Output "OK $($is.Tur): $($is.KaynakAd) -> $($is.HedefAd)" }
+    if ($is.Tur -eq 'tempo') {
+        $hedefYol = Join-Path $RaporDir $is.HedefAd
+        if (KulvarVarMi $hedefYol) {
+            Write-Output "OK kulvar: $($is.HedefAd)"
+        } else {
+            Write-Output "EKSIK: $($is.HedefAd) tempo raporunda kulvar kolonu YOK."
+            $kulvarEksik.Add($is.HedefAd) | Out-Null
+        }
+    }
+    if ($is.Tur -eq 'sinif') {
+        # 28.10.2026 kurali: sinif dusme raporunda 6 ay / 1 yil en dusuk ikramiye
+        # kolonlari ve sadece tik isareti olmali (uretec eski kalirsa burada yakalanir).
+        $hedefYol = Join-Path $RaporDir $is.HedefAd
+        $tSinif = OkuDosya $hedefYol
+        $tikVar = ($tSinif -match 'Son 6 Ay En D[^<]*k') -and ($tSinif -match 'Son 1 Y[^<]*l En D[^<]*k') -and ($tSinif -match "class='tick'")
+        if ($tikVar) {
+            Write-Output "OK sinif tik: $($is.HedefAd)"
+        } else {
+            Write-Output "EKSIK: $($is.HedefAd) sinif-dusme raporunda 6 AY/1 YIL tik kolonlari YOK."
+            $sinifTickEksik.Add($is.HedefAd) | Out-Null
+        }
+    }
+}
+
+# ---------- 4. Degerlendirme (onceki gun) ----------
+$Onceki = $Hedef.AddDays(-1)
+$oncekiIso = $Onceki.ToString('yyyy-MM-dd')
+$oncekiGun = $Onceki.Day.ToString()
+$oncekiAyDosya = $AyDosya[$Onceki.ToString('MM')]
+$OncekiEtiket = "$oncekiGun $($AyAd[$Onceki.ToString('MM')]) $($Onceki.Year)"
+$degerKart = @()
+if (Test-Path $SrcDeger) {
+    foreach ($f in Get-ChildItem $SrcDeger -Filter "${oncekiIso}_*_evaluation.html") {
+        $m = [regex]::Match($f.Name, "^${oncekiIso}_(.+)_evaluation\.html$")
+        if (-not $m.Success) { continue }
+        $dsehir = ToAsciiLower $m.Groups[1].Value
+        if ($dsehir -eq 'general' -or $dsehir -like '*ayni_yuzey*') { continue }
+        $g = SehirGoster $dsehir
+        $hedefAd = "$dsehir-$oncekiGun-$oncekiAyDosya-degerlendirme.html"
+        $t = OkuDosya $f.FullName
+        $satir = ([regex]::Matches($t, '<tr><td>')).Count
+        if ($t -notmatch 'googletagmanager') { $t = $t -replace '</head>', ($Gtag + '</head>') }
+        YazDosya (Join-Path $RaporDir $hedefAd) $t
+        $yeniDosyalar.Add($hedefAd) | Out-Null
+        $degerKart += [pscustomobject]@{ Sehir = $dsehir; Goster = $g; Dosya = $hedefAd; Kosu = $satir }
+        Write-Output "OK degerlendirme: $($f.Name) -> $hedefAd ($satir kosu)"
+    }
+}
+if ($degerKart.Count -eq 0) { Write-Output "UYARI: $oncekiIso icin degerlendirme dosyasi yok - kart uretilmedi." }
+
+# ---------- 5. Eski gun dosyalari ----------
+# Ayni-yuzey degerlendirmeleri siteye yuklenmez; eski kalintilar temizlenir.
+foreach ($f in Get-ChildItem $RaporDir -Filter '*ayni_yuzey*') {
+    Write-Output "SIL (ayni-yuzey): rapor/$($f.Name)"
+    if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+}
+$ayDesen = $AyTers.Keys -join '|'
+$silinenTarihler = New-Object System.Collections.Generic.HashSet[string]
+foreach ($f in Get-ChildItem $RaporDir -Filter '*.html') {
+    $m = [regex]::Match($f.Name, "^([a-z]+)-(\d{1,2})-($ayDesen)(-[a-z-]+)?\.html$")
+    if (-not $m.Success) { continue }
+    if ($m.Groups[2].Value -eq $gun -and $m.Groups[3].Value -eq $hedefAy) { continue }
+    if ($m.Groups[2].Value -eq $oncekiGun -and $m.Groups[3].Value -eq $oncekiAyDosya -and $m.Groups[4].Value -eq '-degerlendirme') { continue }
+    $silinenTarihler.Add("$($m.Groups[2].Value).$($AyTers[$m.Groups[3].Value]).$($Hedef.Year)") | Out-Null
+    Write-Output "SIL: rapor/$($f.Name)"
+    if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+}
+
+# ---------- 5b. Kaynak klasor temizligi (AGENTS.md madde 11: yalnizca en guncel gun kalir) ----------
+if (Test-Path $SrcBeyer) {
+    foreach ($f in Get-ChildItem $SrcBeyer -Filter '*.html' -ErrorAction SilentlyContinue) {
+        $m = [regex]::Match($f.Name, '^program_beyer_(.+)_(\d{8})(_normal|_ayni_yuzey|_ayni_sehir)?\.html$')
+        if ($m.Success -and $m.Groups[2].Value -ne $basic) {
+            Write-Output "SIL (kaynak beyer): $($f.Name)"
+            if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+        }
+    }
+}
+if (Test-Path $SrcKilit) {
+    foreach ($f in Get-ChildItem $SrcKilit -Filter '*.html' -ErrorAction SilentlyContinue) {
+        $m = [regex]::Match($f.Name, '^kilit_yaris_(.+)_tum_kosular_(\d{8})\.html$')
+        if ($m.Success -and $m.Groups[2].Value -ne $basic) {
+            Write-Output "SIL (kaynak kilit): $($f.Name)"
+            if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+        }
+    }
+}
+foreach ($sk in @($SrcSinif, $SrcSinifEski)) {
+    if (-not $sk -or -not (Test-Path $sk)) { continue }
+    foreach ($f in Get-ChildItem $sk -Filter '*_sinif_dusme_analizi.html' -ErrorAction SilentlyContinue) {
+        $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_(.+)_sinif_dusme_analizi\.html$')
+        if ($m.Success -and $m.Groups[1].Value -ne $HedefIso) {
+            Write-Output "SIL (kaynak sinif): $($f.Name)"
+            if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+        }
+    }
+}
+if (Test-Path $SrcTempo) {
+    foreach ($f in Get-ChildItem $SrcTempo -Filter '*.html' -ErrorAction SilentlyContinue) {
+        $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_.+\.html$')
+        if ($m.Success -and $m.Groups[1].Value -ne $HedefIso) {
+            Write-Output "SIL (kaynak tempo): $($f.Name)"
+            if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+        }
+    }
+}
+if (Test-Path $SrcDeger) {
+    $degerTarihler = New-Object System.Collections.Generic.HashSet[string]
+    foreach ($f in Get-ChildItem $SrcDeger -Filter '*.html' -ErrorAction SilentlyContinue) {
+        $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_.+\.html$')
+        if ($m.Success) { $degerTarihler.Add($m.Groups[1].Value) | Out-Null }
+    }
+    if ($degerTarihler.Count -gt 0) {
+        $enYeniDeger = ($degerTarihler | Sort-Object -Descending | Select-Object -First 1)
+        foreach ($f in Get-ChildItem $SrcDeger -Filter '*.html' -ErrorAction SilentlyContinue) {
+            $m = [regex]::Match($f.Name, '^(\d{4}-\d{2}-\d{2})_.+\.html$')
+            if ($m.Success -and $m.Groups[1].Value -ne $enYeniDeger) {
+                Write-Output "SIL (kaynak degerlendirme): $($f.Name)"
+                if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+            }
+        }
+    }
+}
+if ((Test-Path $SrcIstat) -and $sehirler.Count -gt 0) {
+    foreach ($f in Get-ChildItem $SrcIstat -Filter '*.html' -ErrorAction SilentlyContinue) {
+        $k = ToAsciiLower ([System.IO.Path]::GetFileNameWithoutExtension($f.Name))
+        if (-not $sehirler.Contains($k)) {
+            Write-Output "SIL (kaynak istatistik): $($f.Name)"
+            if (-not $WhatIf) { Remove-Item $f.FullName -Force }
+        }
+    }
+}
+
+# ---------- 6. Kartlar ----------
+function KartBlok([string]$tag, [string]$tarihEtiket, [string]$href, [string]$baslik, [string]$desc) {
+    return @"
+<article class="card">
+  <div class="meta">
+    <span class="tag">$tag</span>
+    <span>$tarihEtiket</span>
+  </div>
+  <h3><a href="$href">$baslik</a></h3>
+  <p class="desc">$desc</p>
+</article>
+"@
+}
+
+$yeniKartlar = New-Object System.Collections.Generic.List[string]
+foreach ($d in $degerKart) {
+    $yeniKartlar.Add((KartBlok 'Önceki Günün Değerlendirmesi' $OncekiEtiket "rapor/$($d.Dosya)" "$($d.Goster) $OncekiEtiket Sonuç Değerlendirmesi" "$($d.Goster) $($d.Kosu) koşu için hız figürü metriklerinin sonuç doğruluk analizi (Erken/Kapanış/Son 3 Ort./Son Hız).")) | Out-Null
+}
+foreach ($k in $kartVerisi) {
+    $r = $k.Rapor
+    if ($r.ContainsKey('beyer')) {
+        $yeniKartlar.Add((KartBlok 'Hız Figürleri' $TarihEtiket "rapor/$($k.Taban).html" "$($k.Goster) $TarihEtiket Hız Figürü Raporu" "$($k.Goster) $($r['beyer']) koşu için erken/kapanış hızı, son 3 ortalaması ve form analizi.")) | Out-Null
+    }
+    if ($r.ContainsKey('kilit')) {
+        $yeniKartlar.Add((KartBlok 'Kilit Yarış Analizi' $TarihEtiket "rapor/$($k.Taban)-kilit-yaris.html" "$($k.Goster) $TarihEtiket Kilit Yarış Analizi" 'Sıcak form ve referans grup karşılaştırmalarıyle kilit yarış tespitleri.')) | Out-Null
+    }
+    if ($r.ContainsKey('tempo')) {
+        $yeniKartlar.Add((KartBlok 'Tempo Analizi' $TarihEtiket "rapor/$($k.Taban)-tempo.html" "$($k.Goster) $TarihEtiket Tempo Analizi" "Önde giden figürleri, erken hız top-3'ü ve frontrunner güven seviyeleri.")) | Out-Null
+    }
+    if ($r.ContainsKey('istat')) {
+        $yeniKartlar.Add((KartBlok 'İstatistik ve Galoplar' $TarihEtiket "rapor/$($k.Taban)-istatistik.html" "$($k.Goster) $TarihEtiket İstatistik ve Galoplar" 'Pist eğilimi, dikkat çekici galoplar, J/A kombo ve ara veren at istatistikleri.')) | Out-Null
+    }
+    if ($r.ContainsKey('sinif')) {
+        $yeniKartlar.Add((KartBlok 'Sınıf Düşme/Yükselme Analizi' $TarihEtiket "rapor/$($k.Taban)-sinif-dusme.html" "$($k.Goster) $TarihEtiket Sınıf Düşme/Yükselme Analizi" "$($k.Goster) $($r['sinif']) koşu için sınıf düşen, yükselen ve nötr atların 1.lik ikramiyesi karşılaştırması.")) | Out-Null
+    }
+}
+
+$tarihliHref = 'href="rapor/[a-z_]+-\d{1,2}-(?:' + ($AyTers.Keys -join '|') + ')(?:-[a-z-]+)?\.html"'
+foreach ($sayfa in @((Join-Path $RepoRoot 'raporlar.html'), (Join-Path $RepoRoot 'index.html'))) {
+    $html = OkuDosya $sayfa
+    $bloklar = [regex]::Matches($html, '(?s)<article class="card">.*?</article>')
+    foreach ($b in $bloklar) {
+        if ($b.Value -match $tarihliHref) { $html = $html.Replace($b.Value, '') }
+    }
+    $ekle = ($yeniKartlar -join "`r`n") + "`r`n"
+    $html = [regex]::Replace($html, '(?m)^([ \t]*)<div class="cards-grid">\s*\r?\n', "`$0" + $ekle, 1)
+    YazDosya $sayfa $html
+    Write-Output "OK kartlar: $([System.IO.Path]::GetFileName($sayfa)) ($($yeniKartlar.Count) kart eklendi)"
+}
+
+# ---------- 7. Sitemap ----------
+$sitemapYol = Join-Path $RepoRoot 'sitemap.xml'
+$sm = OkuDosya $sitemapYol
+$tabanUrl = 'https://spoodymann.github.io/spoodymann'
+$m0 = [regex]::Match($sm, '(https://[^<"]+/spoodymann)/rapor/')
+if ($m0.Success) { $tabanUrl = $m0.Groups[1].Value }
+$sm = [regex]::Replace($sm, '(?s)<url>\s*<loc>[^<]*?/rapor/[a-z_]+-\d{1,2}-(?:' + ($AyTers.Keys -join '|') + ')(?:-[a-z-]+)?\.html</loc>\s*</url>\s*', '')
+$yeniUrl = New-Object System.Collections.Generic.List[string]
+foreach ($d in $yeniDosyalar) {
+    $yeniUrl.Add("<url>`r`n    <loc>$tabanUrl/rapor/$d</loc>`r`n  </url>") | Out-Null
+}
+$sm = $sm -replace '</urlset>', (($yeniUrl -join "`r`n") + "`r`n</urlset>")
+YazDosya $sitemapYol $sm
+Write-Output "OK sitemap: $($yeniUrl.Count) URL eklendi"
+
+# ---------- 8. Ozet ----------
+Write-Output '---'
+Write-Output "Eklenen dosya: $($yeniDosyalar.Count), eklenen kart: $($yeniKartlar.Count)"
+if ($kulvarEksik.Count -gt 0) {
+    Write-Output "UYARI: kulvar kolonu eksik tempo raporlari: $($kulvarEksik -join ', ')"
+} else {
+    Write-Output 'OK kulvar: tum tempo raporlarinda kulvar kolonu var.'
+}
+if ($sinifTickEksik.Count -gt 0) {
+    Write-Output "UYARI: 6 ay/1 yil tik kolonlari eksik sinif-dusme raporlari: $($sinifTickEksik -join ', ')"
+} else {
+    Write-Output 'OK sinif tik: tum sinif-dusme raporlarinda 6 ay/1 yil tik kolonlari var.'
+}
+$eski = ($silinenTarihler -join ', ')
+if ($eski -eq '') { $eski = 'yok' }
+Write-Output "Silinen eski raporlar: $eski"
+$commitGun = $Hedef.ToString('dd.MM.yyyy')
+if ($silinenTarihler.Count -gt 0) {
+    $commitTam = "$commitGun raporlari eklendi, $eski raporlari silindi"
+} else {
+    $commitTam = "$commitGun raporlari eklendi"
+}
+Write-Output "Onerilen commit mesaji: $commitTam"
+$mesajDosya = 'C:\Users\Monster\OneDrive\Desktop\spoodyman-commit-mesaji.txt'
+$mesajIcerik = "Tarih: $(Get-Date -Format 'dd.MM.yyyy HH:mm')`r`nOnerilen commit mesaji: $commitTam`r`nEklenen dosya: $($yeniDosyalar.Count), eklenen kart: $($yeniKartlar.Count)`r`nSilinen eski raporlar: $eski`r`n"
+$deployDurum = ''
+if (-not $WhatIf) {
+    [System.IO.File]::WriteAllText($mesajDosya, $mesajIcerik, $NoBom)
+    Write-Output "Commit mesaji dosyaya yazildi: $mesajDosya"
+    # ---------- 8b. Otomatik commit + push (19.09.2026) ----------
+    $pushYapildi = $false
+    try {
+        $GitExe = (Get-Command git.exe -ErrorAction SilentlyContinue | Select-Object -ExpandProperty Source -First 1)
+        if (-not $GitExe) {
+            $aday = @(
+                "$env:LOCALAPPDATA\GitHubDesktop\app-3.6.5\resources\app\git\cmd\git.exe",
+                'C:\Program Files\Git\cmd\git.exe'
+            ) + ((Get-ChildItem "$env:LOCALAPPDATA\GitHubDesktop" -Recurse -Filter 'git.exe' -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName -First 1))
+            foreach ($a in $aday) { if ($a -and (Test-Path $a)) { $GitExe = $a; break } }
+        }
+        if (-not $GitExe) { throw 'git.exe bulunamadi.' }
+        & $GitExe -C $RepoRoot add -A
+        if ($LASTEXITCODE -ne 0) { throw "git add basarisiz (kod $LASTEXITCODE)." }
+        $degisen = & $GitExe -C $RepoRoot status --porcelain
+        if ([string]::IsNullOrWhiteSpace($degisen)) {
+            Write-Output 'BILGI: degisiklik yok - commit atlaniyor.'
+        } else {
+            & $GitExe -C $RepoRoot commit -m $commitTam
+            if ($LASTEXITCODE -ne 0) { throw "git commit basarisiz (kod $LASTEXITCODE)." }
+            Write-Output "OK git commit: $commitTam"
+            & $GitExe -C $RepoRoot push origin main
+            if ($LASTEXITCODE -ne 0) { throw "git push basarisiz (kod $LASTEXITCODE). GitHub Desktop'tan Push origin yapin." }
+            Write-Output 'OK git push: origin main'
+            $pushYapildi = $true
+        }
+    } catch {
+        Write-Output "UYARI: otomatik commit/push yapilamadi ($($_.Exception.Message))"
+        $commitTam = "$commitTam (push YAPILAMADI)"
+    }
+    # ---------- 8c. Pages deploy dogrulama + otomatik tekrar (05.11.2026) ----------
+    # Push basarili olsa da GitHub Pages deploy adimi dusebiliyor; o zaman site
+    # eski icerikte kalir. Deploy izlenir, gerekirse yeniden tetiklenir.
+    $deployDurum = ''
+    if ($pushYapildi) {
+        if ($yeniDosyalar.Count -gt 0) { $ornekYol = 'rapor/' + $yeniDosyalar[0] } else { $ornekYol = 'raporlar.html' }
+        try {
+            $deploySonuc = Invoke-PagesDeployKontrol -GitExe $GitExe -Repo $RepoRoot -Yol $ornekYol
+            foreach ($satir in $deploySonuc.Log) { Write-Output $satir }
+            $deployDurum = [string]$deploySonuc.Sonuc
+        } catch {
+            $deployDurum = "UYARI: Pages deploy kontrolu yapilamadi ($($_.Exception.Message))"
+        }
+        Write-Output "Pages deploy: $deployDurum"
+    }
+    # TEK BILDIRIM: basari + eksik + push durumu tek seste birlesir.
+    $sonMesaj = $commitTam
+    if ($eksikler.Count -gt 0) { $sonMesaj = "$sonMesaj | Eksik ($($eksikler.Count)): $($eksikler -join ', ')" }
+    if ($kulvarEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | KULVAR YOK: $($kulvarEksik -join ', ')" }
+    if ($sinifTickEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | SINIF TIK YOK: $($sinifTickEksik -join ', ')" }
+    if ($sinifEksik.Count -gt 0) { $sonMesaj = "$sonMesaj | SINIF DUSME YOK: $($sinifEksik -join ', ')" }
+    if ($deployDurum -ne '' -and $deployDurum -notlike 'OK*') { $sonMesaj = "$sonMesaj | $deployDurum" }
+    BildirimGoster 'Spoodyman 22:30 yukleme bitti' $sonMesaj
+}
+# Kulvar kolonu eksikse yukleme "basarili" sayilmaz (gunluk akis SiteYukle=1 gosterir).
+if ($kulvarEksik.Count -gt 0) { exit 1 }
+# Sinif-dusme raporu eksikse de yukleme basarisiz sayilir (04.11.2026 karari).
+if ($sinifEksik.Count -gt 0) { exit 1 }
+# Pages deploy yayinlanmadiysa site guncellenmemis demektir (05.11.2026 karari).
+if ($deployDurum -like 'HATA*') { exit 1 }

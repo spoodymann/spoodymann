@@ -1,0 +1,208 @@
+# Spoodyman - Proje Talimatları
+
+Bu repo, Spoodyman at yarışı raporları sitesidir (`raporlar.html` liste sayfası, raporlar `rapor/` klasöründe).
+
+**ÖNEMLİ:** Çalışılacak asıl repo klasörü: `C:\Users\Monster\OneDrive\Belgeler\GitHub\spoodyman`
+(Düzenlemeler buraya yapılır; commit+push OTOMATİKTİR — `scripts/site-yukle-22-30.ps1` 8b adımı yapar. Düşerse kullanıcı GitHub Desktop ile basar.)
+
+## Günlük rapor ekleme iş akışı (HER GÜN otomatik uygula)
+
+Yeni günün raporları (kaynak dosyalar) masaüstündeki şu klasörlerde hazır gelir:
+- `C:\Users\Monster\OneDrive\Desktop\kilit yarış arşivi\` → kilit yarış
+- `C:\Users\Monster\OneDrive\Desktop\beyer raporu\` → hız figürü (beyer)
+- `C:\Users\Monster\OneDrive\Desktop\istatistik ve galop\` → istatistik ve galop
+- `C:\Users\Monster\OneDrive\Desktop\sınıf düşme analizi\` → **sınıf düşme/yükselme** (`*_sinif_dusme_analizi.html`)
+- `C:\Users\Monster\OneDrive\Desktop\frontrunner\` → tempo analizi (`2026-09-02_onde_giden_*.html`)
+
+Şu sırayla yap:
+
+1. **Günün ilk yarışını belirle (rapor sıralaması için):**
+   `scripts/tjk-ilk-yaris-saati.ps1` scriptini çalıştır: `powershell -NoProfile -ExecutionPolicy Bypass -File scripts\tjk-ilk-yaris-saati.ps1 -Tarih dd/MM/yyyy`
+   Şehirler, **en erken ilk yarış saati önce olacak şekilde** `raporlar.html` ve `index.html`'de sıralanır.
+
+2. **Rapor dosyalarını `rapor/` klasörüne ekle.**
+   İsimlendirme: `<sehir>-<gun>-<ay>.html` (örn. `istanbul-2-eylul.html`, `elazig-2-eylul-kilit-yaris.html`).
+   Tür ekleri: `-kilit-yaris`, `-tempo`, `-istatistik`, `-sinif-dusme`.
+
+3. **Her rapor dosyasına Google Analytics ekle** (yoksa):
+   ```html
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-N0CWBQ8K4X"></script>
+   <script>
+     window.dataLayer = window.dataLayer || [];
+     function gtag(){dataLayer.push(arguments);}
+     gtag('js', new Date());
+     gtag('config', 'G-N0CWBQ8K4X');
+   </script>
+   ```
+   `</head>` etiketinden hemen önce.
+
+4. **Hız Figürü (beyer) raporlarında `Beyer` etiketi temizliği:**
+   - `Beyer\s+(\d+)` → `$1`
+   - ` Beyer ` → ` ` (boşluklu)
+   - NOT: `mesafe-fark-note` blokları (`class="mesafe-fark-note"`) ve başlıklardaki mesafe bilgisi (örn. `İSTANBUL 1. Koşu 1300m - Sentetik`) ASLA silinmez.
+   - **03.10.2026 kararı (HER ZAMAN UYGULA):** `match-notes` blokları
+     (`<div class="match-notes">` → "Son yarış aynı pist/mesafe ...") SİLİNİR.
+     Beyer üreteci (`report_program.py` → `_race_match_notes`) bunu üretmez;
+     `site-yukle-22-30.ps1` (`KopyalaRapor -BeyerTemizle`) yine de süpürür.
+
+5. **`raporlar.html` VE `index.html`'e kart ekle** (her rapor için 1 kart):
+   - `div.cards-grid` içine, aynı gün içinde önce en erken ilk yarışlı şehir, sonra diğerleri.
+   - Kart etiketleri: `Hız Figürleri`, `Kilit Yarış Analizi`, `Tempo Analizi`, `İstatistik ve Galoplar`, `Sınıf Düşme/Yükselme Analizi`.
+   - Açıklamada koşu sayısı belirtilir (örn. "İstanbul 9 koşu için ...").
+
+6. **`sitemap.xml` güncelle:** Eski günün rapor URL'lerini sil, yeni günün 10 rapor URL'sini ekle (rehber URL'leri sabit kalır).
+
+7. **ÖNCEKİ GÜNÜN RAPORLARINI SİL (kritik kural):**
+   Yeni günün raporları eklenince bir önceki günün tüm raporları **silinir**:
+   - `index.html` ve `raporlar.html`'deki eski günün kartlarını kaldır.
+   - `rapor/` klasöründeki eski günün dosyalarını sil (git rm).
+   - `sitemap.xml`'deki eski gün URL'lerini kaldır.
+   Sitede yalnızca en güncel günün raporları kalır.
+
+8. **Önceki günün sonuç değerlendirmesini üret (HER GÜN):**
+   Bu rapor, **bir önceki günün yarış sonuçlarına** göre hız figürü metriklerinin
+   (Erken / Kapanış / Son 3 Ort. / Son Hız) doğruluk analizidir.
+   Beyer projesinde çalıştır:
+   ```
+   python src\daily_result_evaluation.py --date <YYYY-MM-DD> --split-tracks
+   ```
+   (çalışma dizini: `C:\Users\Monster\Documents\Codex\2026-05-25\tjk-org-sitesinden-son-1-y\tjk_beyer_project`)
+   - `--date`: **önceki günün** ISO tarihi (örn. bugün 07.09 ise `2026-09-06`).
+   - Sonuçlar DB'de (`tjk_beyer_v2.db`) olmalıdır; DB'de sonuç yoksa değerlendirme üretilemez
+     (sonuçlar genellikle yarış günü akşamı/sonrasında DB'ye işlenir).
+   - `reports\daily_beyer\<date>_<sehir>_evaluation.html` dosyaları oluşur; sadece
+     şehir başına değerlendirme dosyaları kullanılır (`general` dosyası yüklenmez).
+   - Değerlendirmede "Aynı Yüzey" kartları/sütunları ve "Kontrol edilmesi gereken
+     yüksek Son Hız liderleri" notu ÜRETİLMEZ (kullanıcı onayladı, HER ZAMAN UYGULA).
+
+9. **Değerlendirme dosyalarını `rapor/` klasörüne ekle + kart + sitemap:**
+   - Dosyaları `<sehir>-<gun>-<ay>-degerlendirme.html` adıyla kopyala
+     (örn. `istanbul-6-eylul-degerlendirme.html`). gtag bloğunu `</head>` öncesine ekle.
+   - `raporlar.html` ve `index.html`'e, diğer kartların **üstüne** 1'er kart ekle.
+     Etiket: `Önceki Günün Değerlendirmesi`. Açıklamada koşu sayısı belirtilir.
+   - `sitemap.xml`'e değerlendirme URL'lerini ekle (rapor URL'leriyle birlikte).
+   - Eski günün değerlendirme dosyasını/kartlarını/URL'lerini SİL (yalnızca en güncel
+     "önceki günün değerlendirmesi" kalır).
+   - **Aynı-yüzey kuralı (09.09.2026'dan itibaren, HER ZAMAN UYGULA):** `*ayni_yuzey*`
+     değerlendirme dosyaları ÜRETİLMEZ ve siteye YÜKLENMEZ. `rapor/` içindeki
+     `*ayni_yuzey*` dosyaları, kartları ve sitemap URL'leri her yüklemede SİLİNİR
+     (`scripts/site-yukle-22-30.ps1` bunu otomatik yapar).
+
+9b. **Adana sentetik par time güncellemesi (beyer projesinde otomatik):**
+   Adana hipodromunda sentetik pist yeni olduğundan par time örneği azdır.
+   `daily_results_beyer.py` (beyer projesi `src/`) her sonuç işlemede, o gün Adana
+   sentetik koşusu varsa Adana SENTETIK par time'larını otomatik yeniden hesaplar
+   (`rebuild_par_times` track/surface filtreli; diğer par time'lar ve aylık kilit
+   değişmez). Manuel çağrı gerekirse:
+   ```
+   python src\daily_results_beyer.py --date YYYY-MM-DD
+   ```
+   Bu komut özetinde "Adana sentetik par time güncelleme" satırı görünür.
+
+10. **Commit/push (OTOMATİK, 19.09.2026'dan beri):** `scripts/site-yukle-22-30.ps1` 8b adımı
+   `git add -A` + commit + `push origin main` yapar. Commit mesajı formatı, örn:
+   `02.09.2026 raporlari eklendi, 01.09 raporlari silindi`
+   Otomatik push DÜŞERSE kullanıcıya kısa commit mesajı ver
+   (GitHub Desktop: Commit to main → Push origin).
+
+10b. **Pages deploy doğrulaması (05.11.2026, HER ZAMAN UYGULA):** Push başarılı olsa da
+   GitHub Pages "deploy" adımı düşebilir; bu durumda site eski içerikte kalır
+   (05.11.2026'da 6 Kasım raporlarının yayınlanmamasının nedeni buydu). Artık
+   `site-yukle-22-30.ps1` adım 8c push sonrası Actions çalışmasını izler ve canlı
+   dosyanın 200 döndüğünü doğrular; deploy düşerse boş commit ile en fazla 2 kez
+   yeniden tetikler. Yine yayınlanmazsa bildirimde
+   `HATA: Pages deploy yayinlanmadi` geçer ve script çıkış kodu 1 verir.
+   Deploy 15 dk'ya kadar beklenir; hâlâ `in_progress` ise **yeni commit atılmaz**
+   (sağlıklı deploy iptal edilmesin), sadece `UYARI` verilir. 06.11.2026'da Pages
+   deploy'u 6 dk sürdüğü için eski 4 dk sınırı yanlış "düştü" sayıyordu.
+
+11. **KAYNAK KLASÖR TEMİZLİĞİ (10.10.2026'dan itibaren, HER ZAMAN UYGULA):**
+    Yeni günün raporları siteye yüklendikten sonra masaüstündeki kaynak
+    klasörlerdeki eski tarihli dosyalar KALICI OLARAK SİLİNİR (yalnızca
+    klasörden değil, Geri Dönüşüm Kutusu'ndan da silinir — Shift+Delete /
+    kalıcı silme), yalnızca en güncel gün kalır:
+    - `frontrunner\` → yalnızca `YYYY-MM-DD_*` en yeni tarih kalır
+      (örn. `2026-10-10_*` varken `2026-10-0*` eskiler silinir).
+    - `beyer raporu\`, `kilit yarış arşivi\`, `sınıf düşme analizi\` →
+      yalnızca yeni günün tarihi kalır (örn. `*20261010*`).
+    - `istatistik ve galop\` → dosya adında tarih yoktur (şehir adı);
+      yeni günde yer alMAyan şehirlerin dosyaları silinir
+      (örn. yeni gün Adana+İstanbul ise `Ankara.html`, `Diyarbakir.html`,
+      `Izmir.html` silinir, yalnızca yeni günün şehirleri kalır).
+    - `günlük sonuç değerlendirme raporu\` → yalnızca en güncel
+      değerlendirme tarihi kalır.
+
+## Diğer kurallar
+- **git yolu:** `git` artık normal şekilde çalışır (kısayol:
+  `C:\Users\Monster\AppData\Roaming\npm\git.cmd` → `C:\Program Files\Git\cmd\git.exe`).
+  Yine de "git bulunamadı" hatası alırsan tam yolu kullan:
+  `& "C:\Program Files\Git\cmd\git.exe" status`.
+- **"Siteye yükle" (veya "yükle", "push da yap") dendiğinde commit+push'u HER ZAMAN asistan yapar;
+  kullanıcının ayrıca belirtmesine GEREK YOK (script olsun olmasın, ad-hoc değişiklikler dahil).**
+- Commit+push otomatiktir (asistan/script yapar). SADECE otomatik push düşerse
+  kullanıcıya raporları commit/push için adım adım talimat ver
+  (GitHub Desktop: Commit to main → Push origin).
+- TJK sitesi otomatik isteklerde bazen 403 verir; script browser User-Agent kullanır. 403 olursa kullanıcıdan saat bilgisini iste.
+- `rapor/` içindeki rehber dosyaları (`hiz-figur-rehberi`, `kilit-yaris-rehberi`, `istatistik-galop-rehberi`, `tempo-analizi-rehberi`) günlük temizlikte SİLİNMEZ.
+- `gidişhat analizi` klasöründeki `*_sinif_dusme_analizi.html` dosyaları yüklenir.
+  `*_gidisat_raporu.html` 26.09.2026 kararıyla ARTIK ÜRETİLMEZ
+  (`daily_gidisat_otomasyon.py` içinde kapalı; `--gidishat` ile açılır).
+  `gidisat_tempo_stil_raporu.html` de 26.09.2026 kararıyla ARTIK ÜRETİLMEZ
+  (aynı `--gidishat` bayrağına bağlı).
+
+## KULVAR KOLONU (TEMPO RAPORLARI) — ZORUNLU, 25.10.2026
+
+- Her tempo raporunda (`rapor/<sehir>-<gun>-<ay>-tempo.html`) **Kulvar** kolonu
+  olmak ZORUNDADIR: atın bugünkü kulvar (start) numarası + o kulvarın bu
+  pist/mesafedeki koşu/galibiyet sayısı ve kazanma yüzdesi.
+  Kolon **Pozisyonlar ile Tarih arasında** yer alır; açıklama kutusunda
+  `Kulvar:` notu ve kapsanan tarih aralığı bulunur.
+- Üretim: `...\tjk_beyer_project\src\inject_tempo_gate_stats.py`
+  (`report_frontrunner.py` raporu yazdıktan sonra otomatik çağırır).
+- Yükleme güvencesi: `scripts/site-yukle-22-30.ps1` tempo dosyasını kopyalamadan
+  önce kulvar yoksa kendisi ekler; hâlâ yoksa `EKSIK: ... kulvar kolonu YOK`
+  yazar, bildirimde `KULVAR YOK` geçer ve script **çıkış kodu 1** verir
+  (günlük akışta `SiteYukle=1` görünür).
+- 25.10.2026 kök neden: otomasyonun kullandığı Python'da `bs4` yoktu ve hata
+  `try/except` içinde yutuluyordu. `inject_tempo_gate_stats.py` artık `bs4`'ü
+  proje içindeki `.codex-python-packages` klasöründen yükler; `report_frontrunner.py`
+  modül yüklenemezse çıkış kodu 5 verir.
+- Kulvar eksikse ilk bakılacaklar: (1) tempo kaynağı `frontrunner\` dosyasında
+  `class="gate-chip"` var mı, (2) `data\programs\<tarih>_<sehir>_program_raw.csv`
+  mevcut mu, (3) Python'da `bs4` yükleniyor mu, (4) program CSV'sinde **St** kolonu
+  `5 - DS` gibi ek notlu mu (25.10.2026: yalnızca rakam bekleyen `isdigit()`
+  kontrolü yüzünden o atların kulvarı boş kalıyordu; `parse_program` artık
+  baştaki rakamı alır). **St = kulvar (start) numarasıdır**; yanındaki `DS`
+  üst simgesi TJK'da "Tercihli Start" demektir, numarayı değiştirmez.
+
+## SINIF DÜŞME ANALİZİ EK KOLONLARI — ZORUNLU, 28.10.2026
+
+- `rapor/<sehir>-<gun>-<ay>-sinif-dusme.html` tablosunda şu iki kolon da var:
+  `Son 6 Ay En Düşük` ve `Son 1 Yıl En Düşük`.
+- Hücrede **sadece tik (✓)** bulunur: bugünkü ikramiye, atın o pencere içinde
+  koştuğu en düşük 1.lik ikramiyesine eşit veya daha düşükse yeşil tik konur
+  (eşitlikte en az 2 geçmiş koşu aranır). Aksi halde hücre boş bırakılır.
+- 28.10.2026 ikinci karar: `Son Kazandığı İkramiye` kolonu **KALDIRILDI**
+  (kullanıcı isteği); değer/n/rozet metinleri yerine yalnızca tik gösterilir.
+- Üretim: `...\tjk_beyer_project\work\make_sinif_dusme_analizi.py`
+  (`load_horse_history`, `prize_window_stats`, `tick_cell`).
+  Geçmiş = program CSV arşivi + DB sonuçları, (tarih, pist, koşu no) ile tekilleşir.
+- Şartlı 1 koşularında tik konmaz (sınıf vurgusu yapılmaz kuralı).
+- Yükleme güvencesi: `scripts/site-yukle-22-30.ps1` kopyaladıktan sonra
+  `Son 6 Ay En Düşük` + `Son 1 Yıl En Düşük` başlıklarını ve `class='tick'`
+  hücresini arar; yoksa `EKSIK: ... tik kolonlari YOK` yazar, bildirimde
+  `SINIF TIK YOK` geçer (üreteç eski sürüme dönerse burada yakalanır).
+
+
+## SINIF DUSME KENDINI ONARMA (04.11.2026, HER ZAMAN UYGULA)
+
+- `scripts\site-yukle-22-30.ps1`, hedef gun icin `sinif düsme analizi`
+  klasorunde `<tarih>_<sehir>_sinif_dusme_analizi.html` bulamazsa yukleme
+  sirasinda `tjk_beyer_project\work\make_sinif_dusme_analizi.py --date <tarih>`
+  calistirir ve kaynagi yeniden uretir.
+- Onarima ragmen sinif-dusme raporu yoksa script cikis kodu **1** verir ve
+  bildirimde `SINIF DUSME YOK: <sehir>` gecer. Boylece 22:00 akisinda rapor
+  uretilmese bile 22:05 yuklemesi raporu tamamlar veya sorunu gorunur kilar.
+- Manuel onarim:
+  `python work\make_sinif_dusme_analizi.py --date YYYY-MM-DD`
+  (calisma dizini: `tjk_beyer_project`).
